@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>에너지 리포트 자료실</title>
+<style>
+  :root {
+    --bg: #f6f7f9;
+    --surface: #ffffff;
+    --text: #1d2430;
+    --muted: #667085;
+    --line: #e2e6ec;
+    --accent: #0b5cab;
+    --accent-soft: #e8f1fb;
+    --warn-soft: #fff6e5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #12161c;
+      --surface: #1b2129;
+      --text: #e6e9ee;
+      --muted: #9aa4b2;
+      --line: #2b333d;
+      --accent: #6aaaf0;
+      --accent-soft: #1d2b3b;
+      --warn-soft: #2e2a1d;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Pretendard", "Noto Sans KR", "Malgun Gothic", system-ui, sans-serif;
+    line-height: 1.6;
+  }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 32px 16px 64px; }
+  header h1 { margin: 0 0 4px; font-size: 24px; }
+  header p { margin: 0; color: var(--muted); font-size: 14px; }
+  .toolbar { display: flex; flex-wrap: wrap; gap: 10px; margin: 24px 0 8px; align-items: center; }
+  .toolbar input[type="search"] {
+    flex: 1 1 240px; padding: 10px 12px; font-size: 14px;
+    border: 1px solid var(--line); border-radius: 8px;
+    background: var(--surface); color: var(--text);
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip {
+    border: 1px solid var(--line); background: var(--surface); color: var(--text);
+    padding: 6px 12px; border-radius: 999px; font-size: 13px; cursor: pointer;
+  }
+  .chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .count { color: var(--muted); font-size: 13px; margin: 8px 0 16px; }
+  .card {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 12px; padding: 18px 20px; margin-bottom: 14px;
+  }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 12px; color: var(--muted); }
+  .tag { background: var(--accent-soft); color: var(--accent); padding: 2px 8px; border-radius: 4px; font-weight: 600; }
+  .card h2 { margin: 8px 0 4px; font-size: 18px; line-height: 1.4; }
+  .period { color: var(--muted); font-size: 13px; margin: 0 0 12px; }
+  .lead { margin: 0 0 10px; padding-left: 18px; font-size: 14px; }
+  .lead li { margin-bottom: 4px; }
+  details { margin-top: 6px; }
+  details summary { cursor: pointer; color: var(--accent); font-size: 13px; font-weight: 600; }
+  details ul { margin: 8px 0 0; padding-left: 18px; font-size: 14px; }
+  details li { margin-bottom: 4px; }
+  .impl { background: var(--warn-soft); border-radius: 8px; padding: 10px 14px; margin-top: 12px; }
+  .impl h3 { margin: 0 0 4px; font-size: 13px; }
+  .impl ul { margin: 0; padding-left: 18px; font-size: 14px; }
+  .links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .links a {
+    text-decoration: none; font-size: 13px; padding: 7px 12px;
+    border-radius: 8px; border: 1px solid var(--accent); color: var(--accent);
+  }
+  .links a.primary { background: var(--accent); color: #fff; }
+  .empty, .notice { color: var(--muted); text-align: center; padding: 40px 0; font-size: 14px; }
+  footer { margin-top: 32px; color: var(--muted); font-size: 12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>에너지 리포트 자료실</h1>
+    <p>국내외 기관·증권사·컨설팅 리포트와 세미나 자료의 요약 및 원문 링크 <span id="updated"></span></p>
+  </header>
+
+  <div class="toolbar">
+    <input id="q" type="search" placeholder="제목·요약 검색" aria-label="검색">
+    <div class="chips" id="chips"></div>
+  </div>
+  <div class="count" id="count"></div>
+  <main id="list"></main>
+
+  <footer>
+    요약 및 시사점은 Claude가 원문을 읽고 작성한 것으로, 수치와 해석은 원문으로 확인 필요. 원문 저작권은 각 발행 기관에 있음.
+  </footer>
+</div>
+
+<script>
+(function () {
+  var state = { items: [], category: "전체", query: "" };
+  var listEl = document.getElementById("list");
+  var chipsEl = document.getElementById("chips");
+  var countEl = document.getElementById("count");
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text !== undefined) e.textContent = text;
+    return e;
+  }
+
+  function fmtDate(s) {
+    return (s || "").replace(/-/g, ".");
+  }
+
+  function safeUrl(u) {
+    return /^https?:\/\//i.test(u || "") ? u : "#";
+  }
+
+  function renderChips() {
+    var cats = ["전체"];
+    state.items.forEach(function (it) {
+      if (it.category && cats.indexOf(it.category) < 0) cats.push(it.category);
+    });
+    chipsEl.innerHTML = "";
+    cats.forEach(function (c) {
+      var b = el("button", "chip", c);
+      b.type = "button";
+      b.setAttribute("aria-pressed", String(c === state.category));
+      b.addEventListener("click", function () {
+        state.category = c;
+        renderChips();
+        render();
+      });
+      chipsEl.appendChild(b);
+    });
+  }
+
+  function card(it) {
+    var c = el("article", "card");
+
+    var meta = el("div", "meta");
+    meta.appendChild(el("span", "tag", it.category || "기타"));
+    meta.appendChild(el("span", "", it.source || ""));
+    if (it.series) meta.appendChild(el("span", "", "· " + it.series));
+    meta.appendChild(el("span", "", "· " + fmtDate(it.date)));
+    c.appendChild(meta);
+
+    c.appendChild(el("h2", "", it.title));
+    if (it.period) c.appendChild(el("p", "period", "대상 기간: " + it.period));
+
+    var sum = it.summary || [];
+    var lead = el("ul", "lead");
+    sum.slice(0, 3).forEach(function (s) { lead.appendChild(el("li", "", s)); });
+    c.appendChild(lead);
+
+    if (sum.length > 3) {
+      var d = el("details");
+      d.appendChild(el("summary", "", "요약 전체 보기 (" + sum.length + "건)"));
+      var ul = el("ul");
+      sum.slice(3).forEach(function (s) { ul.appendChild(el("li", "", s)); });
+      d.appendChild(ul);
+      c.appendChild(d);
+    }
+
+    if (it.implications && it.implications.length) {
+      var box = el("div", "impl");
+      box.appendChild(el("h3", "", "시사점"));
+      var iu = el("ul");
+      it.implications.forEach(function (s) { iu.appendChild(el("li", "", s)); });
+      box.appendChild(iu);
+      c.appendChild(box);
+    }
+
+    var links = el("div", "links");
+    var a1 = el("a", "primary", "원문 PDF 열기");
+    a1.href = safeUrl(it.url);
+    a1.target = "_blank";
+    a1.rel = "noopener noreferrer";
+    links.appendChild(a1);
+    if (it.detail_url) {
+      var a2 = el("a", "", "게시글 보기");
+      a2.href = safeUrl(it.detail_url);
+      a2.target = "_blank";
+      a2.rel = "noopener noreferrer";
+      links.appendChild(a2);
+    }
+    c.appendChild(links);
+    return c;
+  }
+
+  function render() {
+    var q = state.query.trim().toLowerCase();
+    var rows = state.items.filter(function (it) {
+      if (state.category !== "전체" && it.category !== state.category) return false;
+      if (!q) return true;
+      var hay = [it.title, it.source, it.series].concat(it.summary || [], it.implications || [])
+        .join(" ").toLowerCase();
+      return hay.indexOf(q) >= 0;
+    }).sort(function (a, b) { return (b.date || "").localeCompare(a.date || ""); });
+
+    listEl.innerHTML = "";
+    countEl.textContent = "총 " + rows.length + "건";
+    if (!rows.length) {
+      listEl.appendChild(el("div", "empty", "조건에 맞는 자료가 없습니다."));
+      return;
+    }
+    rows.forEach(function (it) { listEl.appendChild(card(it)); });
+  }
+
+  document.getElementById("q").addEventListener("input", function (e) {
+    state.query = e.target.value;
+    render();
+  });
+
+  fetch("reports.json", { cache: "no-cache" })
+    .then(function (r) {
+      if (!r.ok) throw new Error(r.status);
+      return r.json();
+    })
+    .then(function (data) {
+      state.items = data.items || [];
+      if (data.updated) {
+        document.getElementById("updated").textContent = "(최종 업데이트 " + fmtDate(data.updated) + ")";
+      }
+      renderChips();
+      render();
+    })
+    .catch(function () {
+      listEl.appendChild(el("div", "notice",
+        "자료를 불러오지 못했습니다. 파일을 직접 열었다면 웹 주소(GitHub Pages)로 접속해 주세요."));
+    });
+})();
+</script>
+</body>
+</html>
