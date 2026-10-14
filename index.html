@@ -1,238 +1,196 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>에너지 리포트 자료실</title>
-<style>
-  :root {
-    --bg: #f6f7f9;
-    --surface: #ffffff;
-    --text: #1d2430;
-    --muted: #667085;
-    --line: #e2e6ec;
-    --accent: #0b5cab;
-    --accent-soft: #e8f1fb;
-    --warn-soft: #fff6e5;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #12161c;
-      --surface: #1b2129;
-      --text: #e6e9ee;
-      --muted: #9aa4b2;
-      --line: #2b333d;
-      --accent: #6aaaf0;
-      --accent-soft: #1d2b3b;
-      --warn-soft: #2e2a1d;
-    }
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font-family: "Pretendard", "Noto Sans KR", "Malgun Gothic", system-ui, sans-serif;
-    line-height: 1.6;
-  }
-  .wrap { max-width: 920px; margin: 0 auto; padding: 32px 16px 64px; }
-  header h1 { margin: 0 0 4px; font-size: 24px; }
-  header p { margin: 0; color: var(--muted); font-size: 14px; }
-  .toolbar { display: flex; flex-wrap: wrap; gap: 10px; margin: 24px 0 8px; align-items: center; }
-  .toolbar input[type="search"] {
-    flex: 1 1 240px; padding: 10px 12px; font-size: 14px;
-    border: 1px solid var(--line); border-radius: 8px;
-    background: var(--surface); color: var(--text);
-  }
-  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
-  .chip {
-    border: 1px solid var(--line); background: var(--surface); color: var(--text);
-    padding: 6px 12px; border-radius: 999px; font-size: 13px; cursor: pointer;
-  }
-  .chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
-  .count { color: var(--muted); font-size: 13px; margin: 8px 0 16px; }
-  .card {
-    background: var(--surface); border: 1px solid var(--line);
-    border-radius: 12px; padding: 18px 20px; margin-bottom: 14px;
-  }
-  .meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 12px; color: var(--muted); }
-  .tag { background: var(--accent-soft); color: var(--accent); padding: 2px 8px; border-radius: 4px; font-weight: 600; }
-  .card h2 { margin: 8px 0 4px; font-size: 18px; line-height: 1.4; }
-  .period { color: var(--muted); font-size: 13px; margin: 0 0 12px; }
-  .lead { margin: 0 0 10px; padding-left: 18px; font-size: 14px; }
-  .lead li { margin-bottom: 4px; }
-  details { margin-top: 6px; }
-  details summary { cursor: pointer; color: var(--accent); font-size: 13px; font-weight: 600; }
-  details ul { margin: 8px 0 0; padding-left: 18px; font-size: 14px; }
-  details li { margin-bottom: 4px; }
-  .impl { background: var(--warn-soft); border-radius: 8px; padding: 10px 14px; margin-top: 12px; }
-  .impl h3 { margin: 0 0 4px; font-size: 13px; }
-  .impl ul { margin: 0; padding-left: 18px; font-size: 14px; }
-  .links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-  .links a {
-    text-decoration: none; font-size: 13px; padding: 7px 12px;
-    border-radius: 8px; border: 1px solid var(--accent); color: var(--accent);
-  }
-  .links a.primary { background: var(--accent); color: #fff; }
-  .empty, .notice { color: var(--muted); text-align: center; padding: 40px 0; font-size: 14px; }
-  footer { margin-top: 32px; color: var(--muted); font-size: 12px; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>에너지 리포트 자료실</title>
+  <style>/* Tailwind 미리 빌드(열 때 계산 없음) */*,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/*! tailwindcss v3.4.19 | MIT License | https://tailwindcss.com*/*,:after,:before{box-sizing:border-box;border:0 solid #e5e7eb}:after,:before{--tw-content:""}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0}fieldset,legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::-moz-placeholder,textarea::-moz-placeholder{opacity:1;color:#9ca3af}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.absolute{position:absolute}.relative{position:relative}.right-1{right:.25rem}.mx-auto{margin-left:auto;margin-right:auto}.mb-1{margin-bottom:.25rem}.ml-2{margin-left:.5rem}.mt-0{margin-top:0}.mt-0\.5{margin-top:.125rem}.mt-1{margin-top:.25rem}.mt-2{margin-top:.5rem}.mt-3{margin-top:.75rem}.block{display:block}.flex{display:flex}.inline-flex{display:inline-flex}.table{display:table}.grid{display:grid}.hidden{display:none}.h-4{height:1rem}.w-28{width:7rem}.w-4{width:1rem}.w-full{width:100%}.border-collapse{border-collapse:collapse}.transform{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.cursor-pointer{cursor:pointer}.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-end{align-items:flex-end}.items-center{align-items:center}.items-baseline{align-items:baseline}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.gap-0{gap:0}.gap-1{gap:.25rem}.gap-1\.5{gap:.375rem}.gap-2{gap:.5rem}.gap-x-1{-moz-column-gap:.25rem;column-gap:.25rem}.space-y-2>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.5rem*var(--tw-space-y-reverse))}.overflow-x-auto{overflow-x:auto}.rounded{border-radius:.25rem}.rounded-lg{border-radius:.5rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-l{border-left-width:1px}.border-l-4{border-left-width:4px}.border-rose-200{--tw-border-opacity:1;border-color:rgb(254 205 211/var(--tw-border-opacity,1))}.border-slate-200{--tw-border-opacity:1;border-color:rgb(226 232 240/var(--tw-border-opacity,1))}.bg-\[\#001f3f\]{--tw-bg-opacity:1;background-color:rgb(0 31 63/var(--tw-bg-opacity,1))}.bg-rose-50{--tw-bg-opacity:1;background-color:rgb(255 241 242/var(--tw-bg-opacity,1))}.bg-rose-50\/30{background-color:rgba(255,241,242,.3)}.bg-slate-50{--tw-bg-opacity:1;background-color:rgb(248 250 252/var(--tw-bg-opacity,1))}.bg-transparent{background-color:transparent}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.p-3{padding:.75rem}.p-4{padding:1rem}.p-6{padding:1.5rem}.px-1{padding-left:.25rem;padding-right:.25rem}.px-1\.5{padding-left:.375rem;padding-right:.375rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-4{padding-left:1rem;padding-right:1rem}.py-0{padding-top:0;padding-bottom:0}.py-0\.5{padding-top:.125rem;padding-bottom:.125rem}.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-1\.5{padding-top:.375rem;padding-bottom:.375rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.pb-1{padding-bottom:.25rem}.pl-2{padding-left:.5rem}.pl-4{padding-left:1rem}.pr-6{padding-right:1.5rem}.text-center{text-align:center}.text-2xl{font-size:1.5rem;line-height:2rem}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-base{font-size:1rem;line-height:1.5rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:.75rem;line-height:1rem}.font-black{font-weight:900}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.leading-relaxed{line-height:1.625}.tracking-tight{letter-spacing:-.025em}.text-\[\#d93f3c\]{--tw-text-opacity:1;color:rgb(217 63 60/var(--tw-text-opacity,1))}.text-emerald-600{--tw-text-opacity:1;color:rgb(5 150 105/var(--tw-text-opacity,1))}.text-rose-600{--tw-text-opacity:1;color:rgb(225 29 72/var(--tw-text-opacity,1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139/var(--tw-text-opacity,1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105/var(--tw-text-opacity,1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85/var(--tw-text-opacity,1))}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59/var(--tw-text-opacity,1))}.text-slate-900{--tw-text-opacity:1;color:rgb(15 23 42/var(--tw-text-opacity,1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.shadow{--tw-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color),0 1px 2px -1px var(--tw-shadow-color)}.shadow,.shadow-sm{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgba(0,0,0,.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color)}.outline-none{outline:2px solid transparent;outline-offset:2px}.transition{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,-webkit-backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter,-webkit-backdrop-filter;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.hover\:bg-slate-800:hover{--tw-bg-opacity:1;background-color:rgb(30 41 59/var(--tw-bg-opacity,1))}@media (min-width:768px){.md\:grid-cols-7{grid-template-columns:repeat(7,minmax(0,1fr))}.md\:items-end{align-items:flex-end}.md\:border-b-0{border-bottom-width:0}.md\:border-r{border-right-width:1px}.md\:text-sm{font-size:.875rem;line-height:1.25rem}}</style>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Noto Sans KR', sans-serif; background-color: #ffffff; color: #1a1a1a; }
+    .site-header{line-height:1.4;position:sticky;top:0;z-index:100;background:#001f3f;color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+    .site-header .in{max-width:1000px;margin:0 auto;padding:18px 16px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+    .site-header h1{line-height:1.2;margin:0;font-size:28px;font-weight:900;letter-spacing:-.02em;color:#fff}
+    .site-header .sub{margin:4px 0 0;font-size:13px;color:#b6c2d1}
+    .site-header .sub b{color:#fff;font-weight:700}
+    .menu{display:flex;gap:10px;flex-wrap:wrap}
+    .menu a{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:190px;height:44px;padding:0;border-radius:2px;background:#e5e7eb;color:#1e293b;font-size:14px;font-weight:700;text-decoration:none;transition:background .15s}
+    .menu a:hover{background:#f1f5f9}
+    .menu a span{font-size:16px;line-height:1}
+    .mb{display:none}
+  @media (max-width:640px){ .mb{display:inline} .menu a{text-align:center;line-height:1.25;gap:4px;height:48px!important;padding:0 6px!important} .menu a span{display:none} .site-header h1{font-size:22px} .menu{width:100%} .menu a{flex:1;width:auto;height:40px;padding:0 12px;font-size:13px} }
+    .mckinsey-border { border-top: 4px solid #001f3f; }
+    .chart-container { position: relative; height: 450px; width: 100%; border: 1px solid #e5e7eb; padding: 1rem; background-color: #ffffff; }
+    table th, table td { border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-size: 0.875rem; }
+    table th { background-color: #f8fafc; font-weight: 700; color: #334155; }
+    .text-holiday { color: #dc2626 !important; font-weight: 700; }
+    body h2 { display:flex; align-items:center; font-size:18px; font-weight:700; color:#001f3f; margin:30px 0 10px; padding-bottom:8px; border-bottom:2px solid #e5e7eb; }
+    body h2::before { content:''; flex:none; width:6px; height:18px; margin-right:9px; background:#001f3f; }
+    .etc-menu{display:flex;gap:10px;flex-wrap:wrap}
+    .etc-menu a{display:inline-flex;align-items:center;justify-content:center;min-width:150px;height:44px;padding:0 20px;border-radius:2px;background:#e5e7eb;color:#1e293b;font-size:14px;font-weight:700;text-decoration:none;transition:background .15s;white-space:nowrap}
+    .etc-menu a:hover{background:#f1f5f9}
+    @media (max-width:640px){ .etc-menu a{flex:1 1 calc(50% - 5px);min-width:0;padding:0 8px} }
+    .kpx-pick,.kpx-pick label,.kpx-pick input{line-height:normal}
+    .kpx-pick input{padding:1px 2px;width:190px}
+    .cat-btn{cursor:pointer;border:0;font-family:inherit}
+    .etc-menu a.primary,.cat-btn[aria-pressed="true"]{background:#001f3f;color:#fff}
+    .etc-menu a.primary:hover{background:#1e293b}
+    .rp-card{border:1px solid #e5e7eb;border-top:4px solid #001f3f;background:#fff;padding:18px 20px;margin-bottom:14px}
+    .rp-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;font-size:12px;color:#64748b;font-weight:500}
+    .rp-tag{background:#001f3f;color:#fff;padding:2px 8px;border-radius:2px;font-weight:700}
+    .rp-card h3{font-size:17px;font-weight:700;color:#1a1a1a;margin:8px 0 2px;line-height:1.4}
+    .rp-period{font-size:12px;color:#64748b;margin:0 0 10px}
+    .rp-sum{margin:0;padding-left:18px;list-style:disc;font-size:14px;line-height:1.7;color:#1e293b}
+    .rp-sum li{margin-bottom:3px}
+    .rp-card details{margin-top:6px}
+    .rp-card summary{cursor:pointer;color:#001f3f;font-size:13px;font-weight:700}
+    .rp-impl{margin-top:12px;background:#f8fafc;border:1px solid #e5e7eb;border-left:4px solid #001f3f;padding:12px 16px;font-size:14px;line-height:1.7;color:#1e293b;font-weight:500}
+    .rp-impl b{display:block;font-size:12px;color:#475569;margin-bottom:2px}
+    .rp-impl ul{margin:0;padding-left:18px;list-style:disc}
+    .rp-links{margin-top:14px}
+    .rp-empty{border:1px solid #e5e7eb;padding:40px 0;text-align:center;font-size:14px;color:#64748b}
+  </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <h1>에너지 리포트 자료실</h1>
-    <p>국내외 기관·증권사·컨설팅 리포트와 세미나 자료의 요약 및 원문 링크 <span id="updated"></span></p>
+  <header class="site-header">
+    <div class="in">
+      <div>
+        <h1>에너지 리포트 자료실</h1>
+        <p class="sub">최종 업데이트: <b id="headerDate">-</b> | 국내외 기관 리포트 요약 | 에너지사업총괄</p>
+      </div>
+      <nav class="menu">
+        <a href="https://shycrt-lgtm.github.io/KPX-Daily-Report/">전력시장<br class="mb"> 전일실적 <span>›</span></a>
+        <a href="https://shycrt-lgtm.github.io/Energy-Index/">에너지 시장<br class="mb"> 주요정보 <span>›</span></a>
+        <a href="https://shycrt-lgtm.github.io/TMS/">TMS <span>›</span></a>
+        <a href="https://shycrt-lgtm.github.io/Energy-Price/#home">에너지<br class="mb"> 단가 <span>›</span></a>
+      </nav>
+    </div>
   </header>
 
-  <div class="toolbar">
-    <input id="q" type="search" placeholder="제목·요약 검색" aria-label="검색">
-    <div class="chips" id="chips"></div>
+  <div class="mx-auto" style="max-width:1000px;padding:28px 16px 48px">
+    <div class="flex" style="justify-content:space-between;align-items:stretch;gap:10px 12px;flex-wrap:wrap">
+      <nav class="etc-menu" id="cats"></nav>
+      <div class="kpx-pick flex items-center gap-2 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-lg shadow-sm" style="margin-left:auto">
+        <label for="q" class="text-xs md:text-sm font-bold text-slate-700 cursor-pointer">검색:</label>
+        <input type="search" id="q" class="bg-transparent text-xs md:text-sm font-bold text-slate-800 outline-none" placeholder="제목·요약 검색">
+      </div>
+    </div>
+
+    <div>
+      <h2>리포트 목록</h2>
+      <p class="text-xs text-slate-500 mb-2" id="count"></p>
+      <div id="list"></div>
+      <p class="text-[11px] text-slate-500 mt-2 px-1 tracking-tight">* 요약·시사점은 Claude가 원문을 읽고 작성한 것으로, 수치와 해석은 원문 확인이 필요합니다. 원문 저작권은 각 발행 기관에 있습니다.</p>
+    </div>
   </div>
-  <div class="count" id="count"></div>
-  <main id="list"></main>
 
-  <footer>
-    요약 및 시사점은 Claude가 원문을 읽고 작성한 것으로, 수치와 해석은 원문으로 확인 필요. 원문 저작권은 각 발행 기관에 있음.
-  </footer>
-</div>
+  <script>
+  (function () {
+    var state = { items: [], category: "전체", query: "" };
+    var listEl = document.getElementById("list");
+    var catsEl = document.getElementById("cats");
+    var countEl = document.getElementById("count");
 
-<script>
-(function () {
-  var state = { items: [], category: "전체", query: "" };
-  var listEl = document.getElementById("list");
-  var chipsEl = document.getElementById("chips");
-  var countEl = document.getElementById("count");
+    function el(tag, cls, text) {
+      var e = document.createElement(tag);
+      if (cls) e.className = cls;
+      if (text !== undefined) e.textContent = text;
+      return e;
+    }
+    function fmtDate(s) { return (s || "").replace(/-/g, "."); }
+    function safeUrl(u) { return /^https?:\/\//i.test(u || "") ? u : "#"; }
 
-  function el(tag, cls, text) {
-    var e = document.createElement(tag);
-    if (cls) e.className = cls;
-    if (text !== undefined) e.textContent = text;
-    return e;
-  }
-
-  function fmtDate(s) {
-    return (s || "").replace(/-/g, ".");
-  }
-
-  function safeUrl(u) {
-    return /^https?:\/\//i.test(u || "") ? u : "#";
-  }
-
-  function renderChips() {
-    var cats = ["전체"];
-    state.items.forEach(function (it) {
-      if (it.category && cats.indexOf(it.category) < 0) cats.push(it.category);
-    });
-    chipsEl.innerHTML = "";
-    cats.forEach(function (c) {
-      var b = el("button", "chip", c);
-      b.type = "button";
-      b.setAttribute("aria-pressed", String(c === state.category));
-      b.addEventListener("click", function () {
-        state.category = c;
-        renderChips();
-        render();
+    function renderCats() {
+      var cats = ["전체"];
+      state.items.forEach(function (it) {
+        if (it.category && cats.indexOf(it.category) < 0) cats.push(it.category);
       });
-      chipsEl.appendChild(b);
-    });
-  }
-
-  function card(it) {
-    var c = el("article", "card");
-
-    var meta = el("div", "meta");
-    meta.appendChild(el("span", "tag", it.category || "기타"));
-    meta.appendChild(el("span", "", it.source || ""));
-    if (it.series) meta.appendChild(el("span", "", "· " + it.series));
-    meta.appendChild(el("span", "", "· " + fmtDate(it.date)));
-    c.appendChild(meta);
-
-    c.appendChild(el("h2", "", it.title));
-    if (it.period) c.appendChild(el("p", "period", "대상 기간: " + it.period));
-
-    var sum = it.summary || [];
-    var lead = el("ul", "lead");
-    sum.slice(0, 3).forEach(function (s) { lead.appendChild(el("li", "", s)); });
-    c.appendChild(lead);
-
-    if (sum.length > 3) {
-      var d = el("details");
-      d.appendChild(el("summary", "", "요약 전체 보기 (" + sum.length + "건)"));
-      var ul = el("ul");
-      sum.slice(3).forEach(function (s) { ul.appendChild(el("li", "", s)); });
-      d.appendChild(ul);
-      c.appendChild(d);
+      catsEl.innerHTML = "";
+      cats.forEach(function (c) {
+        var a = el("a", "cat-btn", c);
+        a.setAttribute("role", "button");
+        a.setAttribute("aria-pressed", String(c === state.category));
+        a.style.minWidth = "110px";
+        a.addEventListener("click", function () { state.category = c; renderCats(); render(); });
+        catsEl.appendChild(a);
+      });
     }
 
-    if (it.implications && it.implications.length) {
-      var box = el("div", "impl");
-      box.appendChild(el("h3", "", "시사점"));
-      var iu = el("ul");
-      it.implications.forEach(function (s) { iu.appendChild(el("li", "", s)); });
-      box.appendChild(iu);
-      c.appendChild(box);
+    function link(label, url, primary) {
+      var a = el("a", primary ? "primary" : "", label);
+      a.href = safeUrl(url);
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      return a;
     }
 
-    var links = el("div", "links");
-    var a1 = el("a", "primary", "원문 PDF 열기");
-    a1.href = safeUrl(it.url);
-    a1.target = "_blank";
-    a1.rel = "noopener noreferrer";
-    links.appendChild(a1);
-    if (it.detail_url) {
-      var a2 = el("a", "", "게시글 보기");
-      a2.href = safeUrl(it.detail_url);
-      a2.target = "_blank";
-      a2.rel = "noopener noreferrer";
-      links.appendChild(a2);
-    }
-    c.appendChild(links);
-    return c;
-  }
+    function card(it) {
+      var c = el("article", "rp-card");
+      var meta = el("div", "rp-meta");
+      meta.appendChild(el("span", "rp-tag", it.category || "기타"));
+      meta.appendChild(el("span", "", it.source || ""));
+      if (it.series) meta.appendChild(el("span", "", "| " + it.series));
+      meta.appendChild(el("span", "", "| " + fmtDate(it.date)));
+      c.appendChild(meta);
+      c.appendChild(el("h3", "", it.title));
+      if (it.period) c.appendChild(el("p", "rp-period", "대상 기간: " + it.period));
 
-  function render() {
-    var q = state.query.trim().toLowerCase();
-    var rows = state.items.filter(function (it) {
-      if (state.category !== "전체" && it.category !== state.category) return false;
-      if (!q) return true;
-      var hay = [it.title, it.source, it.series].concat(it.summary || [], it.implications || [])
-        .join(" ").toLowerCase();
-      return hay.indexOf(q) >= 0;
-    }).sort(function (a, b) { return (b.date || "").localeCompare(a.date || ""); });
-
-    listEl.innerHTML = "";
-    countEl.textContent = "총 " + rows.length + "건";
-    if (!rows.length) {
-      listEl.appendChild(el("div", "empty", "조건에 맞는 자료가 없습니다."));
-      return;
-    }
-    rows.forEach(function (it) { listEl.appendChild(card(it)); });
-  }
-
-  document.getElementById("q").addEventListener("input", function (e) {
-    state.query = e.target.value;
-    render();
-  });
-
-  fetch("reports.json", { cache: "no-cache" })
-    .then(function (r) {
-      if (!r.ok) throw new Error(r.status);
-      return r.json();
-    })
-    .then(function (data) {
-      state.items = data.items || [];
-      if (data.updated) {
-        document.getElementById("updated").textContent = "(최종 업데이트 " + fmtDate(data.updated) + ")";
+      var sum = it.summary || [];
+      var ul = el("ul", "rp-sum");
+      sum.slice(0, 3).forEach(function (s) { ul.appendChild(el("li", "", s)); });
+      c.appendChild(ul);
+      if (sum.length > 3) {
+        var d = el("details");
+        d.appendChild(el("summary", "", "요약 전체 보기 (" + sum.length + "건)"));
+        var ul2 = el("ul", "rp-sum");
+        ul2.style.marginTop = "8px";
+        sum.slice(3).forEach(function (s) { ul2.appendChild(el("li", "", s)); });
+        d.appendChild(ul2);
+        c.appendChild(d);
       }
-      renderChips();
-      render();
-    })
-    .catch(function () {
-      listEl.appendChild(el("div", "notice",
-        "자료를 불러오지 못했습니다. 파일을 직접 열었다면 웹 주소(GitHub Pages)로 접속해 주세요."));
-    });
-})();
-</script>
+      if (it.implications && it.implications.length) {
+        var box = el("div", "rp-impl");
+        box.appendChild(el("b", "", "시사점"));
+        var iu = el("ul");
+        it.implications.forEach(function (s) { iu.appendChild(el("li", "", s)); });
+        box.appendChild(iu);
+        c.appendChild(box);
+      }
+      var nav = el("nav", "etc-menu rp-links");
+      nav.appendChild(link("원문 PDF 열기", it.url, true));
+      if (it.detail_url) nav.appendChild(link("게시글 보기", it.detail_url, false));
+      c.appendChild(nav);
+      return c;
+    }
+
+    function render() {
+      var q = state.query.trim().toLowerCase();
+      var rows = state.items.filter(function (it) {
+        if (state.category !== "전체" && it.category !== state.category) return false;
+        if (!q) return true;
+        var hay = [it.title, it.source, it.series].concat(it.summary || [], it.implications || []).join(" ").toLowerCase();
+        return hay.indexOf(q) >= 0;
+      }).sort(function (a, b) { return (b.date || "").localeCompare(a.date || ""); });
+      listEl.innerHTML = "";
+      countEl.textContent = "총 " + rows.length + "건";
+      if (!rows.length) { listEl.appendChild(el("div", "rp-empty", "조건에 맞는 자료가 없습니다.")); return; }
+      rows.forEach(function (it) { listEl.appendChild(card(it)); });
+    }
+
+    document.getElementById("q").addEventListener("input", function (e) { state.query = e.target.value; render(); });
+
+    fetch("reports.json", { cache: "no-cache" })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (data) {
+        state.items = data.items || [];
+        if (data.updated) document.getElementById("headerDate").textContent = fmtDate(data.updated);
+        renderCats();
+        render();
+      })
+      .catch(function () {
+        listEl.appendChild(el("div", "rp-empty", "자료를 불러오지 못했습니다. 파일을 직접 열었다면 웹 주소(GitHub Pages)로 접속해 주세요."));
+      });
+  })();
+  </script>
 </body>
 </html>
