@@ -106,9 +106,8 @@
       state.items.forEach(function (it) {
         if (it.category && cats.indexOf(it.category) < 0) cats.push(it.category);
       });
-      var li = cats.indexOf("자체자료");
-      if (li > 0) { cats.splice(li, 1); cats.push("자체자료"); }
-      catsEl.style.display = cats.length <= 2 ? "none" : "";
+      cats.push("자체자료");
+      catsEl.style.display = "";
       catsEl.innerHTML = "";
       cats.forEach(function (c) {
         var a = el("a", "cat-btn", c);
@@ -189,8 +188,80 @@
       return c;
     }
 
+    var KEY_OK = "energyInternal.pw";
+    function b64(s) { var b = atob(s), a = new Uint8Array(b.length); for (var i = 0; i < b.length; i++) b64a(a, i, b.charCodeAt(i)); return a; }
+    function b64a(a, i, v) { a[i] = v; }
+    function unlock(pw) {
+      return fetch("internal.json", { cache: "no-cache" }).then(function (r) { return r.json(); }).then(function (d) {
+        var e = d.index;
+        return crypto.subtle.importKey("raw", new TextEncoder().encode(pw), "PBKDF2", false, ["deriveKey"])
+          .then(function (base) {
+            return crypto.subtle.deriveKey({ name: "PBKDF2", salt: b64(e.salt), iterations: e.iter, hash: "SHA-256" }, base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+          })
+          .then(function (k) { return crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(e.iv) }, k, b64(e.ct)); })
+          .then(function (pt) { return JSON.parse(new TextDecoder().decode(pt)); });
+      });
+    }
+    function tryUnlock(pw, errEl) {
+      if (!window.crypto || !crypto.subtle) { if (errEl) errEl.textContent = "이 브라우저에서는 열 수 없습니다. 최신 크롬·엣지에서 https 주소로 접속하세요."; return Promise.resolve(false); }
+      return unlock(pw).then(function (data) {
+        state.internal = data;
+        try { sessionStorage.setItem(KEY_OK, pw); } catch (e) {}
+        render();
+        return true;
+      }, function () { if (errEl) errEl.textContent = "비밀번호가 맞지 않습니다."; return false; });
+    }
+    function renderInternal() {
+      var gate = el("form", "rp-card");
+      gate.autocomplete = "off";
+      gate.style.maxWidth = "420px"; gate.style.margin = "24px auto";
+      gate.appendChild(el("h3", "", "\uD83D\uDD12 자체자료"));
+      gate.appendChild(el("p", "rp-period", "비밀번호를 입력하면 자료 목록이 보입니다."));
+      var inp = document.createElement("input");
+      inp.type = "password"; inp.placeholder = "비밀번호"; inp.setAttribute("aria-label", "비밀번호");
+      inp.style.cssText = "width:100%;border:1px solid #cbd5e1;padding:10px 12px;font-size:14px;border-radius:2px";
+      gate.appendChild(inp);
+      var nav = el("nav", "etc-menu"); nav.style.marginTop = "12px";
+      var btn = el("a", "primary cat-btn", "열기"); btn.setAttribute("role", "button"); btn.style.minWidth = "100%";
+      nav.appendChild(btn); gate.appendChild(nav);
+      var err = el("p", ""); err.setAttribute("role", "alert"); err.style.cssText = "color:#dc2626;font-size:13px;margin:10px 0 0;min-height:18px";
+      gate.appendChild(err);
+      function go() { err.textContent = "확인 중..."; tryUnlock(inp.value, err).then(function (ok) { if (ok) err.textContent = ""; }); }
+      btn.addEventListener("click", go);
+      gate.addEventListener("submit", function (e) { e.preventDefault(); go(); });
+      listEl.appendChild(gate);
+      setTimeout(function () { inp.focus(); }, 0);
+    }
+    function showInternal() {
+      var data = state.internal, q = state.query.trim().toLowerCase(), total = 0;
+      data.categories.forEach(function (cat) {
+        var sec = el("div"); sec.appendChild(el("h2", "", cat));
+        var rows = data.items.filter(function (it) { return it.category === cat && (!q || (it.title + " " + cat).toLowerCase().indexOf(q) >= 0); });
+        if (!rows.length) sec.appendChild(el("div", "rp-empty", "등록된 자료 없음"));
+        rows.forEach(function (it) {
+          total++;
+          var c = el("article", "rp-card");
+          var m = el("div", "rp-meta"); m.appendChild(el("span", "rp-tag", cat)); m.appendChild(el("span", "", "| " + fmtDate(it.date)));
+          c.appendChild(m); c.appendChild(el("h3", "", it.title));
+          var nav = el("nav", "etc-menu rp-links"); var a = el("a", "primary", "자료 열기"); a.href = it.url; nav.appendChild(a);
+          c.appendChild(nav); sec.appendChild(c);
+        });
+        listEl.appendChild(sec);
+      });
+      countEl.textContent = "총 " + total + "건";
+    }
+
     function render() {
       var q = state.query.trim().toLowerCase();
+      if (state.category === "자체자료") {
+        if (!state.internal && listEl.querySelector("form")) return;
+        listEl.innerHTML = "";
+        if (state.internal) { showInternal(); return; }
+        countEl.textContent = "";
+        var spw = null; try { spw = sessionStorage.getItem(KEY_OK); } catch (e) {}
+        if (spw && !state.autoTried) { state.autoTried = true; tryUnlock(spw, null).then(function (ok) { if (!ok) renderInternal(); }); return; }
+        renderInternal(); return;
+      }
       var rows = state.items.filter(function (it) {
         if (state.category !== "전체" && it.category !== state.category) return false;
         if (!q) return true;
@@ -219,16 +290,9 @@
           if (lt && lt.id) localStorage.setItem("energyReport.seen", lt.id);
         } catch (e) {}
         if (data.updated) document.getElementById("headerDate").textContent = fmtDate(data.updated);
-        return fetch("internal.json", { cache: "no-cache" }).then(function (r) { return r.ok ? r.json() : { items: [] }; })
-          .catch(function () { return { items: [] }; })
-          .then(function (lk) {
-            (lk.items || []).forEach(function (x) {
-              state.items.push({ id: x.id, category: "자체자료", source: "자체자료", series: x.category, title: x.title, date: x.date, locked: true, summary: [], url: "internal.html" });
-            });
-            state.items.sort(function (a, b) { return (b.date || "").localeCompare(a.date || ""); });
-            renderCats();
-            render();
-          });
+        state.items.sort(function (a, b) { return (b.date || "").localeCompare(a.date || ""); });
+        renderCats();
+        render();
       })
       .catch(function () {
         listEl.appendChild(el("div", "rp-empty", "자료를 불러오지 못했습니다. 파일을 직접 열었다면 웹 주소(GitHub Pages)로 접속해 주세요."));

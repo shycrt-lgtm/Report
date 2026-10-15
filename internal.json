@@ -1,22 +1,8 @@
 {
-  "check": {
+  "index": {
     "iter": 600000,
-    "salt": "U4P1amvrmo9/bYisObaCDw==",
-    "iv": "fsveLzcYweXHz7XT",
-    "ct": "3kuZM6Q1Kbi4vShPWfBfCkpq4Hqs2YJmqg24fSQdkFDIbQ=="
-  },
-  "categories": [
-    "급전순위",
-    "SMP 전월분석",
-    "기타"
-  ],
-  "items": [
-    {
-      "id": "merit-order",
-      "category": "급전순위",
-      "title": "발전가격 급전순위 (전력거래소 열량단가 기준)",
-      "date": "2026-10-15",
-      "url": "internal/merit.html"
-    }
-  ]
+    "salt": "CE/TCvOZZ3pUAjO2vhPpig==",
+    "iv": "rf/VthuVa/Jjl+2x",
+    "ct": "W1tZkgkO/Ui1MHMPDiSkzhkZK4z9X2RSDuXDGnjgopopk/4FGyp46fUT4iltIpCA70wMf7GEXBl/1ibsT8slyGPF7Qev9QXNzNZ6ei9IGPtHIdxQI+o+1/WwaDPwGZzgGnJa/rgmkfNoPzPsIevmydR5cLs4DSwJdDXU3K6ZZMfr6iEBHVEwkS4kcZJFQKJjciEurEzSn0R0/aVzMM0hi5v9keo9sgFFucouUzzbNnVZ2Zj0zMtrIusRsl6UEiv026R4nc26Cc271t4igbW4bQz9In6fjKDgtgwuDqXLwFtOy53CvcpEDO4t1X2vXEhvhp3EP8/l+xH0VUr44+jTPNu9tKNXGQOwq+DaxA=="
+  }
 }

@@ -229,7 +229,7 @@ tr.hl td{background:#eef2f7}
       <p class="sub">전력거래소 중앙급전발전기 열량단가 기준 · <b>CBP 발전가격 순위</b> <span class="gen" id="genAt"></span></p>
     </div>
     <nav class="menu">
-      <a href="../internal.html">자체자료 <span>›</span></a>
+      <a href="../">에너지<br class="mb"> 자료실 <span>›</span></a>
       <button id="btnLock" hidden>잠그기</button>
     </nav>
   </div>
@@ -350,7 +350,7 @@ document.getElementById('lockForm').addEventListener('submit',async e=>{
   }catch(x){ err.textContent='비밀번호가 맞지 않습니다.'; document.getElementById('pw').select(); }
   btn.disabled=false; btn.textContent='열기';
 });
-document.getElementById('btnLock').onclick=()=>{ lsSet(keySlot,null); try{ sessionStorage.removeItem('energyInternal.pw'); sessionStorage.removeItem('energyInternal.ok'); }catch(e){} location.href='../internal.html'; };
+document.getElementById('btnLock').onclick=()=>{ lsSet(keySlot,null); try{ sessionStorage.removeItem('energyInternal.pw'); sessionStorage.removeItem('energyInternal.ok'); }catch(e){} location.href='../'; };
 // 자체자료 화면에서 이미 비밀번호를 확인했으면(같은 탭) 다시 묻지 않고 바로 연다
 (async()=>{
   if(PAYLOAD.plain){ start(PAYLOAD.data); return; }
