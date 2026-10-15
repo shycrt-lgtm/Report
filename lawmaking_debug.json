@@ -1,0 +1,28 @@
+{
+  "run_at": "2026-10-15T10:00:43+09:00",
+  "requests": [
+    {
+      "diff": "0",
+      "page": 1,
+      "status": 200,
+      "length": 41,
+      "head": "<result>\n  <retMsg>401</retMsg>\n</result>",
+      "items": 0,
+      "new": 0
+    },
+    {
+      "diff": "1",
+      "page": 1,
+      "status": 200,
+      "length": 41,
+      "head": "<result>\n  <retMsg>401</retMsg>\n</result>",
+      "items": 0,
+      "new": 0
+    }
+  ],
+  "total_fetched": 0,
+  "ministries": [],
+  "matched": [],
+  "unmatched": [],
+  "other_ministry": 0
+}
