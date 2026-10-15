@@ -1,5 +1,5 @@
 {
-  "run_at": "2026-10-15T10:00:43+09:00",
+  "run_at": "2026-10-15T10:01:23+09:00",
   "requests": [
     {
       "diff": "0",
@@ -7,8 +7,7 @@
       "status": 200,
       "length": 41,
       "head": "<result>\n  <retMsg>401</retMsg>\n</result>",
-      "items": 0,
-      "new": 0
+      "error": "API 응답 retMsg=401"
     },
     {
       "diff": "1",
@@ -16,8 +15,7 @@
       "status": 200,
       "length": 41,
       "head": "<result>\n  <retMsg>401</retMsg>\n</result>",
-      "items": 0,
-      "new": 0
+      "error": "API 응답 retMsg=401"
     }
   ],
   "total_fetched": 0,
