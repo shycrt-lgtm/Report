@@ -1,6 +1,74 @@
 {
-  "updated": "2026-10-14",
+  "updated": "2026-10-15",
   "items": [
+    {
+      "id": "kogas-gas-2026-09",
+      "source": "한국가스공사(KOGAS)",
+      "category": "리포트",
+      "series": "계간 가스산업",
+      "title": "계간 가스산업 2026년 9월호 (제25권 제3호)",
+      "date": "2026-10-12",
+      "summary": [],
+      "sections": [
+        {
+          "title": "1. 국내 탄소배출권 시장 동향 및 전망",
+          "url": "https://www.kogas.or.kr/mgr/fileDownload.do?boardIdx=47820&fileNo=48149"
+        },
+        {
+          "title": "2. 대만 반도체 산업과 천연가스의 역할",
+          "url": "https://www.kogas.or.kr/mgr/fileDownload.do?boardIdx=47821&fileNo=48150"
+        },
+        {
+          "title": "3. 국내 AI데이터센터 전력 조달과 연료전지의 역할",
+          "url": "https://www.kogas.or.kr/mgr/fileDownload.do?boardIdx=47822&fileNo=48151"
+        },
+        {
+          "title": "4. 열에너지 공급을 위한 천연가스의 중요성과 대체열원의 한계 2",
+          "url": "https://www.kogas.or.kr/mgr/fileDownload.do?boardIdx=47823&fileNo=48152"
+        },
+        {
+          "title": "5. 중동 전쟁 발발 이후 글로벌 상류 투자 동향",
+          "url": "https://www.kogas.or.kr/mgr/fileDownload.do?boardIdx=47824&fileNo=48153"
+        },
+        {
+          "title": "6. 국내외 주요국 천연가스 손실률의 비교 분석",
+          "url": "https://www.kogas.or.kr/mgr/fileDownload.do?boardIdx=47825&fileNo=48154"
+        }
+      ],
+      "url": "https://www.kogas.or.kr/site/koGas/goBoard.do?boardNo=30&Key=1040603000000",
+      "link_label": "게시판 보기",
+      "added": "2026-10-15"
+    },
+    {
+      "id": "kogas-gas-2026-06",
+      "source": "한국가스공사(KOGAS)",
+      "category": "리포트",
+      "series": "계간 가스산업",
+      "title": "계간 가스산업 2026년 6월호 (제25권 제2호)",
+      "date": "2026-07-07",
+      "summary": [],
+      "sections": [
+        {
+          "title": "2. 중동 지정학 갈등이 빚어내는 글로벌 천연가스 지형",
+          "url": "https://www.kogas.or.kr/mgr/fileDownload.do?boardIdx=47563&fileNo=47486"
+        },
+        {
+          "title": "3. AI 기반 도시가스 수요예측모형",
+          "url": "https://www.kogas.or.kr/mgr/fileDownload.do?boardIdx=47564&fileNo=47487"
+        },
+        {
+          "title": "4. 중동 전쟁에 따른 글로벌 석유 시장 영향 및 전망",
+          "url": "https://www.kogas.or.kr/mgr/fileDownload.do?boardIdx=47565&fileNo=47488"
+        },
+        {
+          "title": "5. 중동 지역의 수소 잠재력과 한국 수소산업과의 연계 방안",
+          "url": "https://www.kogas.or.kr/mgr/fileDownload.do?boardIdx=47566&fileNo=47489"
+        }
+      ],
+      "url": "https://www.kogas.or.kr/site/koGas/goBoard.do?boardNo=30&Key=1040603000000",
+      "link_label": "게시판 보기",
+      "added": "2026-10-15"
+    },
     {
       "id": "keei-oil-1113",
       "source": "에너지경제연구원(KEEI)",
