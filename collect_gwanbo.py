@@ -23,6 +23,7 @@ PAGE_SIZE = 100
 MAX_PAGES = 20
 HERE = os.path.dirname(os.path.abspath(__file__))
 KST = datetime.timezone(datetime.timedelta(hours=9))
+LAST = {}
 
 
 def today():
@@ -54,6 +55,7 @@ def fetch(key, params):
         q += "&%s=%s" % (k, urllib.parse.quote(str(v), safe=""))
     req = urllib.request.Request(ENDPOINT + "?" + q, headers={"User-Agent": "Mozilla/5.0 (report-collector)"})
     with urllib.request.urlopen(req, timeout=60) as r:
+        LAST["ctype"] = r.headers.get("Content-Type", "")
         return r.status, r.read().decode("utf-8", errors="replace")
 
 
@@ -148,6 +150,22 @@ def merge(reports, new_items):
     return added
 
 
+def probe(key):
+    """응답이 비어 있거나 JSON이 아닐 때 요청 형태를 바꿔가며 원인을 찾는 진단."""
+    out = []
+    base = {"pageNo": 1, "pageSize": 5, "reqFrom": "20261001", "reqTo": today().strftime("%Y%m%d")}
+    for label, extra in [("type=xml", {"type": "xml"}), ("type=JSON", {"type": "JSON"}),
+                         ("type=json+기관", {"type": "json", "pblcnSearch": INSTITUTION})]:
+        rec = {"probe": label}
+        try:
+            status, body = fetch(key, dict(base, **extra))
+            rec.update(status=status, ctype=LAST.get("ctype", ""), body_len=len(body), head=mask(body[:400], key))
+        except Exception as e:
+            rec["error"] = mask(str(e), key)
+        out.append(rec)
+    return out
+
+
 def pull(key, extra, debug, label):
     """날짜 형식(YYYYMMDD → YYYY-MM-DD)을 바꿔가며 모든 페이지를 받는다."""
     since = datetime.date.fromisoformat(SINCE)
@@ -173,6 +191,9 @@ def pull(key, extra, debug, label):
             except (urllib.error.URLError, ValueError, OSError) as e:
                 rec["error"] = mask(str(e), key)
                 rec["head"] = mask(body[:600], key)
+                rec["ctype"] = LAST.get("ctype", "")
+                rec["body_len"] = len(body)
+                debug["probes"] = probe(key)
                 debug["requests"].append(rec)
                 return items, True
             rec.update(status=status, resultCode=code, resultMsg=msg, totalCount=total, items=len(got))
