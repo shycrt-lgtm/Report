@@ -219,7 +219,6 @@
       if (document.getElementById("pwModal")) return;
       var spw = null; try { spw = sessionStorage.getItem(KEY_OK); } catch (e) {}
       function enter() { state.category = "자체자료"; renderCats(); render(); }
-      if (spw) { tryUnlock(spw, null).then(function (ok) { if (ok) enter(); else openModal(); }); return; }
       openModal();
       function openModal() {
         var ov = el("div"); ov.id = "pwModal";
