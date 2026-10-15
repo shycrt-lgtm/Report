@@ -110,7 +110,7 @@
       catsEl.style.display = "";
       catsEl.innerHTML = "";
       cats.forEach(function (c) {
-        var a = el("a", "cat-btn", c);
+        var a = el("a", "cat-btn", c === "자체자료" ? c + (state.internal ? " \uD83D\uDD13" : " \uD83D\uDD12") : c);
         a.setAttribute("role", "button");
         a.setAttribute("aria-pressed", String(c === state.category));
         a.style.minWidth = "110px";
@@ -206,6 +206,7 @@
       if (!window.crypto || !crypto.subtle) { if (errEl) errEl.textContent = "이 브라우저에서는 열 수 없습니다. 최신 크롬·엣지에서 https 주소로 접속하세요."; return Promise.resolve(false); }
       return unlock(pw).then(function (data) {
         state.internal = data;
+        renderCats();
         try { sessionStorage.setItem(KEY_OK, pw); } catch (e) {}
         render();
         return true;
