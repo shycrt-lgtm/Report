@@ -67,7 +67,7 @@
           var b = document.createElement("span");
           b.className = "report-new";
           b.textContent = "NEW";
-          b.setAttribute("aria-label", "새 리포트");
+          b.setAttribute("aria-label", "새 자료");
           a.appendChild(b);
         });
       })

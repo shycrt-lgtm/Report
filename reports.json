@@ -4,7 +4,7 @@
     {
       "id": "keei-oil-1113",
       "source": "에너지경제연구원(KEEI)",
-      "category": "국내 기관",
+      "category": "리포트",
       "series": "국제유가 및 시장 동향",
       "title": "국제유가 및 시장 동향 (1113호, 2026.10.13)",
       "date": "2026-10-13",
@@ -30,7 +30,8 @@
       ],
       "url": "https://www.keei.re.kr/pdfOpen.es?bid=0002&list_no=128333&seq=1",
       "detail_url": "https://www.keei.re.kr/board.es?mid=a10102020000&bid=0002&act=view&list_no=128333&nPage=1",
-      "added": "2026-10-14"
+      "added": "2026-10-14",
+      "link_label": "원문 PDF 열기"
     }
   ]
 }
