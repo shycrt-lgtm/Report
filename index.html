@@ -114,7 +114,10 @@
         a.setAttribute("role", "button");
         a.setAttribute("aria-pressed", String(c === state.category));
         a.style.minWidth = "110px";
-        a.addEventListener("click", function () { state.category = c; renderCats(); render(); });
+        a.addEventListener("click", function () {
+          if (c === "자체자료" && !state.internal) { askPassword(); return; }
+          state.category = c; renderCats(); render();
+        });
         catsEl.appendChild(a);
       });
     }
@@ -211,6 +214,44 @@
         render();
         return true;
       }, function () { if (errEl) errEl.textContent = "비밀번호가 맞지 않습니다."; return false; });
+    }
+    function askPassword() {
+      if (document.getElementById("pwModal")) return;
+      var spw = null; try { spw = sessionStorage.getItem(KEY_OK); } catch (e) {}
+      function enter() { state.category = "자체자료"; renderCats(); render(); }
+      if (spw) { tryUnlock(spw, null).then(function (ok) { if (ok) enter(); else openModal(); }); return; }
+      openModal();
+      function openModal() {
+        var ov = el("div"); ov.id = "pwModal";
+        ov.style.cssText = "position:fixed;inset:0;background:rgba(0,31,63,.55);z-index:1000;display:flex;align-items:center;justify-content:center;padding:16px";
+        var box = el("form", "");
+        box.autocomplete = "off";
+        box.style.cssText = "background:#fff;border-top:4px solid #001f3f;width:100%;max-width:380px;padding:22px 22px 18px;box-shadow:0 10px 30px rgba(0,0,0,.25)";
+        box.appendChild(el("h3", "", "\uD83D\uDD12 자체자료"));
+        box.lastChild.style.cssText = "margin:0 0 6px;font-size:18px;font-weight:700;color:#001f3f";
+        box.appendChild(el("p", "", "비밀번호를 입력하세요."));
+        box.lastChild.style.cssText = "margin:0 0 12px;font-size:14px;color:#475569";
+        var inp = document.createElement("input");
+        inp.type = "password"; inp.placeholder = "비밀번호"; inp.setAttribute("aria-label", "비밀번호");
+        inp.style.cssText = "width:100%;border:1px solid #cbd5e1;padding:10px 12px;font-size:14px;border-radius:2px";
+        box.appendChild(inp);
+        var err = el("p", ""); err.setAttribute("role", "alert");
+        err.style.cssText = "color:#dc2626;font-size:13px;margin:8px 0 0;min-height:18px";
+        box.appendChild(err);
+        var row = el("nav", "etc-menu"); row.style.marginTop = "10px";
+        var ok = el("a", "primary cat-btn", "확인"); ok.setAttribute("role", "button");
+        var cancel = el("a", "cat-btn", "취소"); cancel.setAttribute("role", "button");
+        ok.style.cssText = cancel.style.cssText = "flex:1;min-width:0";
+        row.appendChild(ok); row.appendChild(cancel); box.appendChild(row);
+        ov.appendChild(box); document.body.appendChild(ov);
+        function close() { if (ov.parentNode) ov.parentNode.removeChild(ov); }
+        function go() { err.textContent = "확인 중..."; tryUnlock(inp.value, err).then(function (good) { if (good) { close(); enter(); } }); }
+        ok.addEventListener("click", go); cancel.addEventListener("click", close);
+        box.addEventListener("submit", function (e) { e.preventDefault(); go(); });
+        ov.addEventListener("click", function (e) { if (e.target === ov) close(); });
+        document.addEventListener("keydown", function esc(e) { if (e.key === "Escape") { close(); document.removeEventListener("keydown", esc); } });
+        setTimeout(function () { inp.focus(); }, 0);
+      }
     }
     function renderInternal() {
       var gate = el("form", "rp-card");
