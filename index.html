@@ -87,7 +87,7 @@
 
   <script>
   (function () {
-    var state = { items: [], category: "전체", query: "" };
+    var state = { items: [], category: "전체", query: "", sub: "전체" };
     var listEl = document.getElementById("list");
     var catsEl = document.getElementById("cats");
     var countEl = document.getElementById("count");
@@ -233,22 +233,32 @@
       setTimeout(function () { inp.focus(); }, 0);
     }
     function showInternal() {
-      var data = state.internal, q = state.query.trim().toLowerCase(), total = 0;
-      data.categories.forEach(function (cat) {
-        var sec = el("div"); sec.appendChild(el("h2", "", cat));
-        var rows = data.items.filter(function (it) { return it.category === cat && (!q || (it.title + " " + cat).toLowerCase().indexOf(q) >= 0); });
-        if (!rows.length) sec.appendChild(el("div", "rp-empty", "등록된 자료 없음"));
-        rows.forEach(function (it) {
-          total++;
-          var c = el("article", "rp-card");
-          var m = el("div", "rp-meta"); m.appendChild(el("span", "rp-tag", cat)); m.appendChild(el("span", "", "| " + fmtDate(it.date)));
-          c.appendChild(m); c.appendChild(el("h3", "", it.title));
-          var nav = el("nav", "etc-menu rp-links"); var a = el("a", "primary", "자료 열기"); a.href = it.url; nav.appendChild(a);
-          c.appendChild(nav); sec.appendChild(c);
-        });
-        listEl.appendChild(sec);
+      var data = state.internal, q = state.query.trim().toLowerCase();
+      var subs = ["전체"].concat(data.categories);
+      if (subs.indexOf(state.sub) < 0) state.sub = "전체";
+      var bar = el("nav", "etc-menu"); bar.style.marginBottom = "14px";
+      subs.forEach(function (c) {
+        var a = el("a", "cat-btn", c);
+        a.setAttribute("role", "button");
+        a.setAttribute("aria-pressed", String(c === state.sub));
+        a.style.minWidth = "110px";
+        a.addEventListener("click", function () { state.sub = c; render(); });
+        bar.appendChild(a);
       });
-      countEl.textContent = "총 " + total + "건";
+      listEl.appendChild(bar);
+      var rows = data.items.filter(function (it) {
+        if (state.sub !== "전체" && it.category !== state.sub) return false;
+        return !q || (it.title + " " + it.category).toLowerCase().indexOf(q) >= 0;
+      }).sort(function (a, b) { return (b.date || "").localeCompare(a.date || ""); });
+      countEl.textContent = "총 " + rows.length + "건";
+      if (!rows.length) listEl.appendChild(el("div", "rp-empty", "해당 분류에 등록된 자료가 없습니다."));
+      rows.forEach(function (it) {
+        var c = el("article", "rp-card");
+        var m = el("div", "rp-meta"); m.appendChild(el("span", "rp-tag", it.category)); m.appendChild(el("span", "", "| " + fmtDate(it.date)));
+        c.appendChild(m); c.appendChild(el("h3", "", it.title));
+        var nav = el("nav", "etc-menu rp-links"); var a = el("a", "primary", "자료 열기"); a.href = it.url; nav.appendChild(a);
+        c.appendChild(nav); listEl.appendChild(c);
+      });
     }
 
     function render() {
