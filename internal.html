@@ -116,7 +116,7 @@
       err.textContent = "확인 중...";
       check(pw.value).then(function (ok) {
         if (!ok) { err.textContent = "비밀번호가 맞지 않습니다."; return; }
-        try { sessionStorage.setItem(KEY, "1"); } catch (e) {}
+        try { sessionStorage.setItem(KEY, "1"); sessionStorage.setItem("energyInternal.pw", pw.value); } catch (e) {}
         err.textContent = ""; show();
       });
     }

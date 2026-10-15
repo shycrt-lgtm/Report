@@ -350,8 +350,14 @@ document.getElementById('lockForm').addEventListener('submit',async e=>{
   }catch(x){ err.textContent='비밀번호가 맞지 않습니다.'; document.getElementById('pw').select(); }
   btn.disabled=false; btn.textContent='열기';
 });
-document.getElementById('btnLock').onclick=()=>{ lsSet(keySlot,null); location.reload(); };
-(async()=>{ const raw=lsGet(keySlot); if(!raw||!window.crypto||!crypto.subtle) return;
+document.getElementById('btnLock').onclick=()=>{ lsSet(keySlot,null); try{ sessionStorage.removeItem('energyInternal.pw'); sessionStorage.removeItem('energyInternal.ok'); }catch(e){} location.href='../internal.html'; };
+// 자체자료 화면에서 이미 비밀번호를 확인했으면(같은 탭) 다시 묻지 않고 바로 연다
+(async()=>{
+  if(PAYLOAD.plain){ start(PAYLOAD.data); return; }
+  if(!window.crypto||!crypto.subtle) return;
+  let spw=null; try{ spw=sessionStorage.getItem('energyInternal.pw'); }catch(e){}
+  if(spw){ try{ start(await decryptWith(await deriveKey(spw))); return; }catch(e){} }
+  const raw=lsGet(keySlot); if(!raw) return;
   try{ const key=await crypto.subtle.importKey('raw',b64d(raw),{name:'AES-GCM'},false,['decrypt']); start(await decryptWith(key)); }catch(e){ lsSet(keySlot,null); } })();
 
 // ---------- 화면 ----------
