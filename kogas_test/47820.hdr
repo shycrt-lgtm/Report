@@ -1,0 +1,13 @@
+HTTP/1.1 302 Moved Temporarily
+Date: Thu, 15 Oct 2026 02:02:44 GMT
+Location: https://www.kogas.or.kr/site/alertJsp.jsp?gubun=admin
+Content-type: text/html; charset=utf-8
+Set-Cookie: _xm_webid_1_=336908482; expires=Wed, 13-Jan-2027 02:02:44 GMT; path=/
+Transfer-encoding: chunked
+
+HTTP/1.1 404 Not found
+Date: Thu, 15 Oct 2026 02:02:44 GMT
+Content-length: 3808
+Content-type: text/html; charset=EUC-KR
+Set-Cookie: JSESSIONID=XVpWqQ0Gvk3gh0qhfKLJw3WhFByXrtz4LGHGTvzKtD2VH1Khs1PQ!679647259; path=/; HttpOnly
+
