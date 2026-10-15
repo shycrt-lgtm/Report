@@ -142,6 +142,7 @@
 
       var sum = it.summary || [];
       var ul = el("ul", "rp-sum");
+      if (!sum.length) ul.style.display = "none";
       sum.slice(0, 3).forEach(function (s) { ul.appendChild(el("li", "", s)); });
       c.appendChild(ul);
       if (sum.length > 3) {
@@ -161,8 +162,22 @@
         box.appendChild(iu);
         c.appendChild(box);
       }
+      if (it.sections && it.sections.length) {
+        var sl = el("ul", "rp-sum");
+        it.sections.forEach(function (sec) {
+          var li = el("li", "");
+          var a = document.createElement("a");
+          a.href = safeUrl(sec.url); a.target = "_blank"; a.rel = "noopener";
+          a.textContent = sec.title;
+          a.style.textDecoration = "underline";
+          li.appendChild(a);
+          li.appendChild(document.createTextNode(" (PDF 다운로드)"));
+          sl.appendChild(li);
+        });
+        c.appendChild(sl);
+      }
       var nav = el("nav", "etc-menu rp-links");
-      nav.appendChild(link(it.link_label || "원문 보기", it.url, true));
+      if (it.url) nav.appendChild(link(it.link_label || "원문 보기", it.url, true));
       if (it.detail_url) nav.appendChild(link("게시글 보기", it.detail_url, false));
       c.appendChild(nav);
       return c;
@@ -173,7 +188,7 @@
       var rows = state.items.filter(function (it) {
         if (state.category !== "전체" && it.category !== state.category) return false;
         if (!q) return true;
-        var hay = [it.title, it.prefix, it.source, it.series].concat(it.summary || [], it.implications || []).join(" ").toLowerCase();
+        var hay = [it.title, it.prefix, it.source, it.series].concat(it.summary || [], it.implications || [], (it.sections || []).map(function (x) { return x.title; })).join(" ").toLowerCase();
         return hay.indexOf(q) >= 0;
       }).sort(function (a, b) { return (b.date || "").localeCompare(a.date || ""); });
       listEl.innerHTML = "";
