@@ -1,0 +1,27 @@
+name: kogas-pdf-test
+on: workflow_dispatch
+permissions:
+  contents: write
+concurrency: reports-json-update
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download test
+        run: |
+          mkdir -p kogas_test
+          for p in "47820 48149" "47821 48150"; do set -- $p
+            curl -sS -L -m 60 -A "Mozilla/5.0" -o kogas_test/$1.bin -D kogas_test/$1.hdr \
+              "https://www.kogas.or.kr/mgr/fileDownload.do?boardIdx=$1&fileNo=$2" || true
+          done
+          ls -l kogas_test; head -n 15 kogas_test/*.hdr; file kogas_test/*.bin || true
+          sudo apt-get install -y poppler-utils >/dev/null 2>&1 || true
+          pdftotext -layout kogas_test/47820.bin kogas_test/47820.txt 2>&1 | head -3 || true
+          wc -c kogas_test/*.txt || true
+      - name: Save result
+        run: |
+          git config user.name "github-actions[bot]"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm -f kogas_test/*.bin
+          git add kogas_test && git commit -m "kogas download test result" || true
+          git pull --rebase && git push
