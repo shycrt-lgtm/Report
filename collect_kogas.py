@@ -43,9 +43,13 @@ def main():
     items = data["items"]
     today = datetime.datetime.now(KST).strftime("%Y-%m-%d")
     changed = False
+    items[:] = [i for i in items if not i["id"].startswith("kogas-gas-")
+                or any("kogas-gas-%s-%02d" % (k[0], k[1]) == i["id"] for k in issues)]
     for (y, m, vol, no), ps in sorted(issues.items()):
         iid = "kogas-gas-%s-%02d" % (y, m)
         ps.sort(key=lambda x: x["n"])
+        if [p["n"] for p in ps] != list(range(1, len(ps) + 1)):
+            continue  # 목록 첫 페이지에서 잘렸거나 일부만 올라온 호는 건너뜀
         secs = [{"title": "%d. %s" % (p["n"], p["title"]), "url": p["url"]} for p in ps]
         old = next((i for i in items if i["id"] == iid), None)
         item = {
