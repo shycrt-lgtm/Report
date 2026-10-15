@@ -106,6 +106,8 @@
       state.items.forEach(function (it) {
         if (it.category && cats.indexOf(it.category) < 0) cats.push(it.category);
       });
+      var li = cats.indexOf("자체자료");
+      if (li > 0) { cats.splice(li, 1); cats.push("자체자료"); }
       catsEl.style.display = cats.length <= 2 ? "none" : "";
       catsEl.innerHTML = "";
       cats.forEach(function (c) {
