@@ -53,7 +53,7 @@ def main():
         secs = [{"title": "%d. %s" % (p["n"], p["title"]), "url": p["url"]} for p in ps]
         old = next((i for i in items if i["id"] == iid), None)
         item = {
-            "id": iid, "source": "한국가스공사(KOGAS)", "category": "리포트",
+            "id": iid, "source": "한국가스공사(KOGAS)", "category": "가스산업",
             "series": "계간 가스산업",
             "title": "계간 가스산업 %s년 %d월호 (제%s권 제%s호)" % (y, m, vol, no),
             "date": max(p["date"] for p in ps), "summary": [], "sections": secs,
