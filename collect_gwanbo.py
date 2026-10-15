@@ -158,11 +158,21 @@ def pull(key, extra, debug, label):
         items, bad_param = [], False
         for page in range(1, MAX_PAGES + 1):
             rec = {"step": label, "fmt": fmt, "page": page}
+            body = ""
             try:
                 status, body = fetch(key, dict(base, pageNo=page))
                 code, msg, total, got = parse_response(body)
+            except urllib.error.HTTPError as e:
+                rec["error"] = "HTTP %s" % e.code
+                try:
+                    rec["head"] = mask(e.read().decode("utf-8", errors="replace")[:600], key)
+                except Exception:
+                    pass
+                debug["requests"].append(rec)
+                return items, True
             except (urllib.error.URLError, ValueError, OSError) as e:
                 rec["error"] = mask(str(e), key)
+                rec["head"] = mask(body[:600], key)
                 debug["requests"].append(rec)
                 return items, True
             rec.update(status=status, resultCode=code, resultMsg=msg, totalCount=total, items=len(got))
