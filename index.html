@@ -183,6 +183,14 @@
       .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(function (data) {
         state.items = data.items || [];
+        try {
+          var lt = null;
+          state.items.forEach(function (it) {
+            var k = (it.added || it.date || "") + "|" + (it.date || "");
+            if (!lt || k > lt.k) lt = { k: k, id: it.id };
+          });
+          if (lt && lt.id) localStorage.setItem("energyReport.seen", lt.id);
+        } catch (e) {}
         if (data.updated) document.getElementById("headerDate").textContent = fmtDate(data.updated);
         renderCats();
         render();
