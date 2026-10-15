@@ -135,6 +135,12 @@ def main():
                 status, body = fetch(oc, params)
                 rec.update(status=status, length=len(body), head=mask(body[:1200], oc))
                 got = parse_items(body)
+                m = re.search(r"<retMsg>(.*?)</retMsg>", body, re.S)
+                if m and not got:
+                    rec["error"] = "API 응답 retMsg=" + m.group(1).strip()
+                    debug["requests"].append(rec)
+                    failed = True
+                    break
             except (urllib.error.URLError, ET.ParseError, OSError) as e:
                 rec["error"] = mask(str(e), oc)
                 debug["requests"].append(rec)
