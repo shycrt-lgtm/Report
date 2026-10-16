@@ -55,7 +55,9 @@
     fetch(DATA_URL + "?t=" + Date.now(), { cache: "no-cache" })
       .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(function (data) {
-        var latest = latestOf(data.items);
+        var all = (data.items || []).slice();
+        if (data.internal_notice) all.push(data.internal_notice); // 자체자료 신규 알림(제목 없음)
+        var latest = latestOf(all);
         if (!latest || !latest.id) return;
         Array.prototype.forEach.call(links, function (a) {
           a.addEventListener("click", function () { setSeen(latest.id); });

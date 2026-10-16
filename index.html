@@ -211,6 +211,7 @@
         state.internal = data;
         renderCats();
         try { sessionStorage.setItem(KEY_OK, pw); } catch (e) {}
+        try { if (state.noticeId) localStorage.setItem("energyReport.seen", state.noticeId); } catch (e) {}
         render();
         return true;
       }, function () { if (errEl) errEl.textContent = "비밀번호가 맞지 않습니다."; return false; });
@@ -338,7 +339,10 @@
             var k = (it.added || it.date || "") + "|" + (it.date || "");
             if (!lt || k > lt.k) lt = { k: k, id: it.id };
           });
-          if (lt && lt.id) localStorage.setItem("energyReport.seen", lt.id);
+          var nt = data.internal_notice;
+          state.noticeId = null;
+          if (nt && nt.id && ((nt.added || "") + "|") > lt.k) { state.noticeId = nt.id; }  // 자체자료 알림이 더 최신이면 잠금 해제 후 확인 처리
+          else if (lt && lt.id) localStorage.setItem("energyReport.seen", lt.id);
         } catch (e) {}
         if (data.updated) document.getElementById("headerDate").textContent = fmtDate(data.updated);
         state.items.sort(function (a, b) { return (b.date || "").localeCompare(a.date || ""); });
