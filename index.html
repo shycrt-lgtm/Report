@@ -104,7 +104,7 @@
     function fmtDate(s) { return (s || "").replace(/-/g, "."); }
     function safeUrl(u) { return /^https?:\/\//i.test(u || "") ? u : "#"; }
 
-    var SEEN_KEY = "energyReport.seenIds", FRESH_DAYS = 7;
+    var SEEN_KEY = "energyReport.seenIds", FRESH_DAYS = 1;
     function seenSet() { try { return JSON.parse(localStorage.getItem(SEEN_KEY) || "[]"); } catch (e) { return []; } }
     function markSeen(ids) {
       try { var s = seenSet(); ids.forEach(function (i) { if (s.indexOf(i) < 0) s.push(i); }); localStorage.setItem(SEEN_KEY, JSON.stringify(s.slice(-300))); } catch (e) {}

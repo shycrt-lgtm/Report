@@ -9,7 +9,7 @@
 (function () {
   var DATA_URL = "https://shycrt-lgtm.github.io/Report/reports.json";
   var KEY = "energyReport.seen";
-  var EXPIRE_DAYS = 7;
+  var EXPIRE_DAYS = 1;
 
   function getSeen() {
     try { return localStorage.getItem(KEY) || ""; } catch (e) { return ""; }
