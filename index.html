@@ -35,6 +35,9 @@
     .cat-btn{cursor:pointer;border:0;font-family:inherit}
     .etc-menu a.primary,.etc-menu a.cat-btn[aria-pressed="true"],.etc-menu a.cat-btn[aria-pressed="true"]:hover{background:#001f3f;color:#fff}
     .etc-menu a.primary:hover{background:#1e293b}
+    .cat-btn{position:relative}
+    .nw{position:absolute;top:-7px;right:-4px;background:#dc2626;color:#fff;font-size:10px;font-weight:900;line-height:1;padding:3px 5px;border-radius:2px;letter-spacing:.02em;pointer-events:none}
+    .nw-in{display:inline-block;background:#dc2626;color:#fff;font-size:10px;font-weight:900;line-height:1;padding:3px 5px;border-radius:2px;margin-right:6px;vertical-align:middle}
     .rp-card{border:1px solid #e5e7eb;border-top:4px solid #001f3f;background:#fff;padding:18px 20px;margin-bottom:14px}
     .rp-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;font-size:12px;color:#64748b;font-weight:500}
     .rp-tag{background:#001f3f;color:#fff;padding:2px 8px;border-radius:2px;font-weight:700}
@@ -101,6 +104,31 @@
     function fmtDate(s) { return (s || "").replace(/-/g, "."); }
     function safeUrl(u) { return /^https?:\/\//i.test(u || "") ? u : "#"; }
 
+    var SEEN_KEY = "energyReport.seenIds", FRESH_DAYS = 7;
+    function seenSet() { try { return JSON.parse(localStorage.getItem(SEEN_KEY) || "[]"); } catch (e) { return []; } }
+    function markSeen(ids) {
+      try { var s = seenSet(); ids.forEach(function (i) { if (s.indexOf(i) < 0) s.push(i); }); localStorage.setItem(SEEN_KEY, JSON.stringify(s.slice(-300))); } catch (e) {}
+    }
+    function fresh(it) {
+      var d = it.added || it.date; if (!d) return false;
+      var t = Date.parse(d + "T00:00:00+09:00"); return !isNaN(t) && (Date.now() - t) / 86400000 <= FRESH_DAYS;
+    }
+    function newPub(c) {   // 공개 자료 중 새 글 id 목록 (c: 분류 또는 전체)
+      var s = seenSet();
+      return state.items.filter(function (it) { return (c === "전체" || it.category === c) && fresh(it) && s.indexOf(it.id) < 0; }).map(function (it) { return it.id; });
+    }
+    function newInt(c) {   // 자체자료 새 글 id 목록 (잠금 해제 후)
+      if (!state.internal) return [];
+      var s = seenSet();
+      return state.internal.items.filter(function (it) { return (c === "전체" || it.category === c) && fresh(it) && s.indexOf("i:" + it.id) < 0; }).map(function (it) { return "i:" + it.id; });
+    }
+    function hasNew(c) {
+      if (c === "자체자료") {
+        if (state.internal) return newInt("전체").length > 0;
+        var n = state.notice; return !!(n && fresh(n) && seenSet().indexOf(n.id) < 0);
+      }
+      return newPub(c).length > 0;
+    }
     function renderCats() {
       var cats = ["전체"];
       state.items.forEach(function (it) {
@@ -114,8 +142,11 @@
         a.setAttribute("role", "button");
         a.setAttribute("aria-pressed", String(c === state.category));
         a.style.minWidth = "110px";
+        if (hasNew(c)) a.appendChild(el("span", "nw", "NEW"));
         a.addEventListener("click", function () {
           if (c === "자체자료" && !state.internal) { askPassword(); return; }
+          if (c === "자체자료") { state.intSnap = undefined; }
+          else { state.viewNew = newPub(c); if (c !== "전체") markSeen(state.viewNew); }
           state.category = c; renderCats(); render();
         });
         catsEl.appendChild(a);
@@ -133,6 +164,7 @@
     function card(it) {
       var c = el("article", "rp-card");
       var meta = el("div", "rp-meta");
+      if ((state.viewNew || []).indexOf(it.id) >= 0) meta.appendChild(el("span", "nw-in", "NEW"));
       meta.appendChild(el("span", "rp-tag", it.category || "기타"));
       meta.appendChild(el("span", "", it.source || ""));
       if (it.series) meta.appendChild(el("span", "", "| " + it.series));
@@ -278,13 +310,18 @@
       var data = state.internal, q = state.query.trim().toLowerCase();
       var subs = ["전체"].concat(data.categories);
       if (subs.indexOf(state.sub) < 0) state.sub = "전체";
+      if (state.intSnap === undefined) state.intSnap = newInt("전체");
       var bar = el("nav", "etc-menu"); bar.style.marginBottom = "14px";
       subs.forEach(function (c) {
         var a = el("a", "cat-btn", c);
         a.setAttribute("role", "button");
         a.setAttribute("aria-pressed", String(c === state.sub));
         a.style.minWidth = "110px";
-        a.addEventListener("click", function () { state.sub = c; render(); });
+        if (newInt(c).length) a.appendChild(el("span", "nw", "NEW"));
+        a.addEventListener("click", function () {
+          state.intSnap = newInt(c); if (c !== "전체") markSeen(state.intSnap);
+          state.sub = c; render();
+        });
         bar.appendChild(a);
       });
       listEl.appendChild(bar);
@@ -296,7 +333,9 @@
       if (!rows.length) listEl.appendChild(el("div", "rp-empty", "해당 분류에 등록된 자료가 없습니다."));
       rows.forEach(function (it) {
         var c = el("article", "rp-card");
-        var m = el("div", "rp-meta"); m.appendChild(el("span", "rp-tag", it.category)); m.appendChild(el("span", "", "| " + fmtDate(it.date)));
+        var m = el("div", "rp-meta");
+        if (state.intSnap.indexOf("i:" + it.id) >= 0) m.appendChild(el("span", "nw-in", "NEW"));
+        m.appendChild(el("span", "rp-tag", it.category)); m.appendChild(el("span", "", "| " + fmtDate(it.date)));
         c.appendChild(m); c.appendChild(el("h3", "", it.title));
         var nav = el("nav", "etc-menu rp-links"); var a = el("a", "primary", "자료 열기"); a.href = it.url; nav.appendChild(a);
         c.appendChild(nav); listEl.appendChild(c);
@@ -340,12 +379,14 @@
             if (!lt || k > lt.k) lt = { k: k, id: it.id };
           });
           var nt = data.internal_notice;
+          state.notice = nt || null;
           state.noticeId = null;
           if (nt && nt.id && ((nt.added || "") + "|") > lt.k) { state.noticeId = nt.id; }  // 자체자료 알림이 더 최신이면 잠금 해제 후 확인 처리
           else if (lt && lt.id) localStorage.setItem("energyReport.seen", lt.id);
         } catch (e) {}
         if (data.updated) document.getElementById("headerDate").textContent = fmtDate(data.updated);
         state.items.sort(function (a, b) { return (b.date || "").localeCompare(a.date || ""); });
+        state.viewNew = newPub("전체");
         renderCats();
         render();
       })
