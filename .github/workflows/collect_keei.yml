@@ -1,0 +1,29 @@
+name: collect-keei
+on:
+  schedule:
+    - cron: "29 0 * * 1-5"   # 평일 09:29 KST
+  workflow_dispatch:
+    inputs:
+      probe:
+        description: "1이면 등록하지 않고 구조만 점검"
+        required: false
+        default: "0"
+permissions:
+  contents: write
+concurrency: reports-json-update
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install pypdf
+      - run: python3 collect_keei.py
+        env:
+          PROBE: ${{ github.event.inputs.probe }}
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet && exit 0
+          git commit -m "KEEI 국제유가 및 시장 동향 새 호 등록"
+          for i in 1 2 3; do git pull --rebase && git push && break; sleep 5; done
