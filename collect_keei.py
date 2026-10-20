@@ -60,18 +60,35 @@ def pdf_text(list_no):
     return None, ""
 
 def summarize(text):
-    """첫 쪽의 요약 항목(□·○·ㅇ·◦·- 로 시작하는 줄)을 최대 12개 추출."""
-    items = []
-    for ln in text.splitlines():
-        s = ln.strip()
-        if re.match(r"^[□■○◦ㅇ●•▪\-]\s*\S", s) and len(s) > 8:
-            s = re.sub(r"^[□■○◦ㅇ●•▪\-]\s*", "", s)
-            items.append(s)
-        elif items and s and not re.match(r"^[□■○◦ㅇ●•▪\-]", s) and len(items[-1]) < 120 and not re.match(r"^\d+$", s):
-            items[-1] += " " + s           # 줄바꿈으로 끊긴 문장 이어 붙이기
-        if len(items) >= 12:
-            break
-    return [re.sub(r"\s+", " ", i).strip() for i in items]
+    """핵심 문장(PDF에서 앞에 공백 한 칸으로 추출되는 ■ 문장)과 세부 문장(∙)을 줄바꿈을 이어 붙여 추출.
+    핵심 문장을 모두 넣고 남는 자리를 세부 문장으로 채워 최대 12개, 문서 순서 유지. 출처 표기(Reuters, 10.12)는 삭제."""
+    items, cur = [], None          # (순번, 종류 0=핵심 1=세부, 문장)
+    def close():
+        if cur:
+            items.append(cur)
+    for raw in text.splitlines():
+        s = raw.strip()
+        if not s:
+            continue
+        head = bool(re.match(r"^[ \uf06e](?! )\S", raw)) and len(s) > 15
+        sub = s.startswith("∙")
+        if head or sub:
+            close()
+            cur = [len(items), 0 if head else 1, s.lstrip("\uf06e∙ ").strip()]
+        elif re.match(r"^-\s", s) or re.match(r"^(\d+\.\s|\[|자료:|에너지경제연구원|No\.|\d+$)", s) or ("추이" in s and len(s) < 40):
+            close(); cur = None
+        elif cur is not None:
+            cur[2] += " " + s
+    close()
+    clean = []
+    for n, k, i in items:
+        i = re.sub(r"\s*\((Reuters|Bloomberg|Platts|Argus|OPEC|IEA|EIA|Kpler|CNBC|WSJ|FT)[^)]*\)", "", i)
+        i = re.sub(r"\s+", " ", i).replace("\u200b", "").strip()
+        if len(i) > 10:
+            clean.append((n, k, i))
+    heads = [c for c in clean if c[1] == 0][:12]
+    subs = [c for c in clean if c[1] == 1][:max(0, 12 - len(heads))]
+    return [c[2] for c in sorted(heads + subs)]
 
 def main():
     page = fetch(LIST_URL)
@@ -101,12 +118,12 @@ def main():
         if iid in have:
             continue
         url, text = pdf_text(p["list_no"])
-        period = re.search(r"(\d{4}\.\s*\d{1,2}\.\s*\d{1,2}\.?\s*[~∼]\s*\d{1,2}\.\s*\d{1,2})", text or "")
+        period = re.search(r"(\d{4})\.\s*(\d{1,2})\.\s*(\d{1,2})\.?\s*[~∼]\s*(?:\d{4}\.\s*)?(\d{1,2})\.\s*(\d{1,2})", text or "")
         date = p["date"] or today
         title = p["title"] if re.search(r"\d{4}\.\d{1,2}\.\d{1,2}", p["title"]) else f"{SERIES} ({no}호, {date.replace('-', '.')})"
         items.append({
             "id": iid, "source": "에너지경제연구원(KEEI)", "category": "국제유가", "series": SERIES,
-            "title": title, "date": date, "period": re.sub(r"\s+", " ", period.group(1)) if period else "",
+            "title": title, "date": date, "period": "{}.{}.{} ~ {}.{}".format(*period.groups()) if period else "",
             "summary": summarize(text), "url": url or p["detail"], "detail_url": p["detail"],
             "link_label": "원문 PDF 열기" if url else "게시글 보기", "added": today})
         added += 1
