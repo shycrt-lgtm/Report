@@ -24,10 +24,11 @@
     s.id = "report-badge-style";
     s.textContent =
       "a[data-report-link]{position:relative}" +
-      ".report-new{position:absolute;top:-7px;right:-4px;background:#dc2626;color:#fff;" +
+      "a[data-report-link] span.report-new{display:block!important}" +   // 모바일에서 메뉴 화살표(span)를 숨기는 규칙에 가려지지 않게
+      "a[data-report-link] span.report-new{position:absolute;top:-7px;right:-4px;background:#dc2626;color:#fff;" +
       "font-size:10px;font-weight:900;line-height:1;padding:3px 5px;border-radius:2px;" +
       "letter-spacing:.02em;pointer-events:none;font-family:inherit}" +
-      "@media (max-width:640px){.report-new{top:-6px;right:-2px;font-size:9px;padding:2px 4px}}";
+      "@media (max-width:640px){a[data-report-link] span.report-new{top:-6px;right:-2px;font-size:9px;padding:2px 4px}}";
     document.head.appendChild(s);
   }
 
