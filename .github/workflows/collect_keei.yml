@@ -17,11 +17,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: pip install pypdf
-      - run: python3 collect_keei.py
+      - run: python3 collect_keei.py | tee probe.txt
         env:
           PROBE: ${{ github.event.inputs.probe }}
-      - name: Commit
+      - name: Save probe output (점검 실행 때만, 별도 브랜치)
+        if: github.event.inputs.probe == '1'
         run: |
+          git config user.name "github-actions[bot]"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan keei-probe && git rm -rfq --cached . && git add probe.txt && git commit -qm probe && git push -f origin keei-probe
+      - name: Commit
+        if: github.event.inputs.probe != '1'
+        run: |
+          rm -f probe.txt
           git config user.name "github-actions[bot]"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
           git diff --cached --quiet && exit 0
