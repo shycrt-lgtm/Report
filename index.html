@@ -36,6 +36,7 @@
     .etc-menu a.primary,.etc-menu a.cat-btn[aria-pressed="true"],.etc-menu a.cat-btn[aria-pressed="true"]:hover{background:#001f3f;color:#fff}
     .etc-menu a.primary:hover{background:#1e293b}
     .cat-btn{position:relative}
+    .etc-menu a.cat-2l{flex-direction:column;line-height:1.2;gap:1px}
     .nw{position:absolute;top:-7px;right:-4px;background:#dc2626;color:#fff;font-size:10px;font-weight:900;line-height:1;padding:3px 5px;border-radius:2px;letter-spacing:.02em;pointer-events:none}
     .nw-in{display:inline-block;background:#dc2626;color:#fff;font-size:10px;font-weight:900;line-height:1;padding:3px 5px;border-radius:2px;margin-right:6px;vertical-align:middle}
     .rp-card{border:1px solid #e5e7eb;border-top:4px solid #001f3f;background:#fff;padding:18px 20px;margin-bottom:14px}
@@ -129,6 +130,7 @@
       }
       return newPub(c).length > 0;
     }
+    var CAT_2LINE = { "에너지시장 인사이트": ["에너지시장", "인사이트"] };
     function renderCats() {
       var cats = ["전체"];
       state.items.forEach(function (it) {
@@ -138,7 +140,12 @@
       catsEl.style.display = "";
       catsEl.innerHTML = "";
       cats.forEach(function (c) {
-        var a = el("a", "cat-btn", c === "자체자료" ? c + (state.internal ? " \uD83D\uDD13" : " \uD83D\uDD12") : c);
+        var a = el("a", "cat-btn", c === "자체자료" ? c + (state.internal ? " \uD83D\uDD13" : " \uD83D\uDD12") : "");
+        if (c !== "자체자료") {   // 이름이 긴 분류는 두 줄로 표시
+          var two = CAT_2LINE[c];
+          if (two) { a.classList.add("cat-2l"); a.appendChild(el("span", "", two[0])); a.appendChild(el("span", "", two[1])); }
+          else a.appendChild(document.createTextNode(c));
+        }
         a.setAttribute("role", "button");
         a.setAttribute("aria-pressed", String(c === state.category));
         a.style.minWidth = "110px";
