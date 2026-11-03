@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-29",
+  "updated": "2026-11-03",
   "items": [
     {
       "id": "lng-stat-232",
@@ -40,6 +40,23 @@
       "detail_url": "https://www.keei.re.kr/board.es?mid=a10102020000&bid=0002&act=view&list_no=128421&nPage=1",
       "link_label": "원문 PDF 열기",
       "added": "2026-10-27"
+    },
+    {
+      "id": "kemri-review-338",
+      "source": "한전 경영연구원(KEMRI)",
+      "category": "KEMRI",
+      "series": "KEMRI 전력경제 REVIEW 2026년 9월호 (Vol.331)",
+      "title": "(26-9) 해외 사례를 통한 송전용 ESS 활성화 제도 이슈 분석",
+      "date": "2026-10-26",
+      "summary": [
+        "[이슈페이퍼] 해외 사례를 통한 송전용 ESS 활성화 제도 이슈 분석",
+        "[연구동향] 대규모 부하 증가에 따른 신뢰도 위험 완화 전략",
+        "[연구동향] 미국 계통접속 규정(Order 2023) 이행 현황 및 향후 과제"
+      ],
+      "url": "https://www.kepco.co.kr/c2r/FileDownload.do?fileNo=mWpePwo4LjfYeiuyG9B42A%3D%3D&fileSeq=DIMtNyzfJ3kKEXQCksqfEQ%3D%3D",
+      "detail_url": "https://www.kepco.co.kr/kemri/report/kemri-review/boardView.do?boardMngNo=131&boardNo=338",
+      "link_label": "원문 PDF 다운로드",
+      "added": "2026-10-26"
     },
     {
       "id": "lng-stat-231",
@@ -207,6 +224,160 @@
       "detail_url": "https://www.keei.re.kr/board.es?mid=a10102020000&bid=0002&act=view&list_no=128333&nPage=1",
       "added": "2026-10-14",
       "link_label": "원문 PDF 열기"
+    },
+    {
+      "id": "kemri-review-337",
+      "source": "한전 경영연구원(KEMRI)",
+      "category": "KEMRI",
+      "series": "KEMRI 전력경제 REVIEW 2026년 8월호 (Vol.330)",
+      "title": "(26-8) 미국의 대규모 부하 관리제도 분석",
+      "date": "2026-09-22",
+      "summary": [
+        "[이슈페이퍼] 미국의 대규모 부하 관리제도 분석",
+        "[연구동향] 유럽연합, 친환경 에너지전환 가속화 계획 발표",
+        "[연구동향] 재생에너지 확대에 따른 유연성 수요 전망"
+      ],
+      "url": "https://www.kepco.co.kr/c2r/FileDownload.do?fileNo=8UuseHDJMq9%2BZK6G622BXw%3D%3D&fileSeq=DIMtNyzfJ3kKEXQCksqfEQ%3D%3D",
+      "detail_url": "https://www.kepco.co.kr/kemri/report/kemri-review/boardView.do?boardMngNo=131&boardNo=337",
+      "link_label": "원문 PDF 다운로드",
+      "added": "2026-09-22"
+    },
+    {
+      "id": "kemri-review-336",
+      "source": "한전 경영연구원(KEMRI)",
+      "category": "KEMRI",
+      "series": "KEMRI 전력경제 REVIEW 2026년 7월호 (Vol.329)",
+      "title": "(26-7) 글로벌 육상풍력 리파워링 현황 분석 및 시사점",
+      "date": "2026-08-24",
+      "summary": [
+        "[이슈페이퍼] 글로벌 육상풍력 리파워링 현황 분석 및 시사점",
+        "[연구동향] 송전망 투자재원 확보를 위한 금융모델 유형과 사례",
+        "[연구동향] 석탄발전 부지를 활용한 SMR 도입의 가능성과 과제"
+      ],
+      "url": "https://www.kepco.co.kr/c2r/FileDownload.do?fileNo=3NoGJJxqfEaQH%2BX99xl7Hg%3D%3D&fileSeq=DIMtNyzfJ3kKEXQCksqfEQ%3D%3D",
+      "detail_url": "https://www.kepco.co.kr/kemri/report/kemri-review/boardView.do?boardMngNo=131&boardNo=336",
+      "link_label": "원문 PDF 다운로드",
+      "added": "2026-08-24"
+    },
+    {
+      "id": "kemri-review-335",
+      "source": "한전 경영연구원(KEMRI)",
+      "category": "KEMRI",
+      "series": "KEMRI 전력경제 REVIEW 2026년 6월호 (Vol.328)",
+      "title": "(26-6) 해외 데이터센터 분산화 정책 추진현황 및 시사점",
+      "date": "2026-07-23",
+      "summary": [
+        "[이슈페이퍼] 해외 데이터센터 분산화 정책 추진현황 및 시사점",
+        "[연구동향] EU 전력 부문 주요 동향",
+        "[연구동향] 데이터센터 급증에 대한 미국 PJM의 정책 대응"
+      ],
+      "url": "https://www.kepco.co.kr/c2r/FileDownload.do?fileNo=sHe6%2B3AwaB3U0g71sJk9Jg%3D%3D&fileSeq=DIMtNyzfJ3kKEXQCksqfEQ%3D%3D",
+      "detail_url": "https://www.kepco.co.kr/kemri/report/kemri-review/boardView.do?boardMngNo=131&boardNo=335",
+      "link_label": "원문 PDF 다운로드",
+      "added": "2026-07-23"
+    },
+    {
+      "id": "kemri-review-334",
+      "source": "한전 경영연구원(KEMRI)",
+      "category": "KEMRI",
+      "series": "KEMRI 전력경제 REVIEW 2026년 5월호 (Vol.327)",
+      "title": "(26-5) 글로벌 유틸리티 공급망 관리 동향 및 시사점",
+      "date": "2026-06-22",
+      "summary": [
+        "[이슈페이퍼] 글로벌 유틸리티 공급망 관리 동향 및 시사점",
+        "[연구동향] 전력수요 및 재생에너지의 전력설비 시장 영향",
+        "[연구동향] 호주 분산자원 연계형 전기요금 제도 사례"
+      ],
+      "url": "https://www.kepco.co.kr/c2r/FileDownload.do?fileNo=0UERs6QH%2BEL145YVawAQUQ%3D%3D&fileSeq=DIMtNyzfJ3kKEXQCksqfEQ%3D%3D",
+      "detail_url": "https://www.kepco.co.kr/kemri/report/kemri-review/boardView.do?boardMngNo=131&boardNo=334",
+      "link_label": "원문 PDF 다운로드",
+      "added": "2026-06-22"
+    },
+    {
+      "id": "kemri-review-333",
+      "source": "한전 경영연구원(KEMRI)",
+      "category": "KEMRI",
+      "series": "KEMRI 전력경제 REVIEW 2026년 4월호 (Vol.326)",
+      "title": "(26-4) 미국 EERS 사업유형 확대 동향",
+      "date": "2026-05-26",
+      "summary": [
+        "[이슈페이퍼] 미국 EERS 사업유형 확대 동향",
+        "[연구동향] 2025 에너지 산업 변화와 소비자 선호 트렌드",
+        "[연구동향] 대규모 송전망 구축 편익과 소비자 요금 절감 효과 분석"
+      ],
+      "url": "https://www.kepco.co.kr/c2r/FileDownload.do?fileNo=JutAnAchX74opoW28eHrMg%3D%3D&fileSeq=DIMtNyzfJ3kKEXQCksqfEQ%3D%3D",
+      "detail_url": "https://www.kepco.co.kr/kemri/report/kemri-review/boardView.do?boardMngNo=131&boardNo=333",
+      "link_label": "원문 PDF 다운로드",
+      "added": "2026-05-26"
+    },
+    {
+      "id": "kemri-review-332",
+      "source": "한전 경영연구원(KEMRI)",
+      "category": "KEMRI",
+      "series": "KEMRI 전력경제 REVIEW 2026년 3월호 (Vol.325)",
+      "title": "(26-3) 국가기간 전력망 적기 구축을 위한 고려 사항",
+      "date": "2026-04-20",
+      "summary": [
+        "[이슈페이퍼] 국가기간 전력망 적기 구축을 위한 고려 사항",
+        "[연구동향] 일본 기업들의 재생에너지 조달 방식",
+        "[연구동향] 중국 석탄발전의 역할 변화"
+      ],
+      "url": "https://www.kepco.co.kr/c2r/FileDownload.do?fileNo=9pwsEhcIztsoANJ1rzDH6g%3D%3D&fileSeq=DIMtNyzfJ3kKEXQCksqfEQ%3D%3D",
+      "detail_url": "https://www.kepco.co.kr/kemri/report/kemri-review/boardView.do?boardMngNo=131&boardNo=332",
+      "link_label": "원문 PDF 다운로드",
+      "added": "2026-04-20"
+    },
+    {
+      "id": "kemri-review-331",
+      "source": "한전 경영연구원(KEMRI)",
+      "category": "KEMRI",
+      "series": "KEMRI 전력경제 REVIEW 2026년 2월호 (Vol.324)",
+      "title": "(26-2) 국내외 전력계통 운영 비교 분석",
+      "date": "2026-03-18",
+      "summary": [
+        "[이슈페이퍼] 국내외 전력계통 운영 비교 분석",
+        "[연구동향] AI 데이터센터 부하 특성을 반영한 배터리 적용 사례",
+        "[연구동향] 영국 RAB 모델 도입 배경 및 운영 구조"
+      ],
+      "url": "https://www.kepco.co.kr/c2r/FileDownload.do?fileNo=wdQcmogW3JDIliogWId9iw%3D%3D&fileSeq=DIMtNyzfJ3kKEXQCksqfEQ%3D%3D",
+      "detail_url": "https://www.kepco.co.kr/kemri/report/kemri-review/boardView.do?boardMngNo=131&boardNo=331",
+      "link_label": "원문 PDF 다운로드",
+      "added": "2026-03-18"
+    },
+    {
+      "id": "kemri-review-330",
+      "source": "한전 경영연구원(KEMRI)",
+      "category": "KEMRI",
+      "series": "KEMRI 전력경제 REVIEW 2026년 1월호 (Vol.323)",
+      "title": "(26-1) 2026년 전력산업 경영환경 전망",
+      "date": "2026-02-19",
+      "summary": [
+        "[이슈페이퍼] 2026년 전력산업 경영환경 전망",
+        "[연구동향] 소비자 중심 전력시장 : 에너지 정의와 설계 원칙",
+        "[연구동향] 파리 협정(2015년) 이후, 신흥국 중심의 태양광 확산 동향",
+        "[연구동향] 해외 국가별 송배전 손실률 및 부하율"
+      ],
+      "url": "https://www.kepco.co.kr/c2r/FileDownload.do?fileNo=bpZOthTaB0EkofcGCwKD9Q%3D%3D&fileSeq=DIMtNyzfJ3kKEXQCksqfEQ%3D%3D",
+      "detail_url": "https://www.kepco.co.kr/kemri/report/kemri-review/boardView.do?boardMngNo=131&boardNo=330",
+      "link_label": "원문 PDF 다운로드",
+      "added": "2026-02-19"
+    },
+    {
+      "id": "kemri-review-329",
+      "source": "한전 경영연구원(KEMRI)",
+      "category": "KEMRI",
+      "series": "KEMRI 전력경제 REVIEW 2025년 12월호 (Vol.322)",
+      "title": "(25-12) 해외의 공유형 ESS 사례 및 사업모델 분석",
+      "date": "2026-01-21",
+      "summary": [
+        "[이슈페이퍼] 해외의 공유형 ESS 사례 및 사업모델 분석",
+        "[연구동향] IEA의 2025년 대한민국 에너지 정책 요약",
+        "[연구동향] 일본의 전력수요 증가에 따른 안정적 전력공급 유지 방안"
+      ],
+      "url": "https://www.kepco.co.kr/c2r/FileDownload.do?fileNo=Ndc4pdOLQIzt41Pbt2cFdA%3D%3D&fileSeq=DIMtNyzfJ3kKEXQCksqfEQ%3D%3D",
+      "detail_url": "https://www.kepco.co.kr/kemri/report/kemri-review/boardView.do?boardMngNo=131&boardNo=329",
+      "link_label": "원문 PDF 다운로드",
+      "added": "2026-01-21"
     }
   ],
   "internal_notice": {
