@@ -160,9 +160,10 @@
         });
         catsEl.appendChild(a);
       });
-      var tool = el("a", "tool-btn", "규칙개정 분석도구");   // 자체 도구: 리포트 목록과 별도 (페이지 자체가 비밀번호 보호)
-      tool.href = "internal/rule-ledger.html";
-      catsEl.appendChild(tool);
+      // 자체 도구 버튼: 암호화된 자체자료 목록(tools)에만 들어 있어 비밀번호를 연 뒤에만 표시
+      ((state.internal && state.internal.tools) || []).forEach(function (t) {
+        var tool = el("a", "tool-btn", t.title); tool.href = t.url; catsEl.appendChild(tool);
+      });
     }
 
     function link(label, url, primary) {
