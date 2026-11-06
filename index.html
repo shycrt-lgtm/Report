@@ -35,6 +35,8 @@
     .cat-btn{cursor:pointer;border:0;font-family:inherit}
     .etc-menu a.primary,.etc-menu a.cat-btn[aria-pressed="true"],.etc-menu a.cat-btn[aria-pressed="true"]:hover{background:#001f3f;color:#fff}
     .etc-menu a.primary:hover{background:#1e293b}
+    .etc-menu a.tool-btn{min-width:150px;background:#2c4a6e;color:#fff}
+    .etc-menu a.tool-btn:hover{background:#3a5a80}
     .cat-btn{position:relative}
     .etc-menu a.cat-2l{flex-direction:column;line-height:1.2;gap:1px}
     .nw{position:absolute;top:-7px;right:-4px;background:#dc2626;color:#fff;font-size:10px;font-weight:900;line-height:1;padding:3px 5px;border-radius:2px;letter-spacing:.02em;pointer-events:none}
@@ -158,6 +160,9 @@
         });
         catsEl.appendChild(a);
       });
+      var tool = el("a", "tool-btn", "규칙개정 분석도구");   // 자체 도구: 리포트 목록과 별도 (페이지 자체가 비밀번호 보호)
+      tool.href = "internal/rule-ledger.html";
+      catsEl.appendChild(tool);
     }
 
     function link(label, url, primary) {
