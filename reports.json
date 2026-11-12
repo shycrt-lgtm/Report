@@ -1,6 +1,19 @@
 {
-  "updated": "2026-11-11",
+  "updated": "2026-11-12",
   "items": [
+    {
+      "id": "lng-stat-234",
+      "source": "민간LNG산업협회",
+      "category": "가스산업",
+      "series": "LNG통계",
+      "title": "월간 천연가스 동향 분석(2026년 10월)",
+      "date": "2026-11-12",
+      "summary": [],
+      "url": "http://www.lngkorea.or.kr/bbs/download.php?bo_table=statistics&wr_id=234&no=0",
+      "detail_url": "http://www.lngkorea.or.kr/bbs/board.php?bo_table=statistics&wr_id=234",
+      "link_label": "첨부파일 열기",
+      "added": "2026-11-12"
+    },
     {
       "id": "keei-oil-1117",
       "source": "에너지경제연구원(KEEI)",
