@@ -533,7 +533,7 @@ async function summarize(item) {
  "watch":"실무자가 지금 확인하거나 준비할 점 1문장",
  "biz":[{"area":"영향받는 당사 사업 구분. 다음 중에서만: ${BIZ.join(', ')}","level":"높음 / 보통 / 낮음","note":"해당 구분에서 당사에 미치는 영향, 개조식 1항목(구체적으로, 60자 이내)"}]${KOREC ? `,
  "permits":[{"name":"발전소·사업 이름(원문 그대로, 예: 포항 동백이풍력 발전사업)","kind":"${PERMIT_KINDS.join(' / ')} 중 하나","cond":"조건·사유(없으면 빈 값)"}]` : ''}${PROFILE ? `,
- "fit":"아래 '우리 관점'에서 본 영향 1문장 (관련이 적으면 '직접 관련 낮음')"` : ''}}
+ "fit":["아래 '우리 관점'의 당사 사업 기준 영향 분석 2~4개 항목. 어느 사업(도시가스·집단에너지·LNG발전·태양광·VPP·ESS)에 어떤 경로(수익·비용·인허가·설비 투자·운영 의무)로 영향을 주는지, 당사가 검토·대응할 사항을 구체적으로. 관련이 적으면 ['직접 관련 낮음'] 한 항목"]` : ''}}
 문체: 모든 문장은 보고서용 개조식으로 쓸 것. 명사형·단어 종결(예: '~함', '~임', '~ 예정', '~ 필요', '~ 확대')로 끝내고 '~합니다', '~입니다', '~해요' 같은 서술형·구어체 종결과 마침표는 쓰지 말 것. 자극적이거나 과장된 표현은 피할 것.
 원문에 없는 내용은 지어내지 말고, 알 수 없으면 빈 값으로 둬.${KOREC ? `
 이 문서는 전기위원회 개최 결과야. 독자가 가장 알고 싶은 것은 '어떤 발전소가 허가·인가·취소를 받았는지'야.
@@ -553,7 +553,7 @@ ${RELEVANCE ? `관련도 기준(당사 사업기획 실무자 관점):\n${RELEVA
 ${item.body.slice(0, BODY_MAX)}`;
   const s = await gemini(prompt);
   if (s) {
-    s.v = 7;
+    s.v = 8;
     s.biz = (Array.isArray(s.biz) ? s.biz : []).filter((b) => b && BIZ.includes(b.area))
       .map((b) => ({ area: b.area, level: ['높음', '보통', '낮음'].includes(b.level) ? b.level : '보통', note: String(b.note || '') }));
     delete s.importance; delete s.importance_reason;
@@ -797,7 +797,7 @@ for (const it of fetched) {
     }
     const needPermits = prev.id.startsWith('KOREC-') && !Array.isArray(prev.summary?.permits);
     if (needPermits) { const b = await bodyOf(prev); if (b) prev.body = b; }   // 반복 글자 정리된 원문으로 다시 읽기
-    if (prev.body && (!prev.summary || (prev.summary.v || 0) < 7 || needPermits)) {   // 요약 없음·예전 요약 → 새 분석
+    if (prev.body && (!prev.summary || (prev.summary.v || 0) < 8 || needPermits)) {   // 요약 없음·예전 요약 → 새 분석
       const s = await summarize(prev);
       if (s) { prev.summary = s; console.log(`  분석 추가: ${prev.title}`); }
     }
@@ -811,9 +811,9 @@ for (const it of fetched) {
   await sleep(500);
 }
 
-// 예고 기간이 끝나 이번 목록에 없는 진행 중 건도 예전 기준(v7 전) 분석이면 다시 분석
+// 예고 기간이 끝나 이번 목록에 없는 진행 중 건도 예전 기준(v8 전) 분석이면 다시 분석
 for (const v of old.values()) {
-  if (current.has(v.id) || !v.body || v.status === '종료' || (v.summary?.v || 0) >= 7) continue;
+  if (current.has(v.id) || !v.body || v.status === '종료' || (v.summary?.v || 0) >= 8) continue;
   const s = await summarize(v);
   if (s) { v.summary = s; console.log(`  분석 갱신: ${v.title}`); }
 }
