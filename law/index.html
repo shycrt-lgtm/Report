@@ -94,6 +94,8 @@ select{padding:9px 10px;border:1px solid #cbd5e1;border-radius:2px;background:#f
 .bz{font-size:14px;font-weight:700;padding:2px 9px;border:1px solid #cbd5e1;color:#1e293b;background:#fff;border-radius:2px}
 .bz i{display:inline-block;width:7px;height:7px;margin-right:5px;vertical-align:1px}
 .bz.l0 i{background:var(--red)}.bz.l1 i{background:#d97706}.bz.l2 i{background:#94a3b8}
+.bzcol{display:flex;flex-direction:column;align-items:center;gap:6px}
+.bzcol .bz{white-space:nowrap}
 .bz.kw{border-style:dashed;font-weight:500;color:#475569}
 .bz.kw i{display:none}
 .more{display:none;font-size:16px;border-top:1px dashed #cbd5e1;padding-top:4px}
@@ -681,7 +683,7 @@ function renderIns(){
   const L=liveSet(),P=pool(),T=today();
   const anyAI=data.some(x=>bizOf(x).ai);
   const areaCell=(x,only)=>{const b=bizOf(x);const l=only?b.list.filter(v=>v.level===only):b.list;
-    return l.map(v=>`<span class="bz ${b.ai?lvCls(v.level):'kw'}" style="margin:1px"><i></i>${esc(v.area)}</span>`).join(' ')||'<span class="meta">–</span>'};
+    return l.length?`<div class="bzcol">${l.map(v=>`<span class="bz ${b.ai?lvCls(v.level):'kw'}"><i></i>${esc(v.area)}</span>`).join('')}</div>`:'<span class="meta">–</span>'};
   const titleCell=x=>`<button class="link" data-open="${esc(x.id)}">${esc(x.title)}</button>${age(x.first_seen)<7?' <span class="b new">NEW</span>':''}`;
   const stCell=x=>{const t=track(x);return `${esc(BKN[t.bk])}<br><small class="meta">${esc(t.txt)}</small>`};
   const tbl=(cols,rows,empty)=>rows.length?`<table class="t"><colgroup>${cols.map(c=>`<col${c[1]?` style="width:${c[1]}"`:''}${c[2]?' class="hide-m"':''}>`).join('')}</colgroup><tr>${cols.map(c=>`<th${c[2]?' class="hide-m"':''}>${c[0]}</th>`).join('')}</tr>${rows.join('')}</table>`:`<div class="empty" style="padding:28px 0">${empty}</div>`;
@@ -730,7 +732,7 @@ function renderIns(){
   const hist=(I.history||[]).filter(Boolean);
   el.innerHTML=`
     <h2>당사 영향 높음 <small>${high.length}건</small></h2><p class="hint">${hNote}</p>
-    ${tbl([['사업 구분','18%'],['종류','10%'],['법령·규칙','34%'],['현재 상태','16%'],['당사 영향 내용','',1]],hRows,anyAI?'진행 중인 당사 영향 높음 건 없음':'최근 7일 당사 관련 신규 건 없음')}
+    ${tbl([['사업 구분','17%'],['종류','9%'],['법령·규칙','26%'],['현재 상태','14%'],['당사 영향 내용','',1]],hRows,anyAI?'진행 중인 당사 영향 높음 건 없음':'최근 7일 당사 관련 신규 건 없음')}
     <h2>의견 제출 마감 일정 <small>당사 관련 · 입법예고·행정예고 중</small></h2><p class="hint">협회·소관 부처에 의견 제출 가능한 기한 · 7일 이내 마감은 붉은색</p>
     ${tbl([['마감','11%'],['종류','10%'],['법령·규칙','37%'],['소관·제안','16%',1],['사업 구분','']],dRows,'의견 제출 기한이 남은 당사 관련 건 없음')}
     <h2>공포·시행 일정 <small>최근 30일 ~ 향후</small></h2><p class="hint">공포(발령)·공고로 확정된 건의 시행일 · 시행 전 준비가 필요한 건 확인용</p>
