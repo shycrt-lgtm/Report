@@ -655,30 +655,67 @@ function barList(arr,col,go){
     ||'<p class="hint">데이터 축적 후 표시</p>';
 }
 function renderIns(){
-  const I=INS,el=$('#tab-ins');
-  const L=liveSet();
-  const bizT=BIZ.map(a=>[a,L.filter(x=>hasBiz(x,a)).length]).filter(v=>v[1]).sort((a,b)=>b[1]-a[1]);
-  if(!I.weeks){el.innerHTML='<p class="hint" style="margin-top:20px">동향: 다음 자동 수집 시 최초 생성</p>';return}
-  const hist=(I.history||[]).filter(Boolean);
-  const max=Math.max(1,...I.weeks.map(w=>w.total));
-  const bars=I.weeks.map((w,wi)=>`<div class="bar ${w.partial?'partial':''}" data-i="${wi}"><em>${w.total||''}</em><div class="stack" style="height:${w.total/max*80}%">${Object.entries(w.cats).map(([c,n])=>`<i data-c="${esc(c)}" style="flex:${n};background:${color(c)}"></i>`).join('')}</div><span>${esc(w.to.slice(5).replace('-','/'))}</span></div>`).join('');
-  const partialNote=I.weeks.some(w=>w.partial)?`<p class="note">빗금 막대: 수집 시작(${esc(md(I.since))}) 이전 주 → 당시 진행 중이던 건만 반영되어 실제보다 적게 표시</p>`:'';
-  const ready=I.momentumReady!==false;
-  const M=[...(I.momentum||[])].sort((a,b)=>ready?(b.recent-b.before)-(a.recent-a.before):b.recent-a.recent);
-  const mmax=Math.max(1,...M.map(m=>Math.max(m.recent,m.before)));
-  const mom=M.map(m=>{const d=m.recent-m.before;const ar=!ready?'':d>=1?' <b class="up">▲</b>':d<=-1?' <b class="down">▼</b>':' –';
-    return `<div class="row"><span class="lb">${esc(m.cat)}</span><span class="track"><i style="width:${m.recent/mmax*100}%;background:${color(m.cat)}"></i></span><span class="v">${m.recent}건${ar}</span></div>`}).join('')||'<p class="hint">데이터 축적 후 표시</p>';
-  const hot=(I.hot||[]).map(h=>`<div class="hotl"><b>${esc(h.law)}</b> <span class="meta">${h.count}건</span>
+  const el=$('#tab-ins'),I=INS||{};
+  const L=liveSet(),P=pool(),T=today();
+  const anyAI=data.some(x=>bizOf(x).ai);
+  const areaCell=(x,only)=>{const b=bizOf(x);const l=only?b.list.filter(v=>v.level===only):b.list;
+    return l.map(v=>`<span class="bz ${b.ai?lvCls(v.level):'kw'}" style="margin:1px"><i></i>${esc(v.area)}</span>`).join(' ')||'<span class="meta">–</span>'};
+  const titleCell=x=>`<button class="link" data-open="${esc(x.id)}">${esc(x.title)}</button>${age(x.first_seen)<7?' <span class="b new">NEW</span>':''}`;
+  const stCell=x=>{const t=track(x);return `${esc(BKN[t.bk])}<br><small class="meta">${esc(t.txt)}</small>`};
+  const tbl=(cols,rows,empty)=>rows.length?`<table class="t"><colgroup>${cols.map(c=>`<col${c[1]?` style="width:${c[1]}"`:''}${c[2]?' class="hide-m"':''}>`).join('')}</colgroup><tr>${cols.map(c=>`<th${c[2]?' class="hide-m"':''}>${c[0]}</th>`).join('')}</tr>${rows.join('')}</table>`:`<div class="empty" style="padding:28px 0">${empty}</div>`;
+
+  // ① 당사 영향 높음
+  let high,hNote;
+  if(anyAI){
+    high=L.filter(x=>bizOf(x).ai&&bizOf(x).list.some(v=>v.level==='높음'));
+    hNote='진행 중인 건 중 AI가 당사 사업 영향 "높음"으로 판단한 건 · 최근 7일 신규는 NEW 표시';
+  }else{
+    high=L.filter(x=>bizOf(x).list.length&&age(x.first_seen)<7);
+    hNote='AI 사업 영향 분석 전 → 키워드 추정 기준 당사 관련 최근 7일 신규 건 표시(점선) · GEMINI_API_KEY 등록 후 "높음" 건으로 전환';
+  }
+  high.sort((a,b)=>age(a.first_seen)-age(b.first_seen));
+  const hRows=high.map(x=>{const b=bizOf(x);const v=b.ai?b.list.filter(v=>v.level==='높음'):[];
+    return `<tr><td>${areaCell(x,anyAI?'높음':'')}</td><td>${esc(typeOf(x))}</td><td class="l">${titleCell(x)}</td><td>${stCell(x)}</td><td class="l hide-m">${esc(gz1(v.map(v=>v.note).filter(Boolean).join(' · ')||sum(x)?.oneline||''))}</td></tr>`});
+
+  // ② 의견 제출 마감 일정
+  const due=P.filter(x=>{const n=dday(x);return n!==null&&n>=0&&bizOf(x).list.length}).sort((a,b)=>dday(a)-dday(b));
+  const dRows=due.map(x=>{const n=dday(x);
+    return `<tr><td><b class="${n<=7?'hi':''}">${n===0?'D-DAY':'D-'+n}</b><br><small class="meta">${md(x.end)}</small></td><td>${esc(typeOf(x))}</td><td class="l">${titleCell(x)}</td><td class="hide-m">${esc(x.source==='국회'?(x.proposer||''):(x.proposer||x.org||x.source))}</td><td>${areaCell(x)}</td></tr>`});
+
+  // ③ 공포·시행 일정 (최근 30일 ~ 향후)
+  const ago=new Date(T);ago.setDate(ago.getDate()-30);
+  const sch=[];
+  for(const x of P){
+    const ty=typeOf(x);let an=null,ef=null;
+    if(x.promul?.done){an=parseDate(x.promul.ancYd);ef=parseDate(x.promul.efYd)}
+    else if(ty==='전력시장 규칙'&&track(x).bk==='D'){an=parseDate(x.posted||x.start);const m=String(x.title).match(/(\d{4})[.\-](\d{1,2})[.\-](\d{1,2})\s*,?\s*시행/);ef=m?new Date(+m[1],m[2]-1,+m[3]):an}
+    else continue;
+    const key=ef||an;if(!key||key<ago)continue;
+    sch.push({x,an,ef,key});
+  }
+  sch.sort((a,b)=>a.key-b.key);
+  const d2=d=>d?`${d.getMonth()+1}/${d.getDate()}`:'–';
+  const sRows=sch.map(({x,an,ef})=>{const on=ef&&ef<=T;
+    return `<tr><td>${d2(an)}</td><td><b>${d2(ef)}</b></td><td>${on?'시행 중':'<b class="hi">시행 예정</b>'}</td><td>${esc(typeOf(x))}</td><td class="l">${titleCell(x)}</td><td class="hide-m">${areaCell(x)}</td></tr>`});
+
+  // ⑤ 여러 건이 몰리는 법령 (당사 관련만)
+  const hotA=(I.hot||[]).filter(h=>data.some(x=>x.law===h.law&&bizOf(x).list.length));
+  const hot=hotA.map(h=>{const areas=[...new Set(data.filter(x=>x.law===h.law).flatMap(x=>bizOf(x).list.map(v=>v.area)))];
+    return `<div class="hotl"><b>${esc(h.law)}</b> <span class="meta">${h.count}건 · ${esc(areas.join(', '))}</span>
     <ul>${h.items.map(i=>`<li>${esc(i.proposer||i.title)}${i.date?` <span class="meta">· ${esc(md(i.date))}</span>`:''}${i.oneline?`<small>${esc(gz1(i.oneline))}</small>`:''}</li>`).join('')}</ul>
-    <button class="btn" data-law="${esc(h.law)}">관련 건 모두 보기</button></div>`).join('')||'<p class="hint">여러 건이 몰린 법령 없음</p>';
-  el.innerHTML=`<div class="ins">
-    <section class="wide brief"><h2>주간 브리핑 ${hist.length>1?`<select id="bsel" style="margin-left:auto;font-size:13px;padding:5px 8px">${hist.map((b,i)=>`<option value="${i}">${esc(b.date)} 작성</option>`).join('')}</select>`:''}</h2><div id="brief"></div></section>
-    <section><h2>사업별 관련 건수 <small>진행 중</small></h2><p class="hint">클릭 시 해당 사업 목록으로 이동</p>${barList(bizT,'#001f3f',true)}</section>
-    <section><h2>정책 방향 <small>진행 중</small></h2><p class="hint">규제강화·완화·지원 여부(AI 판단)</p>${barList(I.direction||[],'#64748b')}</section>
-    <section class="wide"><h2>최근 12주 예고 추이</h2><p class="hint">주별 신규 건수(색: 분야) · 막대에 마우스를 올리면 내역 표시</p>${partialNote}<div class="bars">${bars}</div></section>
-    <section><h2>분야별 모멘텀</h2><p class="hint">${ready?'최근 4주 신규 건수 · ▲▼: 직전 8주(4주 환산) 대비 증감':`최근 4주 신규 건수 · 증감(▲▼)은 ${esc(I.momentumFrom||'')}부터 표시`}</p>${mom}</section>
-    <section><h2>여러 건이 몰리는 법령</h2><p class="hint">최근 6개월 동일 법령 2건 이상 → 개정 논의 활발 신호</p>${hot}</section>
-  </div>`;
+    <button class="btn" data-law="${esc(h.law)}">관련 건 모두 보기</button></div>`}).join('')||'<p class="hint">당사 관련 법령 중 여러 건이 몰린 법령 없음</p>';
+
+  const hist=(I.history||[]).filter(Boolean);
+  el.innerHTML=`
+    <h2>당사 영향 높음 <small>${high.length}건</small></h2><p class="hint">${hNote}</p>
+    ${tbl([['사업 구분','18%'],['종류','10%'],['법령·규칙','34%'],['현재 상태','16%'],['당사 영향 내용','',1]],hRows,anyAI?'진행 중인 당사 영향 높음 건 없음':'최근 7일 당사 관련 신규 건 없음')}
+    <h2>의견 제출 마감 일정 <small>당사 관련 · 입법예고·행정예고 중</small></h2><p class="hint">협회·소관 부처에 의견 제출 가능한 기한 · 7일 이내 마감은 붉은색</p>
+    ${tbl([['마감','11%'],['종류','10%'],['법령·규칙','37%'],['소관·제안','16%',1],['사업 구분','']],dRows,'의견 제출 기한이 남은 당사 관련 건 없음')}
+    <h2>공포·시행 일정 <small>최근 30일 ~ 향후</small></h2><p class="hint">공포(발령)·공고로 확정된 건의 시행일 · 시행 전 준비가 필요한 건 확인용</p>
+    ${tbl([['공포·공고','10%'],['시행','9%'],['상태','11%'],['종류','11%'],['법령·규칙',''],['사업 구분','22%',1]],sRows,'최근 30일 이후 공포·시행 건 없음')}
+    <h2>주간 브리핑 ${hist.length>1?`<select id="bsel" style="margin-left:auto;font-size:13px;padding:5px 8px">${hist.map((b,i)=>`<option value="${i}">${esc(b.date)} 작성</option>`).join('')}</select>`:''}</h2>
+    <div class="brief" id="brief"></div>
+    <h2>여러 건이 몰리는 법령 <small>당사 관련</small></h2><p class="hint">최근 6개월 동일 법령 2건 이상 → 개정 논의 활발 신호</p>${hot}`;
   renderBrief(0);
 }
 function renderBrief(i){

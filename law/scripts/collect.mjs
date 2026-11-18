@@ -624,24 +624,26 @@ function buildInsights(list) {
 
 async function weeklyBriefing(list, ins, prev) {
   if (!GEMINI_KEY || OFFLINE) return prev || null;
-  if (prev?.date && (Date.parse(TODAY) - Date.parse(prev.date)) / 864e5 < 7) return prev;
+  if (prev?.v === 2 && prev?.date && (Date.parse(TODAY) - Date.parse(prev.date)) / 864e5 < 7) return prev;   // v2: 당사 관점 브리핑(이전 브리핑은 다음 실행 때 새로 작성)
   const since = addDays(TODAY, -7);
   const recent = list.filter((x) => (x.first_seen || '').slice(0, 10) >= since);
   if (!recent.length) return prev || null;
   const lines = recent.slice(0, 60).map((x, i) => {
     const s = x.summary || {};
-    return `${i + 1}. [${x.stage.label}] ${x.title} | 분야:${(x.categories || []).join('/')} | 마감:${x.end || '-'} | ${s.oneline || ''}`;
+    const biz = (s.biz || []).map((b) => `${b.area}(${b.level})`).join('/');
+    return `${i + 1}. [${x.stage.label}] ${x.title} | 당사 사업:${biz || '-'} | 마감:${x.end || '-'} | ${s.oneline || ''}`;
   }).join('\n');
   const prompt =
-`너는 에너지 정책 애널리스트야. 지난 7일간 새로 올라온 에너지 관련 입법·행정예고와 전력시장 규칙 개정 목록을 보고 실무자용 주간 브리핑을 JSON으로만 써.
+`너는 도시가스·집단에너지·LNG발전·태양광 사업을 하는 에너지 회사의 사업기획 담당자야. 지난 7일간 새로 올라온 에너지 관련 입법·행정예고와 전력시장 규칙 개정 목록을 보고 경영층·실무자용 주간 브리핑을 JSON으로만 써.
+당사 사업 영향이 '높음'·'보통'인 건을 중심으로 쓰고, 당사와 관련이 낮은 건은 흐름을 설명할 때만 짧게 언급할 것.
 문체: 모든 문장은 보고서용 개조식으로 쓸 것. 명사형·단어 종결(예: '~함', '~임', '~ 예정', '~ 필요', '~ 확대')로 끝내고 '~합니다', '~입니다', '~해요' 같은 서술형·구어체 종결과 마침표는 쓰지 말 것. 자극적이거나 과장된 표현은 피할 것.
 해석 원칙: 전력시장 규칙과 시행령·시행규칙·고시는 국회를 거치지 않아 빠르게 확정될 가능성이 높다. 국회 의원발의 법률안은 통과가 불확실하므로 '정치권 관심 신호'로 해석한다.
 형식:
-{"headline":"이번 주를 요약하는 한 문장",
+{"headline":"당사 관점에서 이번 주를 요약하는 한 항목",
  "trends":["눈에 띄는 흐름 2~4개. 여러 건이 같은 방향을 가리킬 때만 흐름이라고 쓸 것"],
  "soon":["곧 확정·시행될 가능성이 높은 변화 최대 3개(법령명 포함)"],
  "signals":["국회 법률안에서 읽히는 정치권 관심사 최대 3개"],
- "actions":["의견제출 마감 등 이번 주에 챙길 일 최대 3개"],
+ "actions":["당사가 챙길 일 최대 3개(의견제출 마감·시행 대비 등, 법령명과 날짜 포함)"],
  "refs":[위 브리핑 문장들에서 실제로 언급한 목록 번호들]}
 목록에 없는 사실은 쓰지 마.${PROFILE ? `\n우리 관점: ${PROFILE}` : ''}
 여러 건이 몰린 법령: ${ins.hot.map((h) => `${h.law}(${h.count}건)`).join(', ') || '없음'}
@@ -652,7 +654,7 @@ ${lines}`;
   console.log('  주간 브리핑 작성 완료');
   const ids = (Array.isArray(b.refs) ? b.refs : []).map((n) => recent[Number(n) - 1]?.id).filter(Boolean);
   delete b.refs;
-  return { ...b, date: TODAY, count: recent.length, ids };
+  return { ...b, v: 2, date: TODAY, count: recent.length, ids };
 }
 
 // ---------- 알림: RSS 피드 + (선택) 텔레그램 ----------
