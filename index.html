@@ -39,6 +39,10 @@
     .etc-menu a.tool-btn:hover{background:#3a5a80}
     .etc-menu a.law-btn{min-width:150px;background:#a5ddd5;color:#0b4a43}
     .etc-menu a.law-btn:hover{background:#c2e9e3}
+    /* 분류·도구 버튼: 모두 같은 폭으로 한 줄 배치 (모바일은 두 칸씩) */
+    #cats{flex:1 1 100%;flex-wrap:nowrap}
+    #cats a{flex:1 1 0;min-width:0!important;padding:0 6px;white-space:normal;text-align:center;line-height:1.2}
+    @media (max-width:640px){ #cats{flex-wrap:wrap} #cats a{flex:1 1 calc(50% - 5px)} }
     .cat-btn{position:relative}
     .etc-menu a.cat-2l{flex-direction:column;line-height:1.2;gap:1px}
     .nw{position:absolute;top:-7px;right:-4px;background:#dc2626;color:#fff;font-size:10px;font-weight:900;line-height:1;padding:3px 5px;border-radius:2px;letter-spacing:.02em;pointer-events:none}
@@ -167,7 +171,7 @@
       });
       // 자체자료를 연 뒤에만 표시: 법령·규칙 동향 → 자체 도구(암호화된 목록의 tools)
       if (state.internal) {
-        var law = el("a", "law-btn cat-btn", "법령·규칙 동향"); law.href = "law/";
+        var law = el("a", "law-btn cat-btn cat-2l"); law.appendChild(el("span", "", "법령·규칙")); law.appendChild(el("span", "", "동향")); law.href = "law/";
         if (lawNew()) law.appendChild(el("span", "nw", "NEW"));
         catsEl.appendChild(law);
       }
