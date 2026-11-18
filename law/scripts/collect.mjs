@@ -811,6 +811,13 @@ for (const it of fetched) {
   await sleep(500);
 }
 
+// 예고 기간이 끝나 이번 목록에 없는 진행 중 건도 예전 기준(v6 전) 분석이면 다시 분석
+for (const v of old.values()) {
+  if (current.has(v.id) || !v.body || v.status === '종료' || (v.summary?.v || 0) >= 6) continue;
+  const s = await summarize(v);
+  if (s) { v.summary = s; console.log(`  분석 갱신: ${v.title}`); }
+}
+
 // 국회 법률안 심사 진행 단계 갱신 (하루 1번)
 let prog = 0;
 for (const v of OFFLINE ? [] : old.values()) {
