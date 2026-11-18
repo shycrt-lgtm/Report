@@ -504,7 +504,7 @@ const PERMIT_KINDS = ['허가', '조건부 허가', '변경허가', '양수인�
 // 당사 사업 관련 구분 (AI가 사업별 영향을 판단할 때 쓰는 목록 — law/index.html의 BIZ와 같게 유지)
 const BIZ = ['도시가스·LNG', '집단에너지·열', '발전 인허가·계통', '전력시장·정산', '재생에너지', '분산에너지·VPP·ESS', '요금·부담금', '탄소·배출권'];
 const BIZ_GUIDE = `도시가스·LNG: 도시가스사업 허가·공급·소매요금, 도매요금·가스공사 공급, 천연가스·발전용 LNG 공급·가격 (당사: 도시가스, LNG발전 연료)
-집단에너지·열: 집단에너지사업 허가·공급구역, 열요금·열공급 규정, 열병합 설비, 히트펌프·폐열 등 열 생산·이용 (당사: 집단에너지)
+집단에너지·열: 집단에너지사업 허가·공급구역, 열요금·열공급 규정, 열병합 설비, 히트펌프·전극보일러 등 전기 사용 열생산설비(전력계통영향평가 대상 규모 기준, 대규모 전기사용시설 규제, 계통 접속·전기요금 포함), 폐열 이용 (당사: 집단에너지)
 발전 인허가·계통: 발전사업 허가·인가, 계통 연계·접속, 출력제어, 송배전망 건설·이용 (당사: LNG발전, 태양광, 열병합)
 전력시장·정산: 전력시장운영규칙, SMP·정산·용량요금·입찰, 전력거래 방식 (당사: LNG발전, 열병합)
 재생에너지: 신재생 공급의무화(RPS)·REC, 재생에너지 입찰·PPA, 태양광 보급·지원 (당사: 태양광)
@@ -553,7 +553,7 @@ ${RELEVANCE ? `관련도 기준(당사 사업기획 실무자 관점):\n${RELEVA
 ${item.body.slice(0, BODY_MAX)}`;
   const s = await gemini(prompt);
   if (s) {
-    s.v = 6;
+    s.v = 7;
     s.biz = (Array.isArray(s.biz) ? s.biz : []).filter((b) => b && BIZ.includes(b.area))
       .map((b) => ({ area: b.area, level: ['높음', '보통', '낮음'].includes(b.level) ? b.level : '보통', note: String(b.note || '') }));
     delete s.importance; delete s.importance_reason;
@@ -797,7 +797,7 @@ for (const it of fetched) {
     }
     const needPermits = prev.id.startsWith('KOREC-') && !Array.isArray(prev.summary?.permits);
     if (needPermits) { const b = await bodyOf(prev); if (b) prev.body = b; }   // 반복 글자 정리된 원문으로 다시 읽기
-    if (prev.body && (!prev.summary || (prev.summary.v || 0) < 6 || needPermits)) {   // 요약 없음·예전 요약 → 새 분석
+    if (prev.body && (!prev.summary || (prev.summary.v || 0) < 7 || needPermits)) {   // 요약 없음·예전 요약 → 새 분석
       const s = await summarize(prev);
       if (s) { prev.summary = s; console.log(`  분석 추가: ${prev.title}`); }
     }
@@ -811,9 +811,9 @@ for (const it of fetched) {
   await sleep(500);
 }
 
-// 예고 기간이 끝나 이번 목록에 없는 진행 중 건도 예전 기준(v6 전) 분석이면 다시 분석
+// 예고 기간이 끝나 이번 목록에 없는 진행 중 건도 예전 기준(v7 전) 분석이면 다시 분석
 for (const v of old.values()) {
-  if (current.has(v.id) || !v.body || v.status === '종료' || (v.summary?.v || 0) >= 6) continue;
+  if (current.has(v.id) || !v.body || v.status === '종료' || (v.summary?.v || 0) >= 7) continue;
   const s = await summarize(v);
   if (s) { v.summary = s; console.log(`  분석 갱신: ${v.title}`); }
 }
