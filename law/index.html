@@ -1,0 +1,695 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>에너지 법령·규칙 동향</title><meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
+<style>
+:root{--text:#1a1a1a;--sub:#64748b;--line:#e5e7eb;--soft:#f8fafc;--chip:#f1f5f9;--navy:#001f3f;--red:#d93f3c;--blue:#005587}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#fff;color:var(--text);line-height:1.6}
+.wrap{max-width:1000px;margin:0 auto;padding:0 16px}
+/* ── 공통 헤더 (Energy-Index와 동일) ── */
+.site-header{line-height:1.4;position:relative;z-index:100;background:#001f3f;color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+.site-header .in{max-width:1000px;margin:0 auto;padding:18px 16px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.site-header h1{line-height:1.2;margin:0;font-size:28px;font-weight:900;letter-spacing:-.02em;color:#fff}
+.site-header h1 a{color:inherit;text-decoration:none}
+.site-header .sub{margin:4px 0 0;font-size:13px;color:#b6c2d1}
+.site-header .sub b{color:#fff;font-weight:700}
+.menu{display:flex;gap:10px;flex-wrap:wrap}
+.menu a{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:190px;height:44px;border-radius:2px;background:#e5e7eb;color:#1e293b;font-size:14px;font-weight:700;text-decoration:none;transition:background .15s}
+.menu a:hover{background:#f1f5f9}
+.menu a span{font-size:16px;line-height:1}
+.mb{display:none}
+main.wrap{padding-top:8px;padding-bottom:48px}
+/* ── 탭 ── */
+.tabs{display:flex;gap:0;margin:22px 0 0;border-bottom:2px solid var(--line);overflow-x:auto}
+.tabs button{border:0;background:none;padding:10px 20px;font:inherit;font-size:15px;font-weight:700;color:var(--sub);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap}
+.tabs button.on{color:var(--navy);border-color:var(--navy)}
+/* ── 제목 ── */
+h2{display:flex;align-items:center;font-size:18px;font-weight:700;color:var(--navy);margin:30px 0 10px;padding-bottom:8px;border-bottom:2px solid var(--line)}
+h2::before{content:'';flex:none;width:6px;height:18px;margin-right:9px;background:var(--navy)}
+h2 small{font-size:12px;font-weight:500;color:var(--sub);margin-left:8px}
+.hint{margin:4px 0 12px;font-size:12.5px;color:var(--sub);line-height:1.7}
+/* ── 표 ── */
+table.t{width:100%;border-collapse:collapse;table-layout:fixed}
+table.t th,table.t td{border:1px solid var(--line);padding:9px 10px;font-size:14px;text-align:center;vertical-align:middle}
+table.t th{background:var(--soft);color:#334155;font-weight:700}
+table.t td.nm{text-align:left;font-weight:700;color:#0f172a;background:var(--soft)}
+table.t td.l{text-align:left}
+table.t td.n{font-weight:800;font-size:16px}
+table.t td.z{color:#cbd5e1}
+table.t td.go{cursor:pointer}
+table.t td.go:hover{background:#e2e8f0}
+table.t tr.tot td{background:var(--soft);font-weight:800}
+table.t .hi{color:var(--red);font-weight:800}
+/* ── 도구 막대 ── */
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0 10px}
+.search{flex:1;min-width:220px;padding:10px 14px;border:1px solid #cbd5e1;border-radius:2px;background:#fff;color:var(--text);font:inherit;font-size:14px}
+.search:focus,select:focus{outline:2px solid var(--navy);outline-offset:-1px}
+select{padding:9px 10px;border:1px solid #cbd5e1;border-radius:2px;background:#fff;color:var(--text);font:inherit;font-size:14px}
+.tool{border:1px solid #cbd5e1;background:#fff;color:#334155;padding:9px 13px;border-radius:2px;cursor:pointer;font:inherit;font-size:13.5px;font-weight:500;white-space:nowrap}
+.tool:hover{background:var(--soft)}
+.tool.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{border:1px solid #cbd5e1;background:#fff;color:#334155;padding:5px 12px;border-radius:2px;cursor:pointer;font:inherit;font-size:13px}
+.chip i{font-style:normal;opacity:.6;margin-left:3px}
+.chip.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.chip.zero{opacity:.45}
+.pre{display:flex;align-items:center;gap:10px;margin:0 0 12px;padding:9px 14px;background:var(--soft);border:1px solid var(--line);border-left:3px solid var(--navy);font-size:13.5px}
+.pre:empty{display:none}
+.pre button{margin-left:auto;border:0;background:none;color:var(--navy);font:inherit;font-weight:700;cursor:pointer}
+/* ── 카드 ── */
+.list{display:flex;flex-direction:column;gap:12px}
+.card{background:#fff;border:1px solid var(--line);padding:16px 18px;display:flex;flex-direction:column;gap:9px}
+.card:hover{border-color:#94a3b8}
+.card.ended{opacity:.6}
+.card.watched{border-color:#f59e0b;box-shadow:0 0 0 1px #f59e0b inset}
+.top{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.ty{font-size:12px;font-weight:700;padding:3px 9px;border-radius:2px;color:#fff;background:var(--navy)}
+.ty.t0{background:#001f3f}.ty.t1{background:#1e40af}.ty.t2{background:#0369a1}.ty.t3{background:#0f766e}.ty.t4{background:#7c2d12}.ty.t5{background:#475569}
+.src{font-size:12.5px;color:var(--sub)}
+.b{font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:2px}
+.b.new{background:#fee2e2;color:#b91c1c}.b.low{background:#f1f5f9;color:#64748b}
+.dday{margin-left:auto;font-size:12px;font-weight:700;padding:3px 10px;border-radius:2px;background:var(--chip);color:#475569}
+.dday.hot{background:var(--red);color:#fff}
+.star{border:0;background:none;cursor:pointer;font-size:18px;line-height:1;color:var(--sub);padding:0 2px}
+.star.on{color:#f59e0b}
+.card h3{margin:0;font-size:17px;line-height:1.45;letter-spacing:-.3px;color:#0f172a}
+.meta{font-size:13px;color:var(--sub)}
+/* 진행 상태 */
+.trk{display:flex;align-items:center;flex-wrap:wrap;gap:0;font-size:12px}
+.trk span{position:relative;padding:3px 10px 3px 14px;background:#f1f5f9;color:#94a3b8;border:1px solid #e2e8f0;margin-right:-1px;white-space:nowrap}
+.trk span:first-child{padding-left:10px}
+.trk span.done{background:#e2e8f0;color:#334155}
+.trk span.cur{background:var(--navy);color:#fff;border-color:var(--navy);font-weight:700}
+.trk span.dead{background:#94a3b8;color:#fff;border-color:#94a3b8}
+.trk em{font-style:normal;margin-left:10px;color:#0f172a;font-weight:700}
+.trk em small{font-weight:500;color:var(--sub)}
+.one{background:var(--soft);border-left:3px solid var(--navy);padding:9px 13px;font-size:14.5px;font-weight:500}
+.biz{display:flex;flex-wrap:wrap;gap:5px;align-items:center}
+.biz>b{font-size:12px;color:var(--sub);font-weight:700;margin-right:2px}
+.bz{font-size:12px;font-weight:700;padding:2px 9px;border:1px solid #cbd5e1;color:#1e293b;background:#fff;border-radius:2px}
+.bz i{display:inline-block;width:7px;height:7px;margin-right:5px;vertical-align:1px}
+.bz.l0 i{background:var(--red)}.bz.l1 i{background:#d97706}.bz.l2 i{background:#94a3b8}
+.bz.kw{border-style:dashed;font-weight:500;color:#475569}
+.bz.kw i{display:none}
+.more{display:none;font-size:14px;border-top:1px dashed #cbd5e1;padding-top:4px}
+.card.open .more{display:block}
+.more h4{margin:14px 0 4px;font-size:13px;color:var(--navy)}
+.more p{margin:0}.more ul{margin:0;padding-left:18px}.more li{margin:2px 0}
+.more table.t{margin-top:4px}
+.more table.t td{font-size:13px;padding:7px 9px}
+.pm b{display:inline-block;font-size:12px;background:#dcfce7;color:#166534;border-radius:2px;padding:1px 7px;margin:6px 0 2px}.pm b.neg{background:#fee2e2;color:#991b1b}.pm small{color:var(--sub)}
+.raw{white-space:pre-wrap;font-size:12.5px;color:var(--sub);max-height:280px;overflow:auto;background:var(--soft);border:1px solid var(--line);padding:12px}
+.actions{display:flex;gap:8px;padding-top:4px}
+.btn{flex:1;text-align:center;padding:9px;border-radius:2px;border:1px solid #cbd5e1;background:#fff;color:#334155;cursor:pointer;font:inherit;font-size:13px;font-weight:700;text-decoration:none}
+.btn:hover{background:var(--soft)}
+.btn.primary{background:var(--navy);border-color:var(--navy);color:#fff}
+.btn.primary:hover{background:#1e293b}
+.empty{text-align:center;color:var(--sub);padding:60px 0;border:1px solid var(--line)}
+/* ── 사업별 영향 ── */
+.lv{display:inline-block;font-size:12px;font-weight:700;padding:1px 8px;border-radius:2px}
+.lv.l0{background:#fee2e2;color:#991b1b}.lv.l1{background:#fef3c7;color:#92400e}.lv.l2{background:#f1f5f9;color:#475569}.lv.kw{background:#fff;border:1px dashed #cbd5e1;color:#64748b;font-weight:500}
+.link{background:none;border:0;padding:0;font:inherit;color:#0f172a;font-weight:700;text-align:left;cursor:pointer}
+.link:hover{text-decoration:underline;color:var(--navy)}
+/* ── 주간 동향 ── */
+.ins{display:grid;grid-template-columns:repeat(2,1fr);gap:0 24px}
+.ins .wide{grid-column:1/-1}
+.brief h3{margin:4px 0 10px;font-size:19px;line-height:1.45;color:#0f172a}
+.brief h4{margin:14px 0 4px;font-size:13px;color:var(--navy)}
+.brief ul{margin:0;padding-left:18px}.brief li{margin:3px 0;font-size:14px}
+.note{font-size:12px;color:var(--sub);background:var(--soft);border:1px solid var(--line);padding:8px 11px;margin:0 0 12px}
+.bars{display:flex;align-items:stretch;gap:6px;height:170px;margin-bottom:26px}
+.bar{flex:1;display:flex;flex-direction:column;justify-content:flex-end;position:relative;cursor:pointer}
+.bar em{font-size:11px;font-style:normal;color:var(--sub);text-align:center}
+.stack{display:flex;flex-direction:column-reverse;overflow:hidden;min-height:2px;background:var(--chip)}
+.stack i{display:block}
+.bar span{position:absolute;bottom:-20px;left:0;right:0;text-align:center;font-size:10.5px;color:var(--sub)}
+.bar:hover .stack{filter:brightness(1.12)}
+.bar.partial .stack{opacity:.35;background-image:repeating-linear-gradient(45deg,#ffffff88 0 4px,transparent 4px 8px)}
+.row{display:flex;align-items:center;gap:10px;margin:7px 0;font-size:13.5px}
+.row .lb{width:110px;flex-shrink:0;font-weight:500}
+.row .track{flex:1;height:10px;background:var(--chip);overflow:hidden}
+.row .track i{display:block;height:100%}
+.row .v{width:64px;text-align:right;color:var(--sub);font-size:12.5px}
+.row.go{cursor:pointer}.row.go:hover .lb{text-decoration:underline}
+.up{color:var(--red);font-weight:700}.down{color:var(--blue);font-weight:700}
+.hotl{border-top:1px solid var(--line);padding:10px 0}
+.hotl:first-of-type{border-top:0}
+.hotl ul{list-style:none;margin:6px 0;padding:0;font-size:13px}
+.hotl li{margin:4px 0}
+.hotl li small{display:block;color:var(--sub);margin:1px 0 0 2px}
+.hotl .btn{flex:none;padding:5px 12px;font-size:12px}
+/* ── 입법 절차 ── */
+.proc{border:1px solid var(--line);padding:14px 16px;margin-bottom:12px}
+.proc h3{margin:0 0 2px;font-size:16px;color:#0f172a}
+.proc h3 small{font-size:12.5px;font-weight:500;color:var(--sub);margin-left:6px}
+.flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:0;margin:10px 0 8px}
+.flow div{flex:1;min-width:110px;border:1px solid #cbd5e1;margin-right:-1px;padding:8px 10px;font-size:13px;background:#fff;position:relative}
+.flow div b{display:block;font-size:13.5px;color:var(--navy)}
+.flow div small{display:block;color:var(--sub);font-size:11.5px;line-height:1.45;margin-top:2px}
+.flow div.k{background:var(--soft)}
+.flow div.x{background:#fff7ed}
+.proc ul{margin:4px 0 0;padding-left:18px;font-size:13px;color:#334155}
+.proc ul li{margin:2px 0}
+.leg{font-size:13.5px}
+.leg td.l{line-height:1.6}
+/* ── 툴팁·토스트·푸터 ── */
+.tip{position:fixed;z-index:150;pointer-events:none;display:none;min-width:180px;background:#fff;color:var(--text);border:1px solid #cbd5e1;box-shadow:0 8px 24px #0000002e;padding:10px 12px;font-size:12.5px}
+.tip .h{font-weight:700;margin-bottom:6px}
+.tip .r{display:flex;align-items:center;gap:6px;margin:3px 0}
+.tip .r i{width:10px;height:10px;flex-shrink:0}
+.tip .r b{margin-left:auto;font-weight:700}
+.tip .r.on{font-weight:700;background:var(--chip);padding:1px 4px;margin:3px -4px}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:#001f3f;color:#fff;padding:10px 16px;border-radius:2px;font-size:13.5px;z-index:160;display:none}
+footer{max-width:1000px;margin:0 auto;padding:10px 16px 30px;font-size:12px;color:#94a3b8;line-height:1.7}
+@media(max-width:760px){.ins{grid-template-columns:1fr}.site-header h1{font-size:24px}.mb{display:inline}.menu{width:100%}.menu a{width:calc(50% - 5px)}
+  table.t th,table.t td{padding:7px 4px;font-size:12.5px}.flow div{min-width:45%}.hide-m{display:none}}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="in">
+    <div>
+      <h1><a href="./" id="home" title="첫 화면으로">에너지 법령·규칙 동향</a></h1>
+      <p class="sub">법률·시행령·시행규칙·고시, 전력시장 규칙의 발의·예고·공포·시행 현황 | <b id="upd">불러오는 중…</b></p>
+    </div>
+    <nav class="menu">
+      <a href="../" data-report-link>에너지<br class="mb"> 자료실 <span>›</span></a>
+      <a href="https://shycrt-lgtm.github.io/Energy-Index/">에너지 시장<br class="mb"> 주요정보 <span>›</span></a>
+      <a href="https://shycrt-lgtm.github.io/KPX-Daily-Report/">전력시장<br class="mb"> 전일실적 <span>›</span></a>
+      <a href="https://shycrt-lgtm.github.io/TMS/">TMS <span>›</span></a>
+      <a href="https://shycrt-lgtm.github.io/Energy-Price/#home">에너지<br class="mb"> 단가 <span>›</span></a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <nav class="tabs">
+    <button data-tab="list" class="on">법령 현황</button>
+    <button data-tab="biz">사업별 영향</button>
+    <button data-tab="ins">주간 동향</button>
+    <button data-tab="proc">입법 절차 안내</button>
+  </nav>
+
+  <!-- 법령 현황 -->
+  <div id="tab-list">
+    <h2>현황 요약 <small>진행 중인 건 · 숫자를 누르면 해당 건만 표시</small></h2>
+    <table class="t" id="mx"></table>
+    <h2>법령·규칙 목록 <small id="cnt"></small></h2>
+    <div class="toolbar">
+      <input class="search" id="q" placeholder="법령명, 내용, 사업, 발전소 이름 검색">
+      <select id="type"></select>
+      <select id="bucket"></select>
+      <select id="sort"><option value="new">최신 수집순</option><option value="biz">사업 영향 큰 순</option><option value="due">의견 마감 임박순</option></select>
+    </div>
+    <div class="chips" id="chips"></div>
+    <div class="toolbar" style="margin-top:-4px">
+      <button class="tool" id="watchOnly" title="☆를 눌러 등록한 법령만 보기">★ 관심 법령</button>
+      <button class="tool" id="lowBtn" title="AI가 당사 사업과 관련이 낮다고 본 건(공사·안전·제재 등)">관련 낮은 건 보기</button>
+      <button class="tool" id="openAll">모두 열기</button>
+      <button class="tool" id="closeAll">모두 접기</button>
+      <button class="tool" id="share" title="지금 보고 있는 조건 그대로 열리는 링크 복사">🔗 링크 복사</button>
+    </div>
+    <div class="pre" id="pre"></div>
+    <section class="list" id="grid"><div class="empty">불러오는 중…</div></section>
+  </div>
+
+  <!-- 사업별 영향 -->
+  <div id="tab-biz" hidden></div>
+
+  <!-- 주간 동향 -->
+  <div id="tab-ins" hidden></div>
+
+  <!-- 입법 절차 안내 -->
+  <div id="tab-proc" hidden>
+    <h2>이 사이트의 상태 표시</h2>
+    <table class="t leg">
+      <colgroup><col style="width:22%"><col></colgroup>
+      <tr><th>발의·예고</th><td class="l">국회 법률안 발의, 정부·부처 입법예고·행정예고(초안 공개·의견 수렴) 단계 · 확정 전</td></tr>
+      <tr><th>심사 중</th><td class="l">국회 상임위·법사위 심사 중, 또는 예고 종료 후 규제·법제처 심사 등 확정 절차 진행(공포 전) · 전력시장 규칙은 규칙개정위원회 의결 후 전기위원회 심의·승인 대기</td></tr>
+      <tr><th>의결·공포</th><td class="l">국회 본회의 의결, 법령 공포, 고시 발령, 전기위원회 의결로 내용 확정 · 시행 전</td></tr>
+      <tr><th>시행</th><td class="l">시행일 도래로 효력 발생(전력시장운영규칙 공고·시행 포함)</td></tr>
+      <tr><th>판단 근거</th><td class="l">국회 법률안: 의안정보시스템 심사 단계 · 시행령·시행규칙·고시: 국가법령정보센터 공포(발령)·시행일 · 전력시장: 전력거래소·전기위원회 게시판 종류 · 매일 3회(07·12·18시) 자동 갱신</td></tr>
+    </table>
+
+    <h2>국회 입법 <small>의원 발의 법률안</small></h2>
+    <div class="proc">
+      <div class="flow">
+        <div><b>발의</b><small>의원 10인 이상 찬성</small></div>
+        <div class="k"><b>입법예고</b><small>국회 10일 이상 의견 수렴</small></div>
+        <div><b>소관 상임위 심사</b><small>법안소위 → 전체회의</small></div>
+        <div><b>법사위</b><small>체계·자구 심사</small></div>
+        <div><b>본회의 의결</b></div>
+        <div><b>정부 이송·공포</b><small>이송 후 15일 이내 공포</small></div>
+        <div><b>시행</b><small>부칙에서 정한 날</small></div>
+      </div>
+      <ul><li>상당수가 위원회 대안으로 통합 반영되거나 임기 만료로 폐기</li><li>정치권 관심 신호로 활용 · 시행령·고시 대비 확정 가능성 낮음</li></ul>
+    </div>
+
+    <h2>정부 입법 <small>정부 제출 법률안</small></h2>
+    <div class="proc">
+      <div class="flow">
+        <div class="k"><b>입법예고</b><small>40일 이상</small></div>
+        <div><b>규제·법제처 심사</b><small>규제개혁위원회(규제 포함 시) · 법제처</small></div>
+        <div><b>차관회의·국무회의</b></div>
+        <div><b>대통령 재가</b></div>
+        <div><b>국회 제출</b></div>
+        <div class="x"><b>국회 심사</b><small>상임위 → 법사위 → 본회의</small></div>
+        <div><b>공포·시행</b></div>
+      </div>
+      <ul><li>정부 방향은 확정, 국회 통과 절차 잔존 → 통상 1년 안팎 소요</li><li>입법예고 단계까지 추적, 국회 제출 후에는 국회 법률안으로 재수집</li></ul>
+    </div>
+
+    <h2>시행령·시행규칙 <small>대통령령 · 총리령·부령</small></h2>
+    <div class="proc">
+      <h3>시행령 <small>대통령령</small></h3>
+      <div class="flow">
+        <div class="k"><b>입법예고</b><small>40일 이상</small></div>
+        <div><b>규제·법제처 심사</b></div>
+        <div><b>차관회의·국무회의</b></div>
+        <div><b>공포</b></div>
+        <div><b>시행</b></div>
+      </div>
+      <h3 style="margin-top:12px">시행규칙 <small>총리령·부령</small></h3>
+      <div class="flow">
+        <div class="k"><b>입법예고</b><small>40일 이상</small></div>
+        <div><b>규제·법제처 심사</b></div>
+        <div><b>공포</b><small>국무회의 없이 장관 발령</small></div>
+        <div><b>시행</b></div>
+      </div>
+      <ul><li>국회 의결 불요 → 예고 마감 후 통상 1~3개월 내 공포</li></ul>
+    </div>
+
+    <h2>행정규칙 <small>고시·훈령·예규·지침</small></h2>
+    <div class="proc">
+      <div class="flow">
+        <div class="k"><b>행정예고</b><small>20일 이상(국민 생활에 영향이 큰 경우)</small></div>
+        <div><b>부처 확정</b><small>의견 반영·내부 검토</small></div>
+        <div><b>발령</b></div>
+        <div><b>시행</b></div>
+      </div>
+      <ul><li>국회·국무회의 없이 부처 확정 → 가장 빠르게 시행</li><li>요금 산정 지침·사업 운영규정 등 실무 영향이 큰 경우 다수</li></ul>
+    </div>
+
+    <h2>전력시장 규칙·전기위원회</h2>
+    <div class="proc">
+      <h3>전력시장운영규칙</h3>
+      <div class="flow">
+        <div><b>규칙개정위원회 의결</b><small>전력거래소</small></div>
+        <div><b>전기위원회 심의</b></div>
+        <div><b>장관 승인</b></div>
+        <div><b>공고·시행</b><small>전력거래소 공고</small></div>
+      </div>
+      <h3 style="margin-top:12px">전기위원회 심의·의결</h3>
+      <div class="flow">
+        <div><b>안건 상정</b><small>발전사업 허가·인가, 규칙·약관·이용규정</small></div>
+        <div><b>심의·의결</b><small>허가·조건부 허가·취소·보류</small></div>
+        <div><b>결과 공고</b></div>
+      </div>
+      <ul><li>통상 1~2개월 내 확정</li><li>전기위원회 결과: 발전사업 허가·인가, 한전 약관·송배전 이용규정 인가 포함</li></ul>
+    </div>
+  </div>
+
+  <div class="tip" id="tip"></div>
+  <div class="toast" id="toast"></div>
+</main>
+<footer>출처: 열린국회정보 · 의안정보시스템 · 국민참여입법센터 · 국가법령정보센터 · 각 부처 · 전력거래소 · 전기위원회 | 요약·사업 영향 분석은 AI 생성 결과 → 정확한 내용은 원문 확인 필요 | 점선 사업 태그: AI 분석 전 키워드 추정</footer>
+
+<script>
+// ───────── 기본 설정 ─────────
+const COLORS={"탈탄소·기후":"#16a34a","집단에너지·열":"#ea580c","전기·전력":"#2563eb","재생에너지·PPA":"#0d9488","원자력":"#7c3aed","수소":"#0891b2","가스·석유·자원":"#b45309","에너지 일반·효율":"#64748b"};
+const color=c=>COLORS[c]||'#475569';
+// 당사 사업 영역 (scripts/collect.mjs의 BIZ와 같게 유지)
+const BIZ=['도시가스·LNG','집단에너지·열','발전 인허가·계통','전력시장·정산','재생에너지','분산에너지·VPP·ESS','요금·부담금','탄소·배출권'];
+// 구분별 범위 (마우스를 올리면 표시)
+const BIZDESC={
+  '도시가스·LNG':'도시가스 공급·요금, 도매요금, 천연가스·발전용 LNG 공급 · 관련: 도시가스, LNG발전 연료',
+  '집단에너지·열':'집단에너지사업 허가·공급구역, 열요금·열공급, 열병합, 히트펌프·폐열 · 관련: 집단에너지',
+  '발전 인허가·계통':'발전사업 허가, 계통 연계·접속, 출력제어, 송배전망 · 관련: LNG발전, 태양광, 열병합',
+  '전력시장·정산':'전력시장운영규칙, SMP, 정산, 용량요금, 입찰 · 관련: LNG발전, 열병합',
+  '재생에너지':'RPS·REC, 재생에너지 입찰, PPA, 태양광 지원 · 관련: 태양광',
+  '분산에너지·VPP·ESS':'분산에너지특구·직접거래, VPP, ESS, 수요관리 · 관련: 신사업',
+  '요금·부담금':'전기요금·한전 약관, 송배전 이용요금, 전력기금, 에너지 세제 · 관련: 전 사업 비용',
+  '탄소·배출권':'배출권 할당·거래, 온실가스 규제 · 관련: LNG발전, 집단에너지'
+};
+// AI 분석 전 건을 위한 키워드 추정
+const BIZKW={
+  '도시가스·LNG':['도시가스','가스요금','가스공급','천연가스','LNG','도매요금','가스공사'],
+  '집단에너지·열':['집단에너지','지역난방','열병합','열요금','열공급','열에너지','히트펌프','폐열'],
+  '발전 인허가·계통':['발전사업 허가','허가(안)','계통','출력제어','배전망','전력망','송전','접속'],
+  '전력시장·정산':['전력시장','SMP','정산','용량요금','용량시장','전력거래','시장운영규칙'],
+  '재생에너지':['RPS','REC','공급인증서','신재생에너지 공급의무','재생에너지','태양광','PPA'],
+  '분산에너지·VPP·ESS':['분산에너지','VPP','가상발전소','통합발전소','ESS','에너지저장','전기저장','BESS','수요관리','수요반응'],
+  '요금·부담금':['전기요금','기본공급약관','이용요금','전력산업기반기금','부담금','교통·에너지·환경세','교통ㆍ에너지ㆍ환경세','개별소비세'],
+  '탄소·배출권':['배출권','온실가스','탄소중립','배출허용']
+};
+const TYPES=['법률','시행령','시행규칙','고시·훈령','전력시장 규칙','전기위원회'];
+const BK=[['A','발의·예고'],['B','심사 중'],['C','의결·공포'],['D','시행']];
+const BKN=Object.fromEntries([...BK,['E','종료·폐기']]);
+const LV=['높음','보통','낮음'];
+
+// ───────── 도구 ─────────
+// 서술형 문장 → 개조식(명사형 종결)으로 변환
+const GZ=[[/있습니다$/,'있음'],[/없습니다$/,'없음'],[/했습니다$/,'했음'],[/었습니다$/,'었음'],[/였습니다$/,'였음'],[/겠습니다$/,'겠음'],[/습니다$/,'음'],
+  [/이다$/,'임'],[/한다$/,'함'],[/된다$/,'됨'],[/있다$/,'있음'],[/없다$/,'없음'],[/했다$/,'함'],[/였다$/,'임'],[/합니다$/,'함'],[/입니다$/,'임'],[/됩니다$/,'됨'],[/줍니다$/,'줌'],[/봅니다$/,'봄'],[/집니다$/,'짐'],[/납니다$/,'남'],[/옵니다$/,'옴'],[/ㅂ니다$/,'']];
+const GZ2=[[/(되었|되어졌|됐)음$/,'됨'],[/(하였|했)음$/,'함'],[/위함임$/,'위함'],[/것임$/,'것임']];
+const gz1=t=>{let s=String(t||'').trim().replace(/[.。]+$/,'');for(const [a,b] of GZ)if(a.test(s)){s=s.replace(a,b);break}for(const [a,b] of GZ2)s=s.replace(a,b);return s};
+const gzList=t=>Array.isArray(t)?t.map(gz1).filter(Boolean):String(t||'').split(/(?<=[.。])\s+/).map(gz1).filter(Boolean);
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const parseDate=s=>{const m=String(s||'').match(/(\d{4})\D+(\d{1,2})\D+(\d{1,2})/);return m?new Date(+m[1],m[2]-1,+m[3]):null};
+const today=()=>{const d=new Date();d.setHours(0,0,0,0);return d};
+const dday=x=>{const e=parseDate(x.end);return e?Math.round((e-today())/864e5):null};
+const age=s=>s?(Date.now()-new Date(s.replace(' ','T')+':00+09:00'))/864e5:999;
+const sum=x=>!x.summary?null:(typeof x.summary==='string'?{oneline:x.summary}:x.summary);
+const md=s=>{const d=parseDate(s);return d?`${d.getMonth()+1}/${d.getDate()}`:''};
+const isLow=x=>sum(x)?.relevance==='낮음';
+function toast(m){const t=$('#toast');t.textContent=m;t.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>t.style.display='none',2200)}
+
+// ───────── 법령 종류 ─────────
+function typeOf(x){
+  if(x.id?.startsWith('KOREC-'))return '전기위원회';
+  if(x.source==='전력시장')return '전력시장 규칙';
+  if(x.source==='국회'||x.stage?.key==='law')return '법률';
+  const t=x.title||'';
+  if(/시행규칙/.test(t)||x.org==='부령'||x.org==='총리령')return '시행규칙';
+  if(/시행령/.test(t)||x.org==='대통령령')return '시행령';
+  return '고시·훈령';
+}
+
+// ───────── 현재 절차 단계 ─────────
+// steps: 절차, cur: 현재 위치, bk: A 발의·예고 / B 심사 중 / C 의결·공포 / D 시행 / E 종료·폐기, txt: 상태 설명
+function track(x){
+  if(x._t)return x._t;
+  const ty=typeOf(x),n=dday(x),p=x.progress,pr=x.promul;
+  let r;
+  if(x.source==='국회'){
+    const steps=['발의','상임위 심사','법사위','본회의 의결','공포','시행'];
+    const s=p?.step||1;
+    let cur=s<=1?0:s===2?1:s===3?2:s<=5?3:4;
+    // 소관위 회부만 된 상태(상정·심사 전)는 '발의' 단계로 표시
+    if(cur===1&&!/상정|심사|의결/.test(p?.label||''))cur=0;
+    const pre=n!==null&&n>=0?`국회 입법예고 중 · 의견 마감 ${md(x.end)}`:'';
+    const txt=[p?.label,pre].filter(Boolean).join(' · ')||'발의';
+    const bk=p?.dead?'E':cur===0?'A':cur<=2?'B':'C';
+    r={steps,cur,dead:!!p?.dead,bk,txt:p?.dead?`${txt} (폐기·대안반영)`:txt};
+  }else if(ty==='법률'){
+    const steps=['입법예고','정부 심사','국회 제출','국회 심사','공포','시행'];
+    const live=n!==null&&n>=0;
+    r={steps,cur:live?0:1,bk:live?'A':'B',txt:live?`입법예고 중 · 의견 마감 ${md(x.end)}`:`예고 종료 ${md(x.end)} · 정부 심사 단계`};
+  }else if(ty==='전기위원회'){
+    r={steps:['안건 상정','심의·의결','결과 공고'],cur:2,bk:'C',txt:`결과 공고 ${md(x.posted||x.start)}`};
+  }else if(ty==='전력시장 규칙'){
+    const steps=['규칙개정위 의결','전기위 심의','장관 승인','공고·시행'];
+    r=x.stageKey==='done'||x.stage?.key==='done'
+      ?{steps,cur:3,bk:'D',txt:`공고 ${md(x.posted||x.start)}`}
+      :{steps,cur:0,bk:'B',txt:`규칙개정위 의결 · 전기위 심의 대기 (게시 ${md(x.posted||x.start)})`};
+  }else{
+    const adm=ty==='고시·훈령';
+    const steps=adm?['행정예고','확정 절차','발령','시행']:['입법예고','규제·법제처 심사','공포','시행'];
+    if(n!==null&&n>=0)r={steps,cur:0,bk:'A',txt:`${adm?'행정':'입법'}예고 중 · 의견 마감 ${md(x.end)}`};
+    else if(pr?.done){const ef=parseDate(pr.efYd),on=ef&&ef<=today();
+      r={steps,cur:on?3:2,bk:on?'D':'C',txt:`${adm?'발령':'공포'} ${md(pr.ancYd)}${pr.efYd?` · 시행 ${md(pr.efYd)}`:''}`};}
+    else r={steps,cur:1,bk:'B',txt:`예고 종료 ${md(x.end)} · ${adm?'발령':'공포'} 전`};
+  }
+  if(x.status==='종료'&&r.bk!=='D'&&r.bk!=='C')r.bk='E';
+  r.type=ty;
+  return x._t=r;
+}
+
+// ───────── 사업 영향 ─────────
+function bizOf(x){
+  if(x._b)return x._b;
+  const s=sum(x)||{};
+  if(Array.isArray(s.biz))return x._b={ai:true,list:s.biz.filter(b=>BIZ.includes(b.area)).sort((a,b)=>LV.indexOf(a.level)-LV.indexOf(b.level))};
+  const txt=[x.title,x.org,s.oneline,s.reason,s.impact,s.watch,(s.points||[]).join(' '),(s.permits||[]).map(p=>p.name).join(' ')].join(' ');
+  const list=BIZ.filter(a=>BIZKW[a].some(k=>txt.includes(k))).map(a=>({area:a,level:'',note:''}));
+  return x._b={ai:false,list};
+}
+const bizScore=x=>{const b=bizOf(x).list;if(!b.length)return 9;return Math.min(...b.map(v=>v.level?LV.indexOf(v.level):1.5))};
+const hasBiz=(x,a)=>bizOf(x).list.some(v=>v.area===a);
+const lvCls=l=>l?'l'+LV.indexOf(l):'kw';
+
+// ───────── 상태 ─────────
+const DEF={tab:'list',type:'',bucket:'',biz:'',q:'',sort:'new',watch:false,low:false,id:''};
+const st={...DEF};
+let data=[],INS={};
+let WATCH=[];
+try{WATCH=JSON.parse(localStorage.getItem('elw-watch')||'[]')}catch{}
+const saveWatch=()=>{try{localStorage.setItem('elw-watch',JSON.stringify(WATCH))}catch{}};
+const lawKey=x=>x.law||x.title;
+const isWatched=x=>WATCH.includes(lawKey(x));
+function readHash(){const h=new URLSearchParams(location.hash.slice(1));for(const k of Object.keys(DEF))if(h.has(k))st[k]=typeof DEF[k]==='boolean'?h.get(k)==='1':h.get(k)}
+function writeHash(){const h=new URLSearchParams();for(const k of Object.keys(DEF)){const v=st[k];if(v!==DEF[k])h.set(k,typeof v==='boolean'?(v?'1':'0'):v)}
+  const s=h.toString();try{history.replaceState(null,'',s?'#'+s:location.pathname+location.search)}catch{}}
+
+Promise.all([
+  fetch('data/bills.json',{cache:'no-store'}).then(r=>r.json()),
+  fetch('data/meta.json',{cache:'no-store'}).then(r=>r.json()),
+  fetch('data/insights.json',{cache:'no-store'}).then(r=>r.ok?r.json():{}).catch(()=>({}))
+]).then(([d,m,ins])=>{
+  data=d;INS=ins||{};
+  $('#upd').textContent='마지막 수집 '+m.updated;
+  $('#type').innerHTML='<option value="">모든 종류</option>'+TYPES.map(t=>`<option>${t}</option>`).join('');
+  $('#bucket').innerHTML='<option value="">진행 중 전체</option>'+BK.map(([k,l])=>`<option value="${k}">${l}</option>`).join('')+'<option value="E">종료·폐기</option><option value="all">전체(종료 포함)</option>';
+  readHash();syncControls();bind();tab(st.tab);renderAll();
+}).catch(e=>{console.error(e);$('#grid').innerHTML='<div class="empty">데이터 불러오기 실패</div>'});
+
+const pool=()=>st.low?data:data.filter(x=>!isLow(x));
+const liveSet=()=>pool().filter(x=>x.status==='진행');
+
+function syncControls(){
+  $('#q').value=st.q;$('#type').value=st.type;$('#bucket').value=st.bucket;$('#sort').value=st.sort;
+  $('#watchOnly').classList.toggle('on',st.watch);
+  $('#watchOnly').textContent=`★ 관심 법령${WATCH.length?` (${WATCH.length})`:''}`;
+  const nl=data.filter(isLow).length;$('#lowBtn').hidden=!nl;$('#lowBtn').classList.toggle('on',st.low);
+  $('#lowBtn').textContent=st.low?'관련 낮은 건 숨기기':`관련 낮은 건 보기 (${nl})`;
+}
+function tab(t){
+  st.tab=t;
+  document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.tab===t));
+  ['list','biz','ins','proc'].forEach(k=>$('#tab-'+k).hidden=k!==t);
+  writeHash();
+}
+function renderAll(){render();renderBiz();renderIns()}
+// 목록으로 이동하면서 조건 지정
+function showList(o){Object.assign(st,{type:'',bucket:'',biz:'',q:'',watch:false,id:''},o);syncControls();tab('list');render();
+  (o.id?$('#grid'):$('#mx')).scrollIntoView({behavior:'smooth',block:'start'})}
+
+function bind(){
+  $('#home').onclick=e=>{e.preventDefault();Object.assign(st,DEF);syncControls();tab('list');render();scrollTo({top:0,behavior:'smooth'})};
+  $('.tabs').onclick=e=>{const b=e.target.closest('button');if(b){tab(b.dataset.tab)}};
+  $('#q').oninput=e=>{st.q=e.target.value.trim();st.id='';render()};
+  $('#type').onchange=e=>{st.type=e.target.value;st.id='';render()};
+  $('#bucket').onchange=e=>{st.bucket=e.target.value;st.id='';render()};
+  $('#sort').onchange=e=>{st.sort=e.target.value;render()};
+  $('#chips').onclick=e=>{const b=e.target.closest('.chip');if(!b)return;st.biz=b.dataset.c;st.id='';render()};
+  $('#mx').onclick=e=>{const c=e.target.closest('[data-ty]');if(!c)return;showList({type:c.dataset.ty,bucket:c.dataset.bk})};
+  $('#watchOnly').onclick=()=>{if(!WATCH.length&&!st.watch){toast('카드의 ☆로 관심 법령 먼저 등록 필요');return}
+    st.watch=!st.watch;if(st.watch)st.bucket='all';syncControls();render()};
+  $('#lowBtn').onclick=()=>{st.low=!st.low;syncControls();renderAll()};
+  const setAll=open=>document.querySelectorAll('#grid .card').forEach(c=>{c.classList.toggle('open',open);const b=c.querySelector('[data-toggle]');if(b)b.textContent=open?'접기':'자세히 보기'});
+  $('#openAll').onclick=()=>setAll(true);
+  $('#closeAll').onclick=()=>setAll(false);
+  $('#share').onclick=async()=>{writeHash();try{await navigator.clipboard.writeText(location.href);toast('현재 화면 링크 복사 완료')}catch{prompt('아래 링크 복사',location.href)}};
+  document.addEventListener('click',e=>{
+    if(e.target.closest('#preX')){Object.assign(st,{id:'',watch:false});syncControls();render();return}
+    const o=e.target.closest('[data-open]');if(o){showList({id:o.dataset.open,bucket:'all'});return}
+    const bz=e.target.closest('[data-biz]');if(bz){showList({biz:bz.dataset.biz});return}
+    const l=e.target.closest('[data-law]');if(l){showList({q:l.dataset.law,bucket:'all'});return}
+  });
+  $('#grid').onclick=e=>{
+    const w=e.target.closest('[data-watch]');
+    if(w){const k=w.dataset.watch;WATCH=WATCH.includes(k)?WATCH.filter(v=>v!==k):[...WATCH,k];saveWatch();
+      toast(WATCH.includes(k)?`관심 법령에 추가: ${k}`:`관심 법령에서 뺌: ${k}`);syncControls();render();return}
+    const b=e.target.closest('[data-toggle]');if(!b)return;
+    const c=b.closest('.card');c.classList.toggle('open');b.textContent=c.classList.contains('open')?'접기':'자세히 보기'};
+  $('#tab-ins').onchange=e=>{if(e.target.id==='bsel')renderBrief(+e.target.value)};
+  $('#tab-ins').onmousemove=e=>{
+    const bar=e.target.closest('.bar'),tip=$('#tip');
+    if(!bar){tip.style.display='none';return}
+    const w=INS.weeks[+bar.dataset.i],hc=e.target.dataset.c||'';
+    const rows=Object.entries(w.cats).sort((a,b)=>b[1]-a[1]);
+    const d=s=>esc(s.slice(5).replace('-','/'));
+    tip.innerHTML=`<div class="h">${d(w.from)} ~ ${d(w.to)} · 총 ${w.total}건</div>`+(w.partial?'<div class="r" style="color:var(--sub)">수집 시작 전 주라 일부만 반영</div>':'')+
+      (rows.map(([c,n])=>`<div class="r ${c===hc?'on':''}"><i style="background:${color(c)}"></i>${esc(c)}<b>${n}건</b></div>`).join('')||'<div class="r">새 예고 없음</div>');
+    tip.style.display='block';
+    const r=tip.getBoundingClientRect();let x=e.clientX+14,y=e.clientY+14;
+    if(x+r.width>innerWidth-8)x=e.clientX-r.width-14;if(y+r.height>innerHeight-8)y=e.clientY-r.height-14;
+    tip.style.left=x+'px';tip.style.top=y+'px';
+  };
+  $('#tab-ins').onmouseleave=()=>{$('#tip').style.display='none'};
+}
+
+// ───────── 법령 현황 ─────────
+const hay=x=>{const s=sum(x)||{};return [x.title,x.proposer,x.org,x.field,x.law,typeOf(x),s.oneline,s.reason,s.impact,(s.points||[]).join(' '),
+  bizOf(x).list.map(b=>b.area+' '+b.note).join(' '),(s.permits||[]).map(p=>p.name).join(' '),x.progress?.label,x.body].join(' ').toLowerCase()};
+const bkOk=x=>{const b=track(x).bk;return st.bucket==='all'?true:st.bucket==='E'?b==='E'||x.status==='종료':x.status==='진행'&&b!=='E'&&(!st.bucket||b===st.bucket)};
+function base(){
+  if(st.id)return data.filter(x=>x.id===st.id);
+  const qs=st.q.toLowerCase().split(/\s+/).filter(Boolean);
+  return pool().filter(x=>bkOk(x)&&(!st.type||typeOf(x)===st.type)&&(!st.watch||isWatched(x))
+    &&(!qs.length||(h=>qs.every(q=>h.includes(q)))(hay(x))));
+}
+function renderMatrix(){
+  const L=liveSet();
+  const c=(t,k)=>L.filter(x=>(!t||typeOf(x)===t)&&(!k||track(x).bk===k)).length;
+  const cell=(t,k,cls='')=>{const n=c(t,k);return n?`<td class="go n ${cls}" data-ty="${esc(t)}" data-bk="${k}" title="눌러서 목록 보기">${n}</td>`:'<td class="z">–</td>'};
+  $('#mx').innerHTML=`<colgroup><col style="width:22%"><col><col><col><col><col></colgroup>
+    <tr><th>종류</th>${BK.map(([,l])=>`<th>${l}</th>`).join('')}<th>계</th></tr>`+
+    TYPES.map(t=>`<tr><td class="nm">${t}</td>${BK.map(([k])=>cell(t,k)).join('')}${cell(t,'')}</tr>`).join('')+
+    `<tr class="tot"><td class="nm">합계</td>${BK.map(([k])=>cell('',k)).join('')}${cell('','')}</tr>`;
+}
+function render(){
+  renderMatrix();
+  const rows=base();
+  const pre=[];
+  if(st.id)pre.push('선택한 1건만 보는 중');
+  if(st.watch)pre.push('★ 관심 법령만 보는 중');
+  $('#pre').innerHTML=pre.length?`<span>📌 <b>${pre.join(' · ')}</b></span><button id="preX">✕ 해제</button>`:'';
+  const cnt=a=>rows.filter(x=>!a||hasBiz(x,a)).length;
+  $('#chips').innerHTML=`<button class="chip ${!st.biz?'on':''}" data-c="">전체 사업<i>${rows.length}</i></button>`+
+    BIZ.map(a=>{const n=cnt(a);return `<button class="chip ${st.biz===a?'on':''} ${n?'':'zero'}" data-c="${a}" title="${esc(BIZDESC[a])}">${a}<i>${n}</i></button>`}).join('');
+  let list=rows.filter(x=>!st.biz||hasBiz(x,st.biz));
+  const due=x=>{const n=dday(x);return n===null||n<0?99999:n};
+  if(st.sort==='due')list.sort((a,b)=>due(a)-due(b));
+  else if(st.sort==='biz')list.sort((a,b)=>bizScore(a)-bizScore(b)||(b.first_seen||'').localeCompare(a.first_seen||''));
+  else list.sort((a,b)=>(b.first_seen||'').localeCompare(a.first_seen||''));
+  $('#cnt').textContent=`${list.length}건`;
+  $('#grid').innerHTML=list.map(card).join('')||`<div class="empty">조건에 맞는 건 없음</div>`;
+  if(st.id)$('#grid .card')?.classList.add('open'),$('#grid [data-toggle]')&&($('#grid [data-toggle]').textContent='접기');
+  writeHash();
+}
+
+function trackHtml(x){
+  const t=track(x);
+  return `<div class="trk">${t.steps.map((s,i)=>`<span class="${t.dead&&i===t.cur?'dead':i<t.cur?'done':i===t.cur?'cur':''}">${esc(s)}</span>`).join('')}<em>${esc(BKN[t.bk])} <small>· ${esc(t.txt)}</small></em></div>`;
+}
+const PK=['허가','조건부 허가','변경허가','양수인가','기간 연장','연장 불승인','허가취소','허가반납','심의보류'];
+function permits(arr){
+  if(!Array.isArray(arr)||!arr.length)return '';
+  const g={};arr.forEach(p=>{(g[p.kind||'기타']||=[]).push(p)});
+  const keys=Object.keys(g).sort((a,b)=>(PK.indexOf(a)+99)%99-(PK.indexOf(b)+99)%99);
+  return `<h4>발전사업 허가·인가 결과 (${arr.length}건)</h4>`+keys.map(k=>`<div class="pm"><b class="${/취소|반납|보류|불승인/.test(k)?'neg':''}">${esc(k)} ${g[k].length}</b><ul>${g[k].map(p=>`<li>${esc(p.name)}${p.cond?`<small> — ${esc(p.cond)}</small>`:''}</li>`).join('')}</ul></div>`).join('');
+}
+function bizChips(x){
+  const b=bizOf(x);if(!b.list.length)return '';
+  return `<div class="biz"><b>사업 영향</b>${b.list.map(v=>`<span class="bz ${b.ai?lvCls(v.level):'kw'}" title="${esc(b.ai?`영향 ${v.level}${v.note?' · '+gz1(v.note):''}`:'AI 분석 전 키워드 추정')}"><i></i>${esc(v.area)}${b.ai&&v.level?` ${esc(v.level)}`:''}</span>`).join('')}</div>`;
+}
+function bizTable(x){
+  const b=bizOf(x);
+  if(!b.ai)return b.list.length?`<h4>당사 사업 영향</h4><p class="meta">AI 분석 전 · 키워드 기준 ${esc(b.list.map(v=>v.area).join(', '))} 관련 추정 · 다음 수집 시 사업별 영향 분석 예정</p>`:'';
+  if(!b.list.length)return `<h4>당사 사업 영향</h4><p class="meta">당사 사업과 직접 관련 낮음</p>`;
+  return `<h4>당사 사업 영향</h4><table class="t"><colgroup><col style="width:16%"><col style="width:12%"><col></colgroup>${b.list.map(v=>`<tr><td class="nm">${esc(v.area)}</td><td><span class="lv ${lvCls(v.level)}">${esc(v.level)}</span></td><td class="l">${esc(gz1(v.note))}</td></tr>`).join('')}</table>`;
+}
+function card(x){
+  const n=dday(x),s=sum(x),t=track(x),w=isWatched(x);
+  const src=x.source==='국회'?(x.proposer||'국회'):x.source==='전력시장'?(x.proposer||'전력거래소'):(x.proposer||x.org||x.source);
+  const badge=n!==null&&n>=0?`<span class="dday ${n<=3?'hot':''}">의견 마감 ${n===0?'D-DAY':'D-'+n}</span>`:(x.posted||(!x.end&&x.start))?`<span class="dday">게시 ${md(x.posted||x.start)}</span>`:'<span class="dday" style="visibility:hidden"></span>';
+  const li=a=>{const l=gzList(a);return l.length?`<ul>${l.map(v=>`<li>${esc(v)}</li>`).join('')}</ul>`:''};
+  const sec=(h,b)=>b?`<h4>${h}</h4>${b}`:'';
+  const p=li;
+  return `<article class="card ${x.status==='종료'?'ended':''} ${w?'watched':''}">
+    <div class="top">
+      <span class="ty t${TYPES.indexOf(t.type)}">${esc(t.type)}</span>
+      <span class="src">${esc(src)}${x.org&&x.source==='국회'?` · ${esc(x.org)}`:''}</span>
+      ${age(x.first_seen)<3?'<span class="b new">NEW</span>':''}${isLow(x)?'<span class="b low" title="AI 판단: 당사 사업과 관련 낮음">관련 낮음</span>':''}
+      ${badge}
+      <button class="star ${w?'on':''}" data-watch="${esc(lawKey(x))}" title="${w?'관심 법령에서 빼기':'관심 법령으로 등록'}">${w?'★':'☆'}</button>
+    </div>
+    <h3>${esc(x.title)}</h3>
+    ${trackHtml(x)}
+    ${s?.oneline?`<div class="one">${esc(gz1(s.oneline))}</div>`:''}
+    ${Array.isArray(s?.points)&&s.points.length&&!s.permits?.length?`<ul style="margin:0;padding-left:18px;font-size:14px">${gzList(s.points.slice(0,3)).map(v=>`<li>${esc(v)}</li>`).join('')}</ul>`:''}
+    ${Array.isArray(s?.permits)&&s.permits.length?`<div class="meta">🏭 ${esc(s.permits.slice(0,4).map(p=>p.name.replace(/\s*발전사업$/,'')).join(', '))}${s.permits.length>4?` 외 ${s.permits.length-4}곳`:''}</div>`:''}
+    ${bizChips(x)}
+    <div class="more">
+      ${bizTable(x)}
+      ${sec('주요 내용',li(s?.points))}
+      ${sec('개정 이유',p(s?.reason))}
+      ${permits(s?.permits)}
+      ${sec('영향·시사점',p(s?.impact))}
+      ${sec('실무 체크포인트',p(s?.watch))}
+      ${sec('당사 관점',p(s?.fit))}
+      ${x.body?`<h4>원문 발췌</h4><div class="raw">${esc(x.body.slice(0,6000))}${x.body.length>6000?'\n…(이하 생략, 원문 보기)':''}</div>`:''}
+    </div>
+    <div class="actions">
+      <button class="btn" data-toggle>자세히 보기</button>
+      ${x.link?`<a class="btn primary" href="${esc(x.link)}" target="_blank" rel="noopener">원문 보기</a>`:''}
+    </div>
+  </article>`;
+}
+
+// ───────── 사업별 영향 ─────────
+function renderBiz(){
+  const L=liveSet();
+  const per=a=>L.filter(x=>hasBiz(x,a));
+  const lvOf=(x,a)=>bizOf(x).list.find(v=>v.area===a)?.level||'';
+  const aiN=L.filter(x=>bizOf(x).ai).length;
+  const head=`<h2>사업별 현황 <small>진행 중인 건 · 사업명을 누르면 목록으로 이동</small></h2>
+    <p class="hint">당사 사업 관련 8개 구분별로 수익·비용·인허가·운영 의무 영향을 AI가 높음·보통·낮음으로 판단 · 진행 중 ${L.length}건 중 ${aiN}건 분석 완료${aiN<L.length?`, 나머지 ${L.length-aiN}건은 키워드 추정(점선) → 다음 수집 시 분석 예정`:''}.</p>
+    <table class="t"><colgroup><col style="width:22%"><col><col><col class="hide-m"><col class="hide-m"><col class="hide-m"><col class="hide-m"></colgroup>
+    <tr><th>사업</th><th>관련 건</th><th>영향 높음</th>${BK.map(([,l])=>`<th class="hide-m">${l}</th>`).join('')}</tr>`+
+    BIZ.map(a=>{const r=per(a),h=r.filter(x=>lvOf(x,a)==='높음').length;
+      return `<tr><td class="nm"><button class="link" data-biz="${a}">${a}</button><br><small class="meta" style="font-weight:500">${esc(BIZDESC[a].split(' · 관련: ')[1]||'')}</small></td><td class="n ${r.length?'':'z'}">${r.length||'–'}</td><td class="n ${h?'hi':'z'}">${h||'–'}</td>${BK.map(([k])=>{const n=r.filter(x=>track(x).bk===k).length;return `<td class="hide-m ${n?'':'z'}">${n||'–'}</td>`}).join('')}</tr>`}).join('')+'</table>';
+  const secs=BIZ.map(a=>{
+    const r=per(a).sort((p,q)=>(LV.indexOf(lvOf(p,a))+9)%9-(LV.indexOf(lvOf(q,a))+9)%9||(q.first_seen||'').localeCompare(p.first_seen||''));
+    if(!r.length)return '';
+    return `<h2>${a} <small>${r.length}건 · ${esc(BIZDESC[a].split(' · 관련: ')[0])}</small></h2><table class="t"><colgroup><col style="width:13%"><col style="width:36%"><col style="width:17%"><col style="width:9%"><col class="hide-m"></colgroup>
+      <tr><th>종류</th><th>법령·규칙</th><th>현재 상태</th><th>영향</th><th class="hide-m">당사 영향 내용</th></tr>`+
+      r.map(x=>{const t=track(x),b=bizOf(x),v=b.list.find(v=>v.area===a);
+        return `<tr><td>${esc(t.type)}</td><td class="l"><button class="link" data-open="${esc(x.id)}">${esc(x.title)}</button></td><td>${esc(BKN[t.bk])}<br><small class="meta">${esc(t.txt)}</small></td>
+          <td>${b.ai?`<span class="lv ${lvCls(v.level)}">${esc(v.level)}</span>`:'<span class="lv kw">추정</span>'}</td><td class="l hide-m">${esc(gz1(b.ai?v.note:(sum(x)?.oneline||'')))}</td></tr>`}).join('')+'</table>';
+  }).join('');
+  $('#tab-biz').innerHTML=head+secs;
+}
+
+// ───────── 주간 동향 ─────────
+function barList(arr,col,go){
+  const m=Math.max(1,...arr.map(a=>a[1]));
+  return arr.map(([k,n])=>`<div class="row ${go?'go':''}" ${go?`data-biz="${esc(k)}"`:''}><span class="lb">${esc(k)}</span><span class="track"><i style="width:${n/m*100}%;background:${col}"></i></span><span class="v">${n}건</span></div>`).join('')
+    ||'<p class="hint">데이터 축적 후 표시</p>';
+}
+function renderIns(){
+  const I=INS,el=$('#tab-ins');
+  const L=liveSet();
+  const bizT=BIZ.map(a=>[a,L.filter(x=>hasBiz(x,a)).length]).filter(v=>v[1]).sort((a,b)=>b[1]-a[1]);
+  if(!I.weeks){el.innerHTML='<p class="hint" style="margin-top:20px">동향: 다음 자동 수집 시 최초 생성</p>';return}
+  const hist=(I.history||[]).filter(Boolean);
+  const max=Math.max(1,...I.weeks.map(w=>w.total));
+  const bars=I.weeks.map((w,wi)=>`<div class="bar ${w.partial?'partial':''}" data-i="${wi}"><em>${w.total||''}</em><div class="stack" style="height:${w.total/max*80}%">${Object.entries(w.cats).map(([c,n])=>`<i data-c="${esc(c)}" style="flex:${n};background:${color(c)}"></i>`).join('')}</div><span>${esc(w.to.slice(5).replace('-','/'))}</span></div>`).join('');
+  const partialNote=I.weeks.some(w=>w.partial)?`<p class="note">빗금 막대: 수집 시작(${esc(md(I.since))}) 이전 주 → 당시 진행 중이던 건만 반영되어 실제보다 적게 표시</p>`:'';
+  const ready=I.momentumReady!==false;
+  const M=[...(I.momentum||[])].sort((a,b)=>ready?(b.recent-b.before)-(a.recent-a.before):b.recent-a.recent);
+  const mmax=Math.max(1,...M.map(m=>Math.max(m.recent,m.before)));
+  const mom=M.map(m=>{const d=m.recent-m.before;const ar=!ready?'':d>=1?' <b class="up">▲</b>':d<=-1?' <b class="down">▼</b>':' –';
+    return `<div class="row"><span class="lb">${esc(m.cat)}</span><span class="track"><i style="width:${m.recent/mmax*100}%;background:${color(m.cat)}"></i></span><span class="v">${m.recent}건${ar}</span></div>`}).join('')||'<p class="hint">데이터 축적 후 표시</p>';
+  const hot=(I.hot||[]).map(h=>`<div class="hotl"><b>${esc(h.law)}</b> <span class="meta">${h.count}건</span>
+    <ul>${h.items.map(i=>`<li>${esc(i.proposer||i.title)}${i.date?` <span class="meta">· ${esc(md(i.date))}</span>`:''}${i.oneline?`<small>${esc(gz1(i.oneline))}</small>`:''}</li>`).join('')}</ul>
+    <button class="btn" data-law="${esc(h.law)}">관련 건 모두 보기</button></div>`).join('')||'<p class="hint">여러 건이 몰린 법령 없음</p>';
+  el.innerHTML=`<div class="ins">
+    <section class="wide brief"><h2>주간 브리핑 ${hist.length>1?`<select id="bsel" style="margin-left:auto;font-size:13px;padding:5px 8px">${hist.map((b,i)=>`<option value="${i}">${esc(b.date)} 작성</option>`).join('')}</select>`:''}</h2><div id="brief"></div></section>
+    <section><h2>사업별 관련 건수 <small>진행 중</small></h2><p class="hint">클릭 시 해당 사업 목록으로 이동</p>${barList(bizT,'#001f3f',true)}</section>
+    <section><h2>정책 방향 <small>진행 중</small></h2><p class="hint">규제강화·완화·지원 여부(AI 판단)</p>${barList(I.direction||[],'#64748b')}</section>
+    <section class="wide"><h2>최근 12주 예고 추이</h2><p class="hint">주별 신규 건수(색: 분야) · 막대에 마우스를 올리면 내역 표시</p>${partialNote}<div class="bars">${bars}</div></section>
+    <section><h2>분야별 모멘텀</h2><p class="hint">${ready?'최근 4주 신규 건수 · ▲▼: 직전 8주(4주 환산) 대비 증감':`최근 4주 신규 건수 · 증감(▲▼)은 ${esc(I.momentumFrom||'')}부터 표시`}</p>${mom}</section>
+    <section><h2>여러 건이 몰리는 법령</h2><p class="hint">최근 6개월 동일 법령 2건 이상 → 개정 논의 활발 신호</p>${hot}</section>
+  </div>`;
+  renderBrief(0);
+}
+function renderBrief(i){
+  const el=$('#brief');if(!el)return;
+  const b=(INS.history||[])[i]||INS.briefing;
+  if(!b){el.innerHTML='<p class="hint">주간 브리핑: GEMINI_API_KEY 등록 시 주 1회 자동 작성</p>';return}
+  const L=(h,a)=>Array.isArray(a)&&a.length?`<h4>${h}</h4><ul>${gzList(a).map(v=>`<li>${esc(v)}</li>`).join('')}</ul>`:'';
+  el.innerHTML=`<p class="hint">${esc(b.date)} 작성 · 최근 7일 신규 ${b.count||0}건 기준 · AI 생성</p>
+    <h3>${esc(gz1(b.headline||''))}</h3>${L('흐름',b.trends)}${L('곧 현실이 될 변화',b.soon)}${L('국회에서 읽히는 신호',b.signals)}${L('이번 주 챙길 일',b.actions)}`;
+}
+</script>
+<script defer src="../badge.js"></script>
+</body>
+</html>

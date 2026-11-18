@@ -1,0 +1,40 @@
+name: collect-law
+# 법령·규칙 동향(law/) — 국회·정부 입법예고, 행정예고, 전력시장 규칙, 전기위원회 결과 수집·AI 분석
+on:
+  schedule:
+    - cron: "17 22,3,9 * * *"   # 한국시간 07:17, 12:17, 18:17
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: collect-law
+  cancel-in-progress: false
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: law
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: 첨부파일 읽기 도구 설치 (PDF·스캔본 OCR)
+        run: |
+          npm install --no-save --no-audit --no-fund --no-package-lock pdfjs-dist@6.2.108
+          sudo apt-get update -qq && sudo apt-get install -y -qq tesseract-ocr tesseract-ocr-kor poppler-utils > /dev/null || echo "OCR 도구 설치 실패 → 스캔본 PDF는 건너뜀"
+      - name: 수집·분석
+        run: node scripts/collect.mjs
+        env:
+          ASSEMBLY_API_KEY: ${{ secrets.ASSEMBLY_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data feed.xml
+          git diff --cached --quiet && exit 0
+          git commit -m "법령·규칙 동향 갱신 $(TZ=Asia/Seoul date '+%F %H:%M')"
+          for i in 1 2 3; do git pull --rebase && git push && exit 0; sleep 5; done
+          exit 1
