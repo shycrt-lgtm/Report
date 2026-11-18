@@ -127,10 +127,13 @@
       var s = seenSet();
       return state.internal.items.filter(function (it) { return (c === "전체" || it.category === c) && fresh(it) && s.indexOf("i:" + it.id) < 0; }).map(function (it) { return "i:" + it.id; });
     }
+    function lawNew() {   // 법령·규칙 동향: 당사 영향 높음 새 건 알림을 아직 안 봤는지
+      var n = state.lawNotice; return !!(n && n.id && fresh(n) && seenSet().indexOf(n.id) < 0);
+    }
     function hasNew(c) {
       if (c === "자체자료") {
-        if (state.internal) return newInt("전체").length > 0;
-        var n = state.notice; return !!(n && fresh(n) && seenSet().indexOf(n.id) < 0);
+        if (state.internal) return newInt("전체").length > 0 || lawNew();
+        var n = state.notice; return !!(n && fresh(n) && seenSet().indexOf(n.id) < 0) || lawNew();
       }
       return newPub(c).length > 0;
     }
@@ -164,7 +167,9 @@
       });
       // 자체자료를 연 뒤에만 표시: 법령·규칙 동향 → 자체 도구(암호화된 목록의 tools)
       if (state.internal) {
-        var law = el("a", "law-btn", "법령·규칙 동향"); law.href = "law/"; catsEl.appendChild(law);
+        var law = el("a", "law-btn cat-btn", "법령·규칙 동향"); law.href = "law/";
+        if (lawNew()) law.appendChild(el("span", "nw", "NEW"));
+        catsEl.appendChild(law);
       }
       ((state.internal && state.internal.tools) || []).forEach(function (t) {
         var tool = el("a", "tool-btn", "");
@@ -404,10 +409,13 @@
             var k = (it.added || it.date || "") + "|" + (it.date || "");
             if (!lt || k > lt.k) lt = { k: k, id: it.id };
           });
-          var nt = data.internal_notice;
+          var nt = data.internal_notice, ln = data.law_notice;
           state.notice = nt || null;
+          state.lawNotice = ln || null;
           state.noticeId = null;
-          if (nt && nt.id && ((nt.added || "") + "|") > lt.k) { state.noticeId = nt.id; }  // 자체자료 알림이 더 최신이면 잠금 해제 후 확인 처리
+          var ntK = nt && nt.id ? (nt.added || "") + "|" : "", lnK = ln && ln.id ? (ln.added || "") + "|" : "";
+          if (lnK && lnK > lt.k && lnK >= ntK) { /* 법령·규칙 동향 알림이 가장 최신 → 그 페이지를 열 때 확인 처리 */ }
+          else if (ntK && ntK > lt.k) { state.noticeId = nt.id; }  // 자체자료 알림이 더 최신이면 잠금 해제 후 확인 처리
           else if (lt && lt.id) localStorage.setItem("energyReport.seen", lt.id);
         } catch (e) {}
         if (data.updated) document.getElementById("headerDate").textContent = fmtDate(data.updated);

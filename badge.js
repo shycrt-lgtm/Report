@@ -58,6 +58,7 @@
       .then(function (data) {
         var all = (data.items || []).slice();
         if (data.internal_notice) all.push(data.internal_notice); // 자체자료 신규 알림(제목 없음)
+        if (data.law_notice) all.push(data.law_notice);           // 법령·규칙 동향: 당사 영향 높음 새 건
         var latest = latestOf(all);
         if (!latest || !latest.id) return;
         Array.prototype.forEach.call(links, function (a) {

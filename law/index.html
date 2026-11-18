@@ -690,6 +690,16 @@ function renderBrief(i){
     <h3>${esc(gz1(b.headline||''))}</h3>${L('흐름',b.trends)}${L('곧 현실이 될 변화',b.soon)}${L('국회에서 읽히는 신호',b.signals)}${L('이번 주 챙길 일',b.actions)}`;
 }
 </script>
+<script>
+// 이 페이지를 열면 자료실의 '영향 높음 새 건' 알림을 확인한 것으로 처리 (자료실·자체자료·이 버튼의 NEW 해제)
+fetch('../reports.json',{cache:'no-cache'}).then(r=>r.json()).then(d=>{
+  const ln=d.law_notice;if(!ln||!ln.id)return;
+  try{const k='energyReport.seenIds',s=JSON.parse(localStorage.getItem(k)||'[]');if(!s.includes(ln.id)){s.push(ln.id);localStorage.setItem(k,JSON.stringify(s.slice(-300)))}}catch{}
+  const all=[...(d.items||[]),d.internal_notice,ln].filter(Boolean);
+  let best=null;for(const it of all){const k=(it.added||it.date||'')+'|'+(it.date||'');if(!best||k>best.k)best={k,id:it.id}}
+  try{if(best&&best.id===ln.id)localStorage.setItem('energyReport.seen',ln.id)}catch{}
+}).catch(()=>{});
+</script>
 <script defer src="../badge.js"></script>
 </body>
 </html>

@@ -842,6 +842,17 @@ fs.writeFileSync(DATA, JSON.stringify(list, null, 1));
 const prevMeta = fs.existsSync(META) ? JSON.parse(fs.readFileSync(META, 'utf8') || '{}') : {};
 fs.writeFileSync(META, JSON.stringify(OFFLINE ? prevMeta : { updated: NOW, sources: [...ok] }));
 if (!OFFLINE) fs.writeFileSync(NEWF, JSON.stringify(newItems, null, 1));
+// 당사 사업 영향 '높음'인 새 건이 있으면 에너지 자료실(reports.json)에 알림을 남김 → 자료실·자체자료·법령·규칙 동향 버튼에 NEW
+const REPORTS = '../reports.json';
+const highNew = newItems.filter((x) => x.summary?.relevance !== '낮음' && (x.summary?.biz || []).some((b) => b.level === '높음'));
+if (!OFFLINE && highNew.length && fs.existsSync(REPORTS)) {
+  try {
+    const rp = JSON.parse(fs.readFileSync(REPORTS, 'utf8'));
+    rp.law_notice = { id: 'law-' + NOW.replace(/\D/g, ''), added: TODAY, count: highNew.length };
+    fs.writeFileSync(REPORTS, JSON.stringify(rp, null, 2) + '\n');
+    console.log(`자료실 NEW 알림: 영향 높음 새 건 ${highNew.length}건`);
+  } catch (e) { console.log('! 자료실 알림 기록 실패: ' + e.message); }
+}
 writeFeed(list);
 
 const prevIns = fs.existsSync(INS) ? JSON.parse(fs.readFileSync(INS, 'utf8') || '{}') : {};
