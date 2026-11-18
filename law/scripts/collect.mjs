@@ -509,7 +509,7 @@ const BIZ_GUIDE = `도시가스·LNG: 도시가스사업 허가·공급·소매�
 전력시장·정산: 전력시장운영규칙, SMP·정산·용량요금·입찰, 전력거래 방식 (당사: LNG발전, 열병합)
 재생에너지: 신재생 공급의무화(RPS)·REC, 재생에너지 입찰·PPA, 태양광 보급·지원 (당사: 태양광)
 분산에너지·VPP·ESS: 분산에너지 특구·직접거래, 가상발전소(VPP)·통합발전소, ESS·BESS, 수요관리·수요반응 (당사: 신사업)
-요금·부담금: 전기요금·한전 기본공급약관, 송배전 이용요금, 전력산업기반기금 등 부담금, 에너지 관련 세제 (당사: 전 사업 비용)
+요금·부담금: 전기요금·한전 기본공급약관, 송배전 이용요금, 전력산업기반기금·석유수입부과금(LNG 수입 포함) 등 부담금, 석유사업법, 교통에너지환경세·개별소비세 등 에너지 세제 (당사: 전 사업 비용)
 탄소·배출권: 배출권 할당·거래, 온실가스 감축 규제 (당사: LNG발전, 집단에너지)`;
 const DIR = ['규제강화', '규제완화', '지원·인센티브', '시장제도 변경', '절차·행정', '기타'];
 let aiCalls = 0;
@@ -553,7 +553,7 @@ ${RELEVANCE ? `관련도 기준(당사 사업기획 실무자 관점):\n${RELEVA
 ${item.body.slice(0, BODY_MAX)}`;
   const s = await gemini(prompt);
   if (s) {
-    s.v = 8;
+    s.v = 9;
     s.biz = (Array.isArray(s.biz) ? s.biz : []).filter((b) => b && BIZ.includes(b.area))
       .map((b) => ({ area: b.area, level: ['높음', '보통', '낮음'].includes(b.level) ? b.level : '보통', note: String(b.note || '') }));
     delete s.importance; delete s.importance_reason;
@@ -797,7 +797,7 @@ for (const it of fetched) {
     }
     const needPermits = prev.id.startsWith('KOREC-') && !Array.isArray(prev.summary?.permits);
     if (needPermits) { const b = await bodyOf(prev); if (b) prev.body = b; }   // 반복 글자 정리된 원문으로 다시 읽기
-    if (prev.body && (!prev.summary || (prev.summary.v || 0) < 8 || needPermits)) {   // 요약 없음·예전 요약 → 새 분석
+    if (prev.body && (!prev.summary || (prev.summary.v || 0) < 9 || needPermits)) {   // 요약 없음·예전 요약 → 새 분석
       const s = await summarize(prev);
       if (s) { prev.summary = s; console.log(`  분석 추가: ${prev.title}`); }
     }
@@ -811,9 +811,9 @@ for (const it of fetched) {
   await sleep(500);
 }
 
-// 예고 기간이 끝나 이번 목록에 없는 진행 중 건도 예전 기준(v8 전) 분석이면 다시 분석
+// 예고 기간이 끝나 이번 목록에 없는 진행 중 건도 예전 기준(v9 전) 분석이면 다시 분석
 for (const v of old.values()) {
-  if (current.has(v.id) || !v.body || v.status === '종료' || (v.summary?.v || 0) >= 8) continue;
+  if (current.has(v.id) || !v.body || v.status === '종료' || (v.summary?.v || 0) >= 9) continue;
   const s = await summarize(v);
   if (s) { v.summary = s; console.log(`  분석 갱신: ${v.title}`); }
 }
