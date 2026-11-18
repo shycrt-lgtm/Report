@@ -525,6 +525,26 @@ function bind(){
   $('#tab-ins').onmouseleave=()=>{$('#tip').style.display='none'};
 }
 
+// 원문 정리: HWP·PDF에서 글자 조각마다 줄이 바뀐 본문을 문장 단위로 다시 이음
+function cleanBody(t){
+  t=String(t||'').replace(/\r/g,'');
+  const L=t.split('\n');
+  const short=L.filter(l=>l.trim().length&&l.trim().length<=4).length;
+  if(L.length<8||short/L.length<0.2)return t;          // 줄바꿈이 정상인 본문은 그대로
+  let out='';
+  for(const raw of L){
+    const l=raw.replace(/\s+$/,''),sp=/\s$/.test(raw);
+    if(!l.trim()){out+='\n';continue}
+    out+=l+(sp?' ':'');
+  }
+  return out
+    .replace(/(\S)\s*(?=(?:\d{1,2}\.\s|[가-하]\.\s|[□■○●ㅇ◦▪•※]|[①-⑳]|\(\d+\)\s))/g,'$1\n')   // 항목 기호 앞에서 줄바꿈
+    .replace(/([다함음임됨])\.\s*/g,'$1.\n')                                           // 문장 끝에서 줄바꿈
+    .replace(/([)\]다함음임됨])\s*(\d{1,2}\.)(?=\s?[가-힣]|$)/g,'$1\n$2')                     // '…4)3. 기타' 같은 번호 앞
+    .replace(/(\d{1,2}일)(?=[가-힣]+(장관|청장|위원장|처장|원장))/g,'$1\n')                // 날짜 뒤 기관장
+    .replace(/(장관|청장|위원장|처장|원장)(?=[「『])/g,'$1\n')
+    .replace(/[ \t]+\n/g,'\n').replace(/\n{3,}/g,'\n\n').trim();
+}
 // ───────── 법령 현황 ─────────
 const hay=x=>{const s=sum(x)||{};return [x.title,x.proposer,x.org,x.field,x.law,typeOf(x),s.oneline,s.reason,s.impact,(s.points||[]).join(' '),
   bizOf(x).list.map(b=>b.area+' '+b.note).join(' '),(s.permits||[]).map(p=>p.name).join(' '),x.progress?.label,x.body].join(' ').toLowerCase()};
@@ -615,7 +635,7 @@ function card(x){
       ${sec('영향·시사점',p(s?.impact))}
       ${sec('실무 체크포인트',p(s?.watch))}
       ${sec('당사 관점',p(s?.fit))}
-      ${x.body?`<h4>원문 발췌</h4><div class="raw">${esc(x.body.slice(0,6000))}${x.body.length>6000?'\n…(이하 생략, 원문 보기)':''}</div>`:''}
+      ${x.body?(b=>`<h4>원문 발췌</h4><div class="raw">${esc(b.slice(0,6000))}${b.length>6000?'\n…(이하 생략, 원문 보기)':''}</div>`)(cleanBody(x.body)):''}
     </div>
     <div class="actions">
       <button class="btn" data-toggle>자세히 보기</button>
