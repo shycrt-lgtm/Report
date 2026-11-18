@@ -15,7 +15,7 @@
 ## 파일
 - `index.html` 화면 / `data/*.json` 수집 결과 / `feed.xml` RSS
 - `scripts/keywords.json` 수집 분야 키워드, `scripts/boards.json` 부처 게시판 목록
-- `scripts/profile.txt` 당사 사업 설명, `scripts/relevance.txt` 관련도 기준
+- `scripts/profile.txt` 당사 사업 설명, `scripts/relevance.txt` 관련도 기준, `scripts/core_laws.txt` 항상 표시할 당사 핵심 법령
 - 사업 구분 8개는 `scripts/collect.mjs`의 BIZ와 `index.html`의 BIZ를 같이 수정
 
 원본: gemma-uxt/Energy-law-watch를 가져와 화면·분석 기준을 당사 기준으로 변경

@@ -7,6 +7,7 @@ import { checkPromulgation } from './promul.mjs';
 const KW = JSON.parse(fs.readFileSync('scripts/keywords.json', 'utf8'));
 const BOARDS = fs.existsSync('scripts/boards.json') ? JSON.parse(fs.readFileSync('scripts/boards.json', 'utf8')) : [];
 const RELEVANCE = fs.existsSync('scripts/relevance.txt') ? fs.readFileSync('scripts/relevance.txt', 'utf8').trim() : '';
+const CORE = fs.existsSync('scripts/core_laws.txt') ? fs.readFileSync('scripts/core_laws.txt', 'utf8').split('\n').map((s) => s.trim()).filter((s) => s && !s.startsWith('#')) : [];
 const PROFILE = fs.existsSync('scripts/profile.txt') ? fs.readFileSync('scripts/profile.txt', 'utf8').trim() : '';
 const DATA = 'data/bills.json';
 const META = 'data/meta.json';
@@ -727,6 +728,11 @@ function finalize(v) {
   v.categories = categorize(v);
   v.stage = stageOf(v);
   v.law = lawOf(v.title);
+  // 당사 핵심 법령은 AI가 '관련 낮음'으로 봐도 목록에 표시
+  if (v.summary && typeof v.summary === 'object' && CORE.some((n) => (v.title || '').replace(/\s+/g, ' ').includes(n))) {
+    v.summary.core = true;
+    if (v.summary.relevance === '낮음') v.summary.relevance = '보통';
+  }
 }
 
 // ---------- 실행 ----------
