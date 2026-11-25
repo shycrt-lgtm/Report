@@ -46,7 +46,7 @@
    "step": 2,
    "label": "소관위 회부(11/23)",
    "dead": false,
-   "checked": "2026-11-25"
+   "checked": "2026-11-26"
   },
   "status": "진행",
   "categories": [
@@ -109,7 +109,7 @@
    "step": 2,
    "label": "소관위 회부(11/20)",
    "dead": false,
-   "checked": "2026-11-25"
+   "checked": "2026-11-26"
   },
   "status": "진행",
   "categories": [
@@ -185,7 +185,7 @@
    "step": 2,
    "label": "소관위 회부(11/20)",
    "dead": false,
-   "checked": "2026-11-25"
+   "checked": "2026-11-26"
   },
   "status": "진행",
   "categories": [
@@ -259,7 +259,7 @@
    "step": 2,
    "label": "소관위 회부(11/19)",
    "dead": false,
-   "checked": "2026-11-25"
+   "checked": "2026-11-26"
   },
   "status": "진행",
   "categories": [
@@ -446,7 +446,7 @@
    "step": 2,
    "label": "소관위 회부(11/18)",
    "dead": false,
-   "checked": "2026-11-25"
+   "checked": "2026-11-26"
   },
   "status": "진행",
   "categories": [
@@ -511,7 +511,7 @@
    "step": 2,
    "label": "소관위 회부(11/16)",
    "dead": false,
-   "checked": "2026-11-25"
+   "checked": "2026-11-26"
   },
   "status": "진행",
   "categories": [
@@ -576,7 +576,7 @@
    "step": 2,
    "label": "소관위 회부(11/16)",
    "dead": false,
-   "checked": "2026-11-25"
+   "checked": "2026-11-26"
   },
   "status": "진행",
   "categories": [
@@ -640,7 +640,7 @@
    "step": 2,
    "label": "소관위 회부(11/17)",
    "dead": false,
-   "checked": "2026-11-25"
+   "checked": "2026-11-26"
   },
   "status": "진행",
   "categories": [
@@ -1876,7 +1876,7 @@
    "ancYd": "",
    "efYd": "",
    "no": "",
-   "checked": "2026-11-25"
+   "checked": "2026-11-26"
   }
  },
  {
@@ -2013,7 +2013,7 @@
    "step": 2,
    "label": "소관위 회부(11/12)",
    "dead": false,
-   "checked": "2026-11-25"
+   "checked": "2026-11-26"
   },
   "briefed": "2026-11-17"
  },
@@ -2081,7 +2081,7 @@
    "step": 2,
    "label": "소관위 회부(11/13)",
    "dead": false,
-   "checked": "2026-11-25"
+   "checked": "2026-11-26"
   }
  },
  {
@@ -2145,7 +2145,7 @@
    "step": 2,
    "label": "소관위 회부(11/12)",
    "dead": false,
-   "checked": "2026-11-25"
+   "checked": "2026-11-26"
   },
   "briefed": "2026-11-17"
  },
@@ -2215,7 +2215,7 @@
    "step": 2,
    "label": "소관위 회부(11/13)",
    "dead": false,
-   "checked": "2026-11-25"
+   "checked": "2026-11-26"
   }
  },
  {
@@ -2287,7 +2287,7 @@
    "ancYd": "",
    "efYd": "",
    "no": "",
-   "checked": "2026-11-25"
+   "checked": "2026-11-26"
   }
  },
  {
@@ -2350,7 +2350,7 @@
    "step": 2,
    "label": "소관위 회부(11/10)",
    "dead": false,
-   "checked": "2026-11-25"
+   "checked": "2026-11-26"
   }
  },
  {
@@ -2419,7 +2419,7 @@
    "step": 2,
    "label": "소관위 회부(11/09)",
    "dead": false,
-   "checked": "2026-11-25"
+   "checked": "2026-11-26"
   }
  },
  {
@@ -2498,7 +2498,7 @@
    "step": 2,
    "label": "소관위 회부(11/06)",
    "dead": false,
-   "checked": "2026-11-25"
+   "checked": "2026-11-26"
   },
   "briefed": "2026-11-17"
  },
@@ -2565,7 +2565,7 @@
    "step": 2,
    "label": "소관위 회부(11/05)",
    "dead": false,
-   "checked": "2026-11-25"
+   "checked": "2026-11-26"
   }
  },
  {
@@ -2653,7 +2653,7 @@
    "step": 2,
    "label": "소관위 회부(11/02)",
    "dead": false,
-   "checked": "2026-11-25"
+   "checked": "2026-11-26"
   },
   "briefed": "2026-11-17"
  },
@@ -2734,7 +2734,7 @@
    "step": 2,
    "label": "소관위 회부(10/30)",
    "dead": false,
-   "checked": "2026-11-25"
+   "checked": "2026-11-26"
   },
   "briefed": "2026-11-17"
  },
@@ -2808,7 +2808,7 @@
    "step": 2,
    "label": "소관위 회부(10/30)",
    "dead": false,
-   "checked": "2026-11-25"
+   "checked": "2026-11-26"
   }
  },
  {
@@ -2926,7 +2926,14 @@
    "note": "국회 의결 없이 규제·법제처 심사와 국무회의(부령은 장관 발령)로 확정"
   },
   "law": "전기공사업법",
-  "briefed": "2026-11-17"
+  "briefed": "2026-11-17",
+  "promul": {
+   "done": false,
+   "ancYd": "",
+   "efYd": "",
+   "no": "",
+   "checked": "2026-11-26"
+  }
  },
  {
   "id": "GOV-89002",
@@ -2993,7 +3000,7 @@
    "ancYd": "",
    "efYd": "",
    "no": "",
-   "checked": "2026-11-25"
+   "checked": "2026-11-26"
   }
  }
 ]
