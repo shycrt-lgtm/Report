@@ -989,5 +989,10 @@
   "internal_notice": {
     "id": "internal-smp-2026-09",
     "added": "2026-10-16"
+  },
+  "law_notice": {
+    "id": "law-202611261313",
+    "added": "2026-11-26",
+    "count": 1
   }
 }
