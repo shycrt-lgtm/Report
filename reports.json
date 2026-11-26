@@ -1,6 +1,23 @@
 {
-  "updated": "2026-11-20",
+  "updated": "2026-11-26",
   "items": [
+    {
+      "id": "kemri-review-339",
+      "source": "한전 경영연구원(KEMRI)",
+      "category": "KEMRI",
+      "series": "KEMRI 전력경제 REVIEW 2026년 10월호 (Vol.332)",
+      "title": "(26-10) 일본의 재생에너지 요금제 운영 현황",
+      "date": "2026-11-24",
+      "summary": [
+        "[이슈페이퍼] 일본의 재생에너지 요금제 운영 현황",
+        "[연구동향] 영국 송전망 확충 지연 문제와 해결 방안",
+        "[연구동향] 호주 기업용 전력계약의 가격위험 분산 사례"
+      ],
+      "url": "https://www.kepco.co.kr/c2r/FileDownload.do?fileNo=vaSEd7Yr1o5uJDylWYUA0A%3D%3D&fileSeq=DIMtNyzfJ3kKEXQCksqfEQ%3D%3D",
+      "detail_url": "https://www.kepco.co.kr/kemri/report/kemri-review/boardView.do?boardMngNo=131&boardNo=339",
+      "link_label": "원문 PDF 다운로드",
+      "added": "2026-11-26"
+    },
     {
       "id": "lng-stat-235",
       "source": "민간LNG산업협회",
