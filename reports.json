@@ -2,6 +2,19 @@
   "updated": "2026-11-26",
   "items": [
     {
+      "id": "lng-stat-236",
+      "source": "민간LNG산업협회",
+      "category": "가스산업",
+      "series": "LNG통계",
+      "title": "주간 천연가스 동향 분석(261126)",
+      "date": "2026-11-26",
+      "summary": [],
+      "url": "http://www.lngkorea.or.kr/bbs/download.php?bo_table=statistics&wr_id=236&no=0",
+      "detail_url": "http://www.lngkorea.or.kr/bbs/board.php?bo_table=statistics&wr_id=236",
+      "link_label": "첨부파일 열기",
+      "added": "2026-11-26"
+    },
+    {
       "id": "kemri-review-339",
       "source": "한전 경영연구원(KEMRI)",
       "category": "KEMRI",
